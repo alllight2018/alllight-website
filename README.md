@@ -8,6 +8,50 @@
 
 ---
 
+## 🚦 公開までのチェックリスト（この順番で進めてください）
+
+> 検索で上位に来るには「公開」と「Google Search Console 登録」が必須です。差し替え → 公開 → 登録の順で。
+
+### STEP 1. 中身を実データに差し替え（公開前）
+- [ ] 建設業許可番号 `第XXXXXX号`（全ページ・フッター）
+- [ ] 電話番号 `078-000-0000`（全ページ）
+- [ ] 数値（工事成績評定点・年間入札本数・実績件数・有資格者数）… `data-count`
+- [ ] 従業員数・経審の評点/ランク（`about.html`）
+- [ ] 施工実績の案件（`works.html`）／社員インタビュー・写真（`recruit.html`）
+- [ ] 画像を自社の現場写真へ（信頼感・SEOともに向上）
+- [ ] OGP画像 `assets/ogp.jpg` `assets/ogp-recruit.jpg` `assets/logo.png` を用意
+
+### STEP 2. 公開（デプロイ）
+- [ ] Netlify にログイン → **Add new site → Import an existing project** → このGitHubリポジトリを選択
+- [ ] 公開ブランチに `claude/hp-renewal-public-works-3gczg9`（または main）を指定
+- [ ] Build command：`npm run build` ／ Publish directory：`.`
+- [ ] 独自ドメイン `alllight2018.com` を設定（DNSをNetlifyへ）＋ HTTPS 有効化
+- [ ] Forms の通知先メールを設定（Netlify管理画面 → Forms）
+
+### STEP 3. Google Search Console（最重要・上位化の起点）
+- [ ] [Search Console](https://search.google.com/search-console) で `alllight2018.com` を登録（ドメイン認証：DNS TXT）
+- [ ] **サイトマップ送信**：`https://alllight2018.com/sitemap.xml`
+- [ ] 主要ページを「URL検査 → インデックス登録をリクエスト」（トップ・各地域・採用）
+
+### STEP 4. ローカルSEO＝MEO（競合に地元で勝つ）
+- [ ] [Googleビジネスプロフィール](https://www.google.com/business/) を作成/整備（本社＝神戸市兵庫区）
+- [ ] 名称・住所・電話（NAP）を**サイトと完全一致**させる（表記ゆれ厳禁）
+- [ ] カテゴリ「電気工事業者」、写真・営業時間・事業内容を充実
+- [ ] 施工写真を定期投稿（Instagramと連動）
+
+### STEP 5. Instagram を実データ連携（自動）
+- [ ] Instagramを**プロアカウント（ビジネス）**化 → Facebookページ連携
+- [ ] Graph API の長期トークン `IG_TOKEN` とユーザーID `IG_USER_ID` を取得
+- [ ] Netlify/GitHub の環境変数・Secrets に設定 → 次回ビルドで最新投稿が自動反映
+
+### STEP 6. 継続運用（順位を上げ続ける）
+- [ ] 社内アプリで現場記事を「公開」→ ブログ自動更新（6時間ごと）
+- [ ] 各 `area/<市区>.html` に実績・写真・お客様の声を追記（一意性UP＝順位安定）
+- [ ] 月1〜2本、手動でもコラムを追加
+- [ ] Search Console で表示回数・掲載順位を確認し、伸びるワードの記事を増やす
+
+---
+
 ## 🎯 このサイトで最大限アピールしていること（ご要望への対応）
 
 | ご要望 | 対応箇所 |
