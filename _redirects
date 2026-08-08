@@ -1,0 +1,9 @@
+# Netlify リダイレクト
+# www → apex（正規化してSEO評価を1本化）
+https://www.alllight2018.com/*   https://alllight2018.com/:splat   301!
+
+# ルートの短縮アクセス
+/home                            /index.html                       301
+/recruit                         /recruit.html                     301
+/works                           /works.html                       301
+/contact                         /contact.html                     301

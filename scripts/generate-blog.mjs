@@ -167,18 +167,21 @@ function renderCards(posts) {
 }
 
 /* ---------- sitemap 生成 ---------- */
-async function loadAreaSlugs() {
+async function loadJsonSlugs(file, key, prefix) {
   try {
-    const raw = JSON.parse(await readFile(join(ROOT, "data", "areas.json"), "utf8"));
-    return (raw.areas || []).map((a) => `area/${a.slug}.html`);
+    const raw = JSON.parse(await readFile(join(ROOT, "data", file), "utf8"));
+    return (raw[key] || []).map((a) => `${prefix}/${a.slug}.html`);
   } catch { return []; }
 }
 
 async function renderSitemap(posts) {
-  const areaPages = await loadAreaSlugs();
+  const areaPages = await loadJsonSlugs("areas.json", "areas", "area");
+  const servicePages = await loadJsonSlugs("services.json", "services", "service");
   const staticPages = ["index.html","about.html","works.html","recruit.html","contact.html",
+    "service/index.html", ...servicePages,
     "area/index.html", ...areaPages,
-    "blog/index.html","blog/koukyou-kouji-denki-setsubi.html","blog/koujiseiseki-hyoutei.html","blog/sekou-kanri-miryoku.html"];
+    "blog/index.html","blog/koukyou-kouji-denki-setsubi.html","blog/koujiseiseki-hyoutei.html","blog/sekou-kanri-miryoku.html",
+    "blog/denki-koujigaisha-erabikata.html","blog/koukyou-kouji-nyusatsu.html","blog/cubicle-koushin-hiyou.html","blog/sekou-kanri-mikeiken.html"];
   const today = new Date().toISOString().slice(0, 10);
   const urls = staticPages.map((p) => ({ loc: `${SITE_ORIGIN}/${p}`, lastmod: today }))
     .concat(posts.map((p) => ({ loc: `${SITE_ORIGIN}/blog/report-${p.slug}.html`, lastmod: (p.updated_at || p.published_at || today).slice(0, 10) })));

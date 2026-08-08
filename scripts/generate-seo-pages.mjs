@@ -36,7 +36,8 @@ const header = (p, current) => `
     </a>
     <nav class="nav-links" aria-label="グローバルナビゲーション">
       <a href="${p}index.html">トップ</a><a href="${p}about.html">会社案内</a>
-      <a href="${p}works.html">公共工事実績</a><a href="${p}area/index.html"${current === "area" ? ' aria-current="page"' : ""}>対応エリア</a>
+      <a href="${p}works.html">公共工事実績</a><a href="${p}service/index.html"${current === "service" ? ' aria-current="page"' : ""}>施工内容</a>
+      <a href="${p}area/index.html"${current === "area" ? ' aria-current="page"' : ""}>対応エリア</a>
       <a href="${p}recruit.html">採用情報</a><a href="${p}blog/index.html">現場ブログ</a>
       <a href="${p}contact.html" class="btn btn-amber" style="padding:.6rem 1.3rem">お問い合わせ</a>
     </nav>
@@ -47,7 +48,7 @@ const header = (p, current) => `
 <nav id="mmenu" class="mobile-menu" aria-label="モバイルメニュー">
   <button class="menu-close" aria-label="メニューを閉じる">&times;</button>
   <a href="${p}index.html">トップ</a><a href="${p}about.html">会社案内</a><a href="${p}works.html">公共工事実績</a>
-  <a href="${p}area/index.html">対応エリア</a><a href="${p}recruit.html">採用情報</a><a href="${p}blog/index.html">現場ブログ</a>
+  <a href="${p}service/index.html">施工内容</a><a href="${p}area/index.html">対応エリア</a><a href="${p}recruit.html">採用情報</a><a href="${p}blog/index.html">現場ブログ</a>
   <a href="${p}contact.html" class="btn btn-amber">お問い合わせ</a>
 </nav>`;
 
@@ -60,8 +61,8 @@ const footer = (p) => `
       <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">サイトマップ</h4>
         <ul style="list-style:none; display:grid; gap:.5rem; font-size:.9rem;">
           <li><a href="${p}index.html">トップ</a></li><li><a href="${p}about.html">会社案内</a></li><li><a href="${p}works.html">公共工事実績</a></li>
-          <li><a href="${p}area/index.html">対応エリア</a></li><li><a href="${p}recruit.html">採用情報</a></li><li><a href="${p}blog/index.html">現場ブログ</a></li>
-          <li><a href="${p}contact.html">お問い合わせ</a></li></ul></div>
+          <li><a href="${p}service/index.html">施工内容</a></li><li><a href="${p}area/index.html">対応エリア</a></li><li><a href="${p}recruit.html">採用情報</a></li>
+          <li><a href="${p}blog/index.html">現場ブログ</a></li><li><a href="${p}contact.html">お問い合わせ</a></li></ul></div>
       <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">会社情報</h4>
         <p style="font-size:.9rem;">〒652-0855<br />兵庫県神戸市兵庫区東出町2丁目8-8<br />TEL：078-000-0000（代表）<br />info@alllight2018.com</p></div>
       <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">許可・登録</h4>
@@ -91,16 +92,21 @@ const head = ({ title, desc, canonical, ogimg }) => `<!DOCTYPE html>
 <meta property="og:image" content="${ogimg}" />
 <meta property="og:locale" content="ja_JP" />
 <meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="/favicon.svg" />
+<link rel="manifest" href="/site.webmanifest" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet" />
 <script src="https://cdn.tailwindcss.com"></script>`;
 
+const labelOf = (area) => area.isPrefecture ? area.name + "全域" : (area.parent ? area.parent + area.name : area.name);
+
 /* ===== 地域ページ本体 ===== */
-function renderAreaPage(area, allAreas) {
+function renderAreaPage(area, allAreas, services = []) {
   const p = "../";
   const url = `${SITE_ORIGIN}/area/${area.slug}.html`;
-  const label = area.isPrefecture ? area.name + "全域" : area.name;
+  const label = labelOf(area);
   const kw = `${area.name} 電気工事`;
   const title = `${label}の電気工事・公共工事なら株式会社オールライト｜電気設備工事・施工管理`;
   const desc = `${label}で電気工事・公共工事の電気設備工事をお探しなら株式会社オールライトへ。${area.context} 受変電・内線・LED照明改修・施工管理まで自社一気通貫で対応。工事成績評定点でも高評価。無料お見積り・採用相談も受付中。`;
@@ -116,7 +122,7 @@ function renderAreaPage(area, allAreas) {
   const bizSchema = {
     "@context": "https://schema.org", "@type": ["ElectricalContractor", "GeneralContractor"],
     name: "株式会社オールライト", url: SITE_ORIGIN, image: ogimg,
-    areaServed: { "@type": area.isPrefecture ? "State" : "City", name: area.name },
+    areaServed: { "@type": area.isPrefecture ? "State" : "City", name: label },
     address: { "@type": "PostalAddress", postalCode: "652-0855", addressRegion: "兵庫県", addressLocality: "神戸市兵庫区", streetAddress: "東出町2丁目8-8", addressCountry: "JP" },
     knowsAbout: ["公共工事", "電気設備工事", "受変電設備", "LED照明改修", "施工管理"]
   };
@@ -173,6 +179,11 @@ ${header(p)}
     </div>
     ${area.wards && area.wards.length ? `<p class="text-sub reveal" style="margin-top:1rem; font-size:.9rem;">対応区域：${area.wards.map(esc).join("・")} ほか${esc(area.name)}全域</p>` : ""}
 
+    ${services.length ? `<h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">${esc(label)}で対応する工事の種類</h2>
+    <div class="reveal" style="display:flex; gap:.6rem; flex-wrap:wrap;">
+      ${services.map((s) => `<a class="chip chip-amber" style="text-decoration:none;" href="${p}service/${s.slug}.html">${esc(s.name)}</a>`).join("\n      ")}
+    </div>` : ""}
+
     <h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">${esc(label)}の発注者に選ばれる3つの理由</h2>
     <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem;">
       <div class="card" style="padding:1.6rem;"><b class="serif" style="color:var(--amber); font-size:1.4rem;">01</b><h3 style="font-weight:700; margin:.3rem 0;">工事点数で証明する品質</h3><p class="text-sub" style="font-size:.9rem;">工事成績評定点で高評価を積み上げ、安心の施工品質をお約束します。</p></div>
@@ -196,7 +207,7 @@ ${header(p)}
 
     <h2 class="serif reveal" style="font-weight:700; font-size:1.2rem; margin:2.6rem 0 1rem;">その他の対応エリア</h2>
     <div class="reveal" style="display:flex; gap:.6rem; flex-wrap:wrap;">
-      ${neighbors.map((a) => `<a class="chip chip-navy" style="text-decoration:none;" href="${a.slug}.html">${esc(a.isPrefecture ? a.name + "全域" : a.name)}の電気工事</a>`).join("\n      ")}
+      ${neighbors.map((a) => `<a class="chip chip-navy" style="text-decoration:none;" href="${a.slug}.html">${esc(labelOf(a))}の電気工事</a>`).join("\n      ")}
     </div>
   </div>
 </section>
@@ -234,9 +245,154 @@ ${header(p, "area")}
     <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; margin-top:2rem;">
       ${areas.map((a, i) => `<a class="card reveal${i % 3 === 1 ? " d1" : i % 3 === 2 ? " d2" : ""}" href="${a.slug}.html" style="display:block; padding:1.6rem;">
         <span class="chip chip-amber">${esc(a.reading)}</span>
-        <h3 class="serif" style="font-weight:700; font-size:1.2rem; margin:.6rem 0 .3rem;">${esc(a.isPrefecture ? a.name + "全域" : a.name)}の電気工事</h3>
+        <h3 class="serif" style="font-weight:700; font-size:1.2rem; margin:.6rem 0 .3rem;">${esc(labelOf(a))}の電気工事</h3>
         <p class="text-sub" style="font-size:.86rem;">${esc(a.context.slice(0, 46))}…</p>
         <span class="link-arrow" style="margin-top:.6rem;">詳しく見る</span>
+      </a>`).join("\n      ")}
+    </div>
+  </div>
+</section>
+${footer(p)}
+<script src="${p}assets/site.js"></script>
+</body>
+</html>
+`;
+}
+
+/* ===== サービス（工種）ページ ===== */
+function renderServicePage(svc, allServices, areas) {
+  const p = "../";
+  const url = `${SITE_ORIGIN}/service/${svc.slug}.html`;
+  const title = `${svc.name}（神戸・兵庫）｜株式会社オールライト｜公共工事の電気設備`;
+  const desc = `${svc.name}なら株式会社オールライトへ。${svc.intro} 神戸市・兵庫県全域の公共施設・官公庁に対応。無料お見積り受付中。`;
+  const primaryAreas = areas.filter((a) => a.type !== "prefecture").slice(0, 12);
+  const others = allServices.filter((s) => s.slug !== svc.slug);
+
+  const faqs = [
+    { q: `${svc.name}の見積りは無料ですか？`, a: `はい、お見積りは無料です。現地調査のうえ、適正な内容でご提案します。神戸・兵庫のほか、公共案件は広域で対応します。` },
+    { q: `公共工事（官公庁・自治体）の${svc.name}に対応できますか？`, a: `はい。積算・入札から施工管理、完成書類の作成まで自社で一貫対応。工事成績評定点でも高評価を積み上げています。` },
+    { q: `施設を使いながらの施工は可能ですか？`, a: `可能です。停電・切替計画や分割施工により、施設の稼働を止めない施工を計画します。` }
+  ];
+  const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) };
+  const serviceSchema = {
+    "@context": "https://schema.org", "@type": "Service", serviceType: svc.name,
+    provider: { "@type": "ElectricalContractor", name: "株式会社オールライト", url: SITE_ORIGIN },
+    areaServed: { "@type": "State", name: "兵庫県" }, description: svc.intro
+  };
+  const breadcrumb = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
+    { "@type": "ListItem", position: 1, name: "トップ", item: `${SITE_ORIGIN}/index.html` },
+    { "@type": "ListItem", position: 2, name: "施工内容", item: `${SITE_ORIGIN}/service/index.html` },
+    { "@type": "ListItem", position: 3, name: svc.name, item: url }
+  ]};
+
+  return `${head({ title, desc, canonical: url, ogimg: svc.image })}
+<link rel="stylesheet" href="${p}assets/site.css" />
+<script type="application/ld+json">${JSON.stringify(serviceSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+</head>
+<body>
+${header(p, "service")}
+
+<section class="hero" style="min-height:52vh; display:flex; align-items:flex-end;">
+  <div class="hero-bg" style="background-image:url('${esc(svc.image)}')"></div>
+  <div class="hero-overlay"></div>
+  <div class="wrap" style="position:relative; padding-block:3rem;">
+    <p class="eyebrow">${esc(svc.en)}</p>
+    <h1 class="serif" style="font-weight:900; font-size:clamp(1.7rem,5vw,2.8rem); margin-top:.4rem; line-height:1.4;">${esc(svc.name)}</h1>
+    <p style="color:rgba(255,255,255,.9); margin-top:.6rem; font-weight:700;">${esc(svc.tagline)}</p>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.6rem;">
+      <a href="${p}contact.html" class="btn btn-amber">無料で見積り・相談する</a>
+      <a href="${p}works.html" class="btn btn-ghost">施工実績を見る</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap" style="max-width:900px;">
+    <div class="reveal">
+      <p class="eyebrow">${esc(svc.name)}</p>
+      <h2 class="section-title">${esc(svc.name)}なら、オールライトへ</h2>
+      <div class="divider-gold" style="margin-top:1rem;"></div>
+      <p class="lead" style="margin-top:1.2rem;">${esc(svc.intro)}</p>
+    </div>
+
+    <h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">対応範囲</h2>
+    <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:.8rem;">
+      ${svc.scope.map((x) => `<div class="card" style="padding:1rem 1.2rem;"><b>▹ ${esc(x)}</b></div>`).join("\n      ")}
+    </div>
+
+    <h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">施工の流れ</h2>
+    <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:1rem;">
+      ${svc.process.map((x, i) => `<div class="card" style="padding:1.4rem;"><b class="serif" style="color:var(--amber); font-size:1.5rem;">0${i + 1}</b><h3 style="font-weight:700; margin-top:.3rem; font-size:.98rem;">${esc(x)}</h3></div>`).join("\n      ")}
+    </div>
+
+    <h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">なぜオールライトが選ばれるのか</h2>
+    <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem;">
+      <div class="card" style="padding:1.6rem;"><h3 style="font-weight:700;">工事点数で証明する品質</h3><p class="text-sub" style="font-size:.9rem; margin-top:.4rem;">工事成績評定点で高評価。安心の施工品質をお約束します。</p></div>
+      <div class="card" style="padding:1.6rem;"><h3 style="font-weight:700;">積算〜書類まで自社完結</h3><p class="text-sub" style="font-size:.9rem; margin-top:.4rem;">窓口一本化で、連絡・調整・品質の安心をお届けします。</p></div>
+      <div class="card" style="padding:1.6rem;"><h3 style="font-weight:700;">神戸から機動力で対応</h3><p class="text-sub" style="font-size:.9rem; margin-top:.4rem;">兵庫県全域にすぐ動ける立地。急な対応も可能です。</p></div>
+    </div>
+
+    <h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">よくある質問</h2>
+    <div class="reveal">
+      ${faqs.map((f) => `<details class="card" style="padding:1.1rem 1.3rem; margin-bottom:.7rem;"><summary style="font-weight:700; cursor:pointer;">${esc(f.q)}</summary><p class="text-sub" style="margin-top:.6rem; font-size:.92rem;">${esc(f.a)}</p></details>`).join("\n      ")}
+    </div>
+
+    <div class="reveal" style="margin-top:2.4rem; padding:1.8rem; background:linear-gradient(120deg,var(--navy),var(--navy-2)); color:#fff; border-radius:16px; display:flex; justify-content:space-between; align-items:center; gap:1.5rem; flex-wrap:wrap;">
+      <div><h2 class="serif" style="font-weight:700; font-size:1.3rem;">${esc(svc.name)}のご相談・お見積り</h2>
+        <p style="color:rgba(255,255,255,.8); margin-top:.4rem; font-size:.92rem;">無料で承ります。3営業日以内にご返信します。</p></div>
+      <a href="${p}contact.html" class="btn btn-amber">お問い合わせ</a>
+    </div>
+
+    <h2 class="serif reveal" style="font-weight:700; font-size:1.2rem; margin:2.6rem 0 1rem;">対応エリア</h2>
+    <div class="reveal" style="display:flex; gap:.6rem; flex-wrap:wrap;">
+      ${primaryAreas.map((a) => `<a class="chip chip-navy" style="text-decoration:none;" href="${p}area/${a.slug}.html">${esc(labelOf(a))}</a>`).join("\n      ")}
+    </div>
+
+    <h2 class="serif reveal" style="font-weight:700; font-size:1.2rem; margin:2rem 0 1rem;">その他の施工内容</h2>
+    <div class="reveal" style="display:flex; gap:.6rem; flex-wrap:wrap;">
+      ${others.map((s) => `<a class="chip chip-amber" style="text-decoration:none;" href="${s.slug}.html">${esc(s.name)}</a>`).join("\n      ")}
+    </div>
+  </div>
+</section>
+
+${footer(p)}
+<script src="${p}assets/site.js"></script>
+</body>
+</html>
+`;
+}
+
+function renderServiceHub(services) {
+  const p = "../";
+  const url = `${SITE_ORIGIN}/service/index.html`;
+  const title = "施工内容（電気設備工事の工種）｜株式会社オールライト｜神戸・兵庫";
+  const desc = "株式会社オールライトの施工内容一覧。電気設備工事・受変電（キュービクル）・LED照明改修・内線幹線・防災防犯弱電・空調設備まで、公共工事に対応する工種をご紹介します。";
+  return `${head({ title, desc, canonical: url, ogimg: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1200&q=80" })}
+<link rel="stylesheet" href="${p}assets/site.css" />
+</head>
+<body>
+${header(p, "service")}
+<section class="hero" style="min-height:40vh; display:flex; align-items:flex-end;">
+  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2000&q=80')"></div>
+  <div class="hero-overlay"></div>
+  <div class="wrap" style="position:relative; padding-block:2.6rem;">
+    <p class="eyebrow">SERVICE</p>
+    <h1 class="serif" style="font-weight:900; font-size:clamp(1.7rem,5vw,2.6rem); margin-top:.4rem;">施工内容</h1>
+    <p style="color:rgba(255,255,255,.85); margin-top:.5rem;">公共工事に対応する、電気設備の工種一覧。</p>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="reveal"><p class="eyebrow">WHAT WE DO</p><h2 class="section-title">工種から探す</h2><div class="divider-gold" style="margin-top:1rem;"></div></div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.2rem; margin-top:2rem;">
+      ${services.map((s, i) => `<a class="card reveal${i % 3 === 1 ? " d1" : i % 3 === 2 ? " d2" : ""}" href="${s.slug}.html" style="display:block;">
+        <div style="height:170px; background-size:cover; background-position:center; background-image:url('${esc(s.image)}')"></div>
+        <div style="padding:1.4rem;"><span class="chip chip-amber">${esc(s.en)}</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.15rem; margin:.6rem 0 .3rem;">${esc(s.name)}</h3>
+          <p class="text-sub" style="font-size:.88rem;">${esc(s.tagline)}</p>
+          <span class="link-arrow" style="margin-top:.5rem;">詳しく見る</span></div>
       </a>`).join("\n      ")}
     </div>
   </div>
@@ -284,13 +440,24 @@ function injectBetween(html, startMark, endMark, replacement) {
 async function main() {
   const areasRaw = JSON.parse(await readFile(join(ROOT, "data", "areas.json"), "utf8"));
   const areas = areasRaw.areas;
+  let services = [];
+  try { services = JSON.parse(await readFile(join(ROOT, "data", "services.json"), "utf8")).services || []; } catch {}
 
   await mkdir(join(ROOT, "area"), { recursive: true });
   for (const area of areas) {
-    await writeFile(join(ROOT, "area", `${area.slug}.html`), renderAreaPage(area, areas), "utf8");
+    await writeFile(join(ROOT, "area", `${area.slug}.html`), renderAreaPage(area, areas, services), "utf8");
   }
   await writeFile(join(ROOT, "area", "index.html"), renderAreaHub(areas), "utf8");
   console.log(`✅ 地域SEOページ ${areas.length} 件＋エリアハブを生成しました。`);
+
+  if (services.length) {
+    await mkdir(join(ROOT, "service"), { recursive: true });
+    for (const svc of services) {
+      await writeFile(join(ROOT, "service", `${svc.slug}.html`), renderServicePage(svc, services, areas), "utf8");
+    }
+    await writeFile(join(ROOT, "service", "index.html"), renderServiceHub(services), "utf8");
+    console.log(`✅ サービスページ ${services.length} 件＋サービスハブを生成しました。`);
+  }
 
   // Instagram 差し込み
   let igData = { profile: "https://www.instagram.com/alllight2018/", posts: [] };
