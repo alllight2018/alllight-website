@@ -1,0 +1,310 @@
+#!/usr/bin/env node
+/**
+ * generate-seo-pages.mjs
+ * ------------------------------------------------------------------
+ * 対ライバル（地域SEO）自動化エンジン。
+ *   1) data/areas.json から地域ランディングページ area/<slug>.html を自動生成
+ *   2) area/index.html（エリアハブ）を生成
+ *   3) data/instagram.json を index.html / recruit.html の
+ *      <!-- AUTO:INSTAGRAM:START/END --> ブロックへ差し込み
+ *
+ * ねらい：同一商圏（神戸市兵庫区）の競合が静的サイトの間に、
+ *         「<地域> 電気工事 / <地域> 公共工事 / <地域> 電気工事 求人」を
+ *         固有コンテンツのページで面制圧する。
+ *
+ * 実行： node scripts/generate-seo-pages.mjs
+ * ------------------------------------------------------------------
+ */
+import { readFile, writeFile, mkdir } from "node:fs/promises";
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(__dirname, "..");
+const SITE_ORIGIN = process.env.SITE_ORIGIN || "https://alllight2018.com";
+
+const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+
+/* ===== 共通パーツ（相対パス prefix を渡す） ===== */
+const header = (p, current) => `
+<header class="site-header">
+  <div class="wrap nav-inner">
+    <a class="brand" href="${p}index.html" aria-label="株式会社オールライト トップへ">
+      <span class="mark" aria-hidden="true">AL</span>
+      <span class="brand-name"><b>株式会社オールライト</b><span>ALLLIGHT CO., LTD.</span></span>
+    </a>
+    <nav class="nav-links" aria-label="グローバルナビゲーション">
+      <a href="${p}index.html">トップ</a><a href="${p}about.html">会社案内</a>
+      <a href="${p}works.html">公共工事実績</a><a href="${p}area/index.html"${current === "area" ? ' aria-current="page"' : ""}>対応エリア</a>
+      <a href="${p}recruit.html">採用情報</a><a href="${p}blog/index.html">現場ブログ</a>
+      <a href="${p}contact.html" class="btn btn-amber" style="padding:.6rem 1.3rem">お問い合わせ</a>
+    </nav>
+    <button class="nav-toggle" aria-label="メニューを開く" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="menu-backdrop"></div>
+<nav id="mmenu" class="mobile-menu" aria-label="モバイルメニュー">
+  <button class="menu-close" aria-label="メニューを閉じる">&times;</button>
+  <a href="${p}index.html">トップ</a><a href="${p}about.html">会社案内</a><a href="${p}works.html">公共工事実績</a>
+  <a href="${p}area/index.html">対応エリア</a><a href="${p}recruit.html">採用情報</a><a href="${p}blog/index.html">現場ブログ</a>
+  <a href="${p}contact.html" class="btn btn-amber">お問い合わせ</a>
+</nav>`;
+
+const footer = (p) => `
+<footer class="site-footer">
+  <div class="wrap" style="padding-block:3.5rem;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:2rem;">
+      <div><div class="brand" style="color:#fff;"><span class="mark" aria-hidden="true">AL</span><span class="brand-name"><b style="color:#fff;">株式会社オールライト</b><span style="color:rgba(255,255,255,.6);">ALLLIGHT CO., LTD.</span></span></div>
+        <p style="margin-top:1rem; font-size:.86rem;">公共工事で、まちに光を灯す。<br />官公庁・公共施設の電気設備工事を全国で。</p></div>
+      <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">サイトマップ</h4>
+        <ul style="list-style:none; display:grid; gap:.5rem; font-size:.9rem;">
+          <li><a href="${p}index.html">トップ</a></li><li><a href="${p}about.html">会社案内</a></li><li><a href="${p}works.html">公共工事実績</a></li>
+          <li><a href="${p}area/index.html">対応エリア</a></li><li><a href="${p}recruit.html">採用情報</a></li><li><a href="${p}blog/index.html">現場ブログ</a></li>
+          <li><a href="${p}contact.html">お問い合わせ</a></li></ul></div>
+      <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">会社情報</h4>
+        <p style="font-size:.9rem;">〒652-0855<br />兵庫県神戸市兵庫区東出町2丁目8-8<br />TEL：078-000-0000（代表）<br />info@alllight2018.com</p></div>
+      <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">許可・登録</h4>
+        <div class="footer-license">建設業許可：兵庫県知事許可（電気工事業）<br />第XXXXXX号</div></div>
+    </div>
+    <div style="margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,.12); display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:.82rem;">
+      <p>&copy; <span data-year>2026</span> ALLLIGHT CO., LTD. All rights reserved.</p>
+      <p><a href="${p}contact.html">お問い合わせ</a>　/　<a href="https://alllight2018.jp/privacy_policy/">プライバシーポリシー</a></p>
+    </div>
+  </div>
+</footer>`;
+
+const head = ({ title, desc, canonical, ogimg }) => `<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(desc)}" />
+<link rel="canonical" href="${canonical}" />
+<meta name="theme-color" content="#15263d" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="株式会社オールライト" />
+<meta property="og:title" content="${esc(title)}" />
+<meta property="og:description" content="${esc(desc)}" />
+<meta property="og:url" content="${canonical}" />
+<meta property="og:image" content="${ogimg}" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>`;
+
+/* ===== 地域ページ本体 ===== */
+function renderAreaPage(area, allAreas) {
+  const p = "../";
+  const url = `${SITE_ORIGIN}/area/${area.slug}.html`;
+  const label = area.isPrefecture ? area.name + "全域" : area.name;
+  const kw = `${area.name} 電気工事`;
+  const title = `${label}の電気工事・公共工事なら株式会社オールライト｜電気設備工事・施工管理`;
+  const desc = `${label}で電気工事・公共工事の電気設備工事をお探しなら株式会社オールライトへ。${area.context} 受変電・内線・LED照明改修・施工管理まで自社一気通貫で対応。工事成績評定点でも高評価。無料お見積り・採用相談も受付中。`;
+  const ogimg = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80";
+
+  const faqs = [
+    { q: `${label}で公共工事の電気設備工事を依頼できますか？`, a: `はい。オールライトは神戸市を拠点に、${label}の官公庁・自治体・独立行政法人が発注する電気設備工事に対応しています。積算・入札から施工管理、完成書類の作成までを自社で一貫してお引き受けします。` },
+    { q: `${label}でどんな電気工事に対応していますか？`, a: `${area.facilities.slice(0, 3).join("・")}などの電気設備工事をはじめ、受変電（キュービクル）、内線・幹線工事、LED照明・省エネ改修、空調・防犯・弱電設備まで幅広く対応します。` },
+    { q: `${label}で電気工事・施工管理の求人はありますか？`, a: `はい。${label}エリアで働く電気工事士・施工管理を募集しています。未経験歓迎・資格取得支援・完全週休二日。詳しくは採用ページをご覧ください。` },
+    { q: `見積りは無料ですか？`, a: `はい、お見積りは無料です。${label}の案件について、入札のご相談から民間工事のお見積りまでお気軽にお問い合わせください。3営業日以内にご返信します。` }
+  ];
+  const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) };
+  const bizSchema = {
+    "@context": "https://schema.org", "@type": ["ElectricalContractor", "GeneralContractor"],
+    name: "株式会社オールライト", url: SITE_ORIGIN, image: ogimg,
+    areaServed: { "@type": area.isPrefecture ? "State" : "City", name: area.name },
+    address: { "@type": "PostalAddress", postalCode: "652-0855", addressRegion: "兵庫県", addressLocality: "神戸市兵庫区", streetAddress: "東出町2丁目8-8", addressCountry: "JP" },
+    knowsAbout: ["公共工事", "電気設備工事", "受変電設備", "LED照明改修", "施工管理"]
+  };
+  const breadcrumb = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
+    { "@type": "ListItem", position: 1, name: "トップ", item: `${SITE_ORIGIN}/index.html` },
+    { "@type": "ListItem", position: 2, name: "対応エリア", item: `${SITE_ORIGIN}/area/index.html` },
+    { "@type": "ListItem", position: 3, name: label, item: url }
+  ]};
+
+  const neighbors = allAreas.filter((a) => a.slug !== area.slug).slice(0, 8);
+
+  return `${head({ title, desc, canonical: url, ogimg })}
+<link rel="stylesheet" href="${p}assets/site.css" />
+<script type="application/ld+json">${JSON.stringify(bizSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(faqSchema)}</script>
+<script type="application/ld+json">${JSON.stringify(breadcrumb)}</script>
+</head>
+<body>
+${header(p)}
+
+<section class="hero" style="min-height:52vh; display:flex; align-items:flex-end;">
+  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=2000&q=80')"></div>
+  <div class="hero-overlay"></div>
+  <div class="wrap" style="position:relative; padding-block:3rem;">
+    <p class="eyebrow">AREA — ${esc(area.reading)}</p>
+    <h1 class="serif" style="font-weight:900; font-size:clamp(1.7rem,5vw,2.8rem); margin-top:.4rem; line-height:1.4;">
+      ${esc(label)}の電気工事・公共工事なら<br /><span class="hype-mark" style="background:linear-gradient(120deg,var(--amber),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent;">株式会社オールライト</span>
+    </h1>
+    <p style="color:rgba(255,255,255,.88); margin-top:.8rem; max-width:640px;">${esc(area.context)}</p>
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.6rem;">
+      <a href="${p}contact.html" class="btn btn-amber">無料で見積り・相談する</a>
+      <a href="${p}works.html" class="btn btn-ghost">施工実績を見る</a>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap" style="max-width:900px;">
+    <div class="reveal">
+      <p class="eyebrow">${esc(kw)}</p>
+      <h2 class="section-title">${esc(label)}で選ばれる電気設備工事のプロ</h2>
+      <div class="divider-gold" style="margin-top:1rem;"></div>
+      <p class="lead" style="margin-top:1.2rem;">
+        株式会社オールライトは、神戸市兵庫区を拠点に${esc(label)}の公共施設・官公庁の電気設備工事を手がける電気工事会社です。
+        ${esc(area.context)}
+        積算・入札から施工管理、完成書類の作成までを<strong>自社で一気通貫</strong>して対応し、
+        発注者の「安心して任せられる」にお応えします。
+      </p>
+    </div>
+
+    <h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">${esc(label)}で対応できる主な施設・工事</h2>
+    <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:.8rem;">
+      ${area.facilities.map((f) => `<div class="card" style="padding:1rem 1.2rem;"><b>▹ ${esc(f)}</b></div>`).join("\n      ")}
+    </div>
+    ${area.wards && area.wards.length ? `<p class="text-sub reveal" style="margin-top:1rem; font-size:.9rem;">対応区域：${area.wards.map(esc).join("・")} ほか${esc(area.name)}全域</p>` : ""}
+
+    <h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">${esc(label)}の発注者に選ばれる3つの理由</h2>
+    <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem;">
+      <div class="card" style="padding:1.6rem;"><b class="serif" style="color:var(--amber); font-size:1.4rem;">01</b><h3 style="font-weight:700; margin:.3rem 0;">工事点数で証明する品質</h3><p class="text-sub" style="font-size:.9rem;">工事成績評定点で高評価を積み上げ、安心の施工品質をお約束します。</p></div>
+      <div class="card" style="padding:1.6rem;"><b class="serif" style="color:var(--amber); font-size:1.4rem;">02</b><h3 style="font-weight:700; margin:.3rem 0;">積算〜書類まで自社完結</h3><p class="text-sub" style="font-size:.9rem;">窓口を一本化。連絡・調整・品質の安心を${esc(label)}の現場でお届けします。</p></div>
+      <div class="card" style="padding:1.6rem;"><b class="serif" style="color:var(--amber); font-size:1.4rem;">03</b><h3 style="font-weight:700; margin:.3rem 0;">地元・神戸からの機動力</h3><p class="text-sub" style="font-size:.9rem;">${esc(label)}にすぐ動ける立地。急な対応・きめ細かなフォローが可能です。</p></div>
+    </div>
+
+    <h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">${esc(label)}に関するよくある質問</h2>
+    <div class="reveal">
+      ${faqs.map((f) => `<details class="card" style="padding:1.1rem 1.3rem; margin-bottom:.7rem;"><summary style="font-weight:700; cursor:pointer;">${esc(f.q)}</summary><p class="text-sub" style="margin-top:.6rem; font-size:.92rem;">${esc(f.a)}</p></details>`).join("\n      ")}
+    </div>
+
+    <div class="reveal" style="margin-top:2.4rem; padding:1.8rem; background:linear-gradient(120deg,var(--navy),var(--navy-2)); color:#fff; border-radius:16px; display:flex; justify-content:space-between; align-items:center; gap:1.5rem; flex-wrap:wrap;">
+      <div><h2 class="serif" style="font-weight:700; font-size:1.3rem;">${esc(label)}の電気工事、まずはご相談を</h2>
+        <p style="color:rgba(255,255,255,.8); margin-top:.4rem; font-size:.92rem;">入札・見積・採用のご相談を無料で承ります。</p></div>
+      <div style="display:flex; gap:.8rem; flex-wrap:wrap;">
+        <a href="${p}contact.html" class="btn btn-amber">お問い合わせ</a>
+        <a href="${p}recruit.html" class="btn btn-ghost">採用情報</a>
+      </div>
+    </div>
+
+    <h2 class="serif reveal" style="font-weight:700; font-size:1.2rem; margin:2.6rem 0 1rem;">その他の対応エリア</h2>
+    <div class="reveal" style="display:flex; gap:.6rem; flex-wrap:wrap;">
+      ${neighbors.map((a) => `<a class="chip chip-navy" style="text-decoration:none;" href="${a.slug}.html">${esc(a.isPrefecture ? a.name + "全域" : a.name)}の電気工事</a>`).join("\n      ")}
+    </div>
+  </div>
+</section>
+
+${footer(p)}
+<script src="${p}assets/site.js"></script>
+</body>
+</html>
+`;
+}
+
+/* ===== エリアハブ ===== */
+function renderAreaHub(areas) {
+  const p = "../";
+  const url = `${SITE_ORIGIN}/area/index.html`;
+  const title = "対応エリア｜兵庫県・神戸市の電気工事・公共工事｜株式会社オールライト";
+  const desc = "株式会社オールライトの対応エリア一覧。神戸市・明石市・姫路市・西宮市など兵庫県全域で電気工事・公共工事の電気設備工事に対応します。地域ごとの対応内容をご紹介。";
+  return `${head({ title, desc, canonical: url, ogimg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" })}
+<link rel="stylesheet" href="${p}assets/site.css" />
+</head>
+<body>
+${header(p, "area")}
+<section class="hero" style="min-height:40vh; display:flex; align-items:flex-end;">
+  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=2000&q=80')"></div>
+  <div class="hero-overlay"></div>
+  <div class="wrap" style="position:relative; padding-block:2.6rem;">
+    <p class="eyebrow">AREA</p>
+    <h1 class="serif" style="font-weight:900; font-size:clamp(1.7rem,5vw,2.6rem); margin-top:.4rem;">対応エリア（兵庫県）</h1>
+    <p style="color:rgba(255,255,255,.85); margin-top:.5rem;">神戸を拠点に、兵庫県全域の電気工事・公共工事に対応します。</p>
+  </div>
+</section>
+<section class="section">
+  <div class="wrap">
+    <div class="reveal"><p class="eyebrow">SERVICE AREA</p><h2 class="section-title">地域から探す</h2><div class="divider-gold" style="margin-top:1rem;"></div></div>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; margin-top:2rem;">
+      ${areas.map((a, i) => `<a class="card reveal${i % 3 === 1 ? " d1" : i % 3 === 2 ? " d2" : ""}" href="${a.slug}.html" style="display:block; padding:1.6rem;">
+        <span class="chip chip-amber">${esc(a.reading)}</span>
+        <h3 class="serif" style="font-weight:700; font-size:1.2rem; margin:.6rem 0 .3rem;">${esc(a.isPrefecture ? a.name + "全域" : a.name)}の電気工事</h3>
+        <p class="text-sub" style="font-size:.86rem;">${esc(a.context.slice(0, 46))}…</p>
+        <span class="link-arrow" style="margin-top:.6rem;">詳しく見る</span>
+      </a>`).join("\n      ")}
+    </div>
+  </div>
+</section>
+${footer(p)}
+<script src="${p}assets/site.js"></script>
+</body>
+</html>
+`;
+}
+
+/* ===== Instagram ブロック差し込み ===== */
+function renderInstagramBlock(igData, prefix) {
+  const profile = igData.profile || "https://www.instagram.com/alllight2018/";
+  const posts = (igData.posts || []).slice(0, 6);
+  const grid = posts.length
+    ? posts.map((it) => `      <a href="${esc(it.permalink || profile)}" target="_blank" rel="noopener" class="ig-cell" style="position:relative; display:block; aspect-ratio:1/1; border-radius:12px; overflow:hidden; background:#222;">
+        <img src="${esc(it.image)}" alt="${esc((it.caption || "オールライトの現場・日常").slice(0, 60))}" loading="lazy" style="width:100%; height:100%; object-fit:cover;" />
+      </a>`).join("\n")
+    : `      <div class="card" style="grid-column:1/-1; padding:1.4rem; border-style:dashed; text-align:center;">Instagramの最新投稿はこちら → <a class="link-arrow" href="${esc(profile)}" target="_blank" rel="noopener">@alllight2018</a></div>`;
+  return `<!-- AUTO:INSTAGRAM:START — scripts/generate-seo-pages.mjs が data/instagram.json から自動生成。手動編集しないでください。 -->
+<section class="section" style="background:#fff; border-block:1px solid var(--line);">
+  <div class="wrap">
+    <div class="reveal" style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:1rem;">
+      <div><p class="eyebrow">INSTAGRAM</p><h2 class="section-title">現場と、そこにいる人たち。</h2>
+        <p class="lead" style="margin-top:.5rem;">日々の現場・仲間の様子を発信中。フォローで“中の人”が見えます。</p></div>
+      <a href="${esc(profile)}" target="_blank" rel="noopener" class="btn btn-navy">@alllight2018 をフォロー</a>
+    </div>
+    <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:.8rem; margin-top:1.8rem;">
+${grid}
+    </div>
+  </div>
+</section>
+<!-- AUTO:INSTAGRAM:END -->`;
+}
+
+function injectBetween(html, startMark, endMark, replacement) {
+  const s = html.indexOf(startMark);
+  const e = html.indexOf(endMark);
+  if (s === -1 || e === -1) return null;
+  return html.slice(0, s) + replacement + html.slice(e + endMark.length);
+}
+
+/* ===== メイン ===== */
+async function main() {
+  const areasRaw = JSON.parse(await readFile(join(ROOT, "data", "areas.json"), "utf8"));
+  const areas = areasRaw.areas;
+
+  await mkdir(join(ROOT, "area"), { recursive: true });
+  for (const area of areas) {
+    await writeFile(join(ROOT, "area", `${area.slug}.html`), renderAreaPage(area, areas), "utf8");
+  }
+  await writeFile(join(ROOT, "area", "index.html"), renderAreaHub(areas), "utf8");
+  console.log(`✅ 地域SEOページ ${areas.length} 件＋エリアハブを生成しました。`);
+
+  // Instagram 差し込み
+  let igData = { profile: "https://www.instagram.com/alllight2018/", posts: [] };
+  const igPath = join(ROOT, "data", "instagram.json");
+  if (existsSync(igPath)) { try { igData = JSON.parse(await readFile(igPath, "utf8")); } catch {} }
+  for (const [file, prefix] of [["index.html", ""], ["recruit.html", ""]]) {
+    const fp = join(ROOT, file);
+    if (!existsSync(fp)) continue;
+    let html = await readFile(fp, "utf8");
+    const block = renderInstagramBlock(igData, prefix);
+    const injected = injectBetween(html, "<!-- AUTO:INSTAGRAM:START", "<!-- AUTO:INSTAGRAM:END -->", block);
+    if (injected) { await writeFile(fp, injected, "utf8"); console.log(`✅ ${file} にInstagramブロックを差し込みました。`); }
+    else console.warn(`⚠️  ${file} に AUTO:INSTAGRAM マーカーがありません（スキップ）。`);
+  }
+}
+
+main().catch((e) => { console.error(e); process.exit(1); });

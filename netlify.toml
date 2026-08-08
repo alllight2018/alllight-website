@@ -5,7 +5,7 @@
 
 [build]
   publish = "."
-  command = "npm run build:blog"
+  command = "npm run build"
 
 [build.environment]
   NODE_VERSION = "20"

@@ -5,8 +5,10 @@
   "description": "株式会社オールライト コーポレートサイト（公共工事・電気設備工事）",
   "type": "module",
   "scripts": {
+    "build:instagram": "node scripts/fetch-instagram.mjs",
+    "build:seo": "node scripts/generate-seo-pages.mjs",
     "build:blog": "node scripts/generate-blog.mjs",
-    "build": "node scripts/generate-blog.mjs"
+    "build": "node scripts/fetch-instagram.mjs && node scripts/generate-seo-pages.mjs && node scripts/generate-blog.mjs"
   },
   "engines": {
     "node": ">=18"

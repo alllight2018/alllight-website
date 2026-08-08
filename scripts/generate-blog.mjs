@@ -167,8 +167,17 @@ function renderCards(posts) {
 }
 
 /* ---------- sitemap 生成 ---------- */
-function renderSitemap(posts) {
+async function loadAreaSlugs() {
+  try {
+    const raw = JSON.parse(await readFile(join(ROOT, "data", "areas.json"), "utf8"));
+    return (raw.areas || []).map((a) => `area/${a.slug}.html`);
+  } catch { return []; }
+}
+
+async function renderSitemap(posts) {
+  const areaPages = await loadAreaSlugs();
   const staticPages = ["index.html","about.html","works.html","recruit.html","contact.html",
+    "area/index.html", ...areaPages,
     "blog/index.html","blog/koukyou-kouji-denki-setsubi.html","blog/koujiseiseki-hyoutei.html","blog/sekou-kanri-miryoku.html"];
   const today = new Date().toISOString().slice(0, 10);
   const urls = staticPages.map((p) => ({ loc: `${SITE_ORIGIN}/${p}`, lastmod: today }))
@@ -204,7 +213,7 @@ async function main() {
   const posts = await fetchPosts();
 
   // sitemap は常に再生成（動的記事が無ければ静的ページのみ）
-  await writeFile(join(ROOT, "sitemap.xml"), renderSitemap(posts || []), "utf8");
+  await writeFile(join(ROOT, "sitemap.xml"), await renderSitemap(posts || []), "utf8");
   console.log("✅ sitemap.xml を更新しました。");
 
   if (posts === null) return; // 認証情報なし → 記事更新はスキップ

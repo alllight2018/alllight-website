@@ -44,12 +44,18 @@ alllight-website/
 │  ├─ koukyou-kouji-denki-setsubi.html   コラム①公共工事の電気設備工事
 │  ├─ koujiseiseki-hyoutei.html          コラム②工事成績評定点（工事点数）
 │  └─ sekou-kanri-miryoku.html           コラム③施工管理の仕事
+├─ area/                   ★地域SEOページ（自動生成）神戸市・明石市…＋エリアハブ
+├─ data/
+│  ├─ areas.json           地域ページの元データ（自治体を足すとページが増える）
+│  └─ instagram.json       Instagram投稿データ（自動更新＋フォールバック）
 ├─ scripts/
-│  └─ generate-blog.mjs    社内アプリ→ブログ自動生成スクリプト
+│  ├─ generate-seo-pages.mjs  ★地域ページ生成＋Instagram差し込み
+│  ├─ generate-blog.mjs       社内アプリ→ブログ自動生成＋サイトマップ
+│  └─ fetch-instagram.mjs     Instagram Graph API取得
 ├─ supabase/migrations/
 │  └─ 0001_blog_posts.sql  公開用テーブル定義（要適用）
 └─ .github/workflows/
-   └─ blog-sync.yml        自動連携ワークフロー
+   └─ blog-sync.yml        自動連携ワークフロー（ビルド＝地域＋IG＋ブログ）
 ```
 
 ---
@@ -144,6 +150,42 @@ alllight-website/
 ### そのまま静的公開でもOK
 Node を使わない場合、HTMLファイル群をそのままサーバーへアップロードするだけで動作します
 （ブログ自動連携のみ Node が必要）。
+
+---
+
+## 🥇 対ライバル戦略：東洋電気工事に検索で勝つ（自動化）
+
+同じ神戸市兵庫区の競合 **東洋電気工事（to-tec.com）** を、同じ商圏のキーワードで上回るための設計です。
+考え方は **お手本＝小田島組（岩手）** に学び、「コンテンツ量 × 鮮度 × 人の発信」で面を取ります。
+
+| 施策 | 実装 | なぜ勝てるか |
+|---|---|---|
+| **地域ページの面制圧** | `data/areas.json` → `scripts/generate-seo-pages.mjs` が `area/<市>.html` を自動生成（現在9ページ） | 競合が1枚の会社サイトなのに対し、「神戸市 電気工事」「明石市 公共工事」等をページ単位で網羅。自治体を足すだけで増殖 |
+| **FAQ構造化データ** | 各地域ページに `FAQPage` / 地域 `ElectricalContractor` schema | 検索結果でFAQリッチリザルト・地図表示を狙える |
+| **コンテンツ鮮度** | 社内アプリ→ブログ自動連携（6時間ごと） | 更新頻度でGoogleの評価を継続的に獲得。競合は静的で更新が止まりがち |
+| **Instagram連携** | `@alllight2018` をトップ・採用に埋め込み（`data/instagram.json`） | 「人が主役」の発信＝小田島組式。指名検索・回遊・採用に効く |
+| **採用×地域×職種** | 地域ページ・採用ページ・JobPosting schema を相互リンク | 「電気工事 求人 神戸」「施工管理 求人 兵庫」で採用流入を獲得 |
+| **内部リンク網** | 全ページに「対応エリア」ナビ＋地域間リンク | サイト全体の評価を地域ページへ流し込む |
+
+### 地域を増やす（＝ページを増やす）方法
+`data/areas.json` の `areas` に自治体を1つ追加して `npm run build` するだけ。
+`area/<slug>.html` とサイトマップ、エリアハブ、内部リンクが自動更新されます。
+
+### Instagram を実データに自動連携する
+1. Instagramを**プロアカウント（ビジネス）**にし、Facebookページと連携
+2. Instagram Graph API の **長期トークン**と**ユーザーID**を取得
+3. GitHub Secrets / Netlify環境変数に `IG_TOKEN` / `IG_USER_ID` を設定
+4. `npm run build:instagram`（または通常ビルド）で `data/instagram.json` が最新6件に更新され、トップ・採用へ自動反映
+
+> トークン未設定の間は `data/instagram.json` の注目投稿（プレースホルダ）が表示されます。画像は自社の実写真に差し替えると効果的です。
+
+### 検索で勝つための運用（公開後すぐ）
+1. **Googleビジネスプロフィール**を整備（本社＝神戸市兵庫区）。地域ページとNAP（名称・住所・電話）を一致させる → ローカル検索で競合に対抗
+2. **Search Console**に `sitemap.xml` を送信（地域・ブログが自動で載る）
+3. 地域ごとの**実績・写真**を各 `area/<市>.html` に追記（一意性が上がるほど順位が安定）
+4. ブログを止めない（自動連携＋月1〜2本の手動記事）
+
+> ⚠️ 地域ページは「固有情報を持つ質の高いページ」であることが前提です。各エリアに実際の施工実績・写真・お客様の声を足していくほど、競合との差が開きます（薄いまま量産しないこと）。
 
 ---
 

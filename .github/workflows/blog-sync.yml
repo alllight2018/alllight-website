@@ -22,12 +22,14 @@ jobs:
         with:
           node-version: "20"
 
-      - name: 現場レポートを生成
+      - name: サイトを生成（地域SEO＋Instagram＋現場レポート）
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
           SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          IG_TOKEN: ${{ secrets.IG_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
           SITE_ORIGIN: https://alllight2018.com
-        run: npm run build:blog
+        run: npm run build
 
       - name: 変更をコミット＆プッシュ
         run: |
