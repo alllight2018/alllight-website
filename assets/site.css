@@ -15,9 +15,9 @@
   --navy: #0f1220;      /* ベースの黒（わずかに青み） */
   --navy-2: #171b2e;
   --ink: #070810;       /* さらに濃い黒 */
-  --amber: #0b5cff;     /* オールライトブルー（アクセント枠を流用） */
-  --amber-2: #3f86ff;
-  --orange: #00b7ff;    /* 青グラデの明るい側（シアン） */
+  --amber: #1a8cff;     /* オールライトブルー（明るめ／ロゴ画像で微調整可） */
+  --amber-2: #52aaff;
+  --orange: #21ccff;    /* 青グラデの明るい側（シアン） */
   --sub: #5b6470;
   --bg: #f4f6fb;
   --line: #e3e7f0;
@@ -180,6 +180,19 @@ a:hover { color: inherit; }
 .marquee span { font-family: "Noto Sans JP", sans-serif; font-weight: 900; opacity: 1; text-transform: uppercase; letter-spacing: .04em; }
 .marquee span::after { content: "／"; margin-left: 2.4rem; opacity: .45; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---------- メガスローガン・マーキー（小田島組テイスト） ---------- */
+.mega-marquee { background: #05060c; color: #fff; overflow: hidden; padding: 1.4rem 0; border-block: 1px solid rgba(255,255,255,.08); }
+.mega-marquee .track {
+  display: flex; gap: 2.6rem; white-space: nowrap; width: max-content;
+  animation: marquee 32s linear infinite;
+  font-family: "Dela Gothic One", "Zen Kaku Gothic New", sans-serif;
+  font-size: clamp(2rem, 7vw, 4.8rem); line-height: 1.1;
+}
+.mega-marquee .track .fill { color: #fff; }
+.mega-marquee .track .blue { color: var(--amber); }
+.mega-marquee .track .out { color: transparent; -webkit-text-stroke: 1.5px rgba(255,255,255,.55); text-stroke: 1.5px rgba(255,255,255,.55); }
+.mega-marquee.reverse .track { animation-direction: reverse; }
 
 /* ---------- リビール ---------- */
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
