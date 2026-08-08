@@ -1,0 +1,26 @@
+# Netlify 設定 — 株式会社オールライト コーポレートサイト
+# 静的サイト。ビルド時に社内アプリ(Supabase)から現場レポートを自動生成します。
+# ※ Supabase から取得するには Netlify の環境変数に
+#    SUPABASE_URL / SUPABASE_ANON_KEY を設定してください（未設定でもビルドは成功します）。
+
+[build]
+  publish = "."
+  command = "npm run build:blog"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# セキュリティ関連ヘッダ
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# 静的アセットのキャッシュ
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

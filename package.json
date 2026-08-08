@@ -1,0 +1,14 @@
+{
+  "name": "alllight-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "株式会社オールライト コーポレートサイト（公共工事・電気設備工事）",
+  "type": "module",
+  "scripts": {
+    "build:blog": "node scripts/generate-blog.mjs",
+    "build": "node scripts/generate-blog.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

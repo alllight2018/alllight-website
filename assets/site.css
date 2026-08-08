@@ -1,0 +1,240 @@
+/* =========================================================
+   株式会社オールライト コーポレートサイト
+   共通スタイル（Tailwind CDN を補完するブランドレイヤー）
+   ---------------------------------------------------------
+   ブランドカラー
+     --navy   : #15263d  信頼・公共性のベースカラー
+     --amber  : #f0b400  "ALL LIGHT"＝光／ブチアゲのアクセント
+     --sub    : #5b6470  サブテキスト
+     --bg     : #f4f5f7  背景
+   ========================================================= */
+
+:root {
+  --navy: #15263d;
+  --navy-2: #1e3450;
+  --amber: #f0b400;
+  --amber-2: #ffcb2e;
+  --orange: #ff7a18;
+  --sub: #5b6470;
+  --bg: #f4f5f7;
+  --line: #e3e6ec;
+  --radius: 14px;
+  --shadow: 0 18px 50px -20px rgba(21, 38, 61, .35);
+  --maxw: 1180px;
+}
+
+* { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+
+body {
+  font-family: "Noto Sans JP", system-ui, sans-serif;
+  color: var(--navy);
+  background: var(--bg);
+  line-height: 1.85;
+  letter-spacing: .015em;
+}
+
+.serif { font-family: "Noto Serif JP", "Noto Sans JP", serif; }
+
+.wrap { width: min(var(--maxw), 92%); margin-inline: auto; }
+
+/* ---------- 見出し ---------- */
+.eyebrow {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-weight: 700; letter-spacing: .18em; font-size: .74rem;
+  color: var(--amber); text-transform: uppercase;
+}
+.eyebrow::before {
+  content: ""; width: 26px; height: 2px; background: var(--amber); display: inline-block;
+}
+.section-title {
+  font-family: "Noto Serif JP", serif; font-weight: 700;
+  line-height: 1.35; letter-spacing: .02em;
+  font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+}
+
+/* ---------- ボタン ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+  padding: .95rem 1.9rem; border-radius: 999px; font-weight: 700;
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+  white-space: nowrap;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-amber { background: var(--amber); color: var(--navy); box-shadow: 0 12px 26px -10px rgba(240,180,0,.75); }
+.btn-amber:hover { background: var(--amber-2); }
+.btn-navy { background: var(--navy); color: #fff; }
+.btn-navy:hover { background: var(--navy-2); }
+.btn-ghost { border: 1.5px solid rgba(255,255,255,.55); color: #fff; }
+.btn-ghost:hover { background: rgba(255,255,255,.12); }
+.btn-outline { border: 1.5px solid var(--navy); color: var(--navy); }
+.btn-outline:hover { background: var(--navy); color: #fff; }
+
+/* ---------- ヘッダー ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(21, 38, 61, .0);
+  transition: background .3s ease, box-shadow .3s ease;
+}
+.site-header.solid {
+  background: rgba(255,255,255,.92);
+  backdrop-filter: saturate(160%) blur(10px);
+  box-shadow: 0 1px 0 var(--line);
+}
+.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+.brand { display: flex; align-items: center; gap: .7rem; font-weight: 800; letter-spacing: .02em; }
+.brand .mark {
+  width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center;
+  background: linear-gradient(135deg, var(--amber), var(--orange));
+  color: var(--navy); font-weight: 900; font-size: 1.15rem; box-shadow: 0 8px 20px -8px rgba(240,180,0,.8);
+}
+.brand .mark::selection { background: transparent; }
+.brand-name { line-height: 1.15; }
+.brand-name b { font-size: 1.05rem; display: block; }
+.brand-name span { font-size: .64rem; letter-spacing: .22em; color: var(--sub); }
+
+.nav-links { display: flex; align-items: center; gap: 1.6rem; }
+.nav-links a { font-weight: 600; font-size: .92rem; position: relative; padding: .3rem 0; }
+.nav-links a::after {
+  content: ""; position: absolute; left: 0; bottom: -2px; height: 2px; width: 0;
+  background: var(--amber); transition: width .25s ease;
+}
+.nav-links a:hover::after, .nav-links a[aria-current="page"]::after { width: 100%; }
+
+/* ヘッダー配色：透明時は白文字、solid 時はネイビー文字 */
+.site-header:not(.solid) .brand-name b,
+.site-header:not(.solid) .nav-links a { color: #fff; }
+.site-header:not(.solid) .brand-name span { color: rgba(255,255,255,.7); }
+.site-header.solid .brand-name b { color: var(--navy); }
+.site-header.solid .nav-links a { color: var(--navy); }
+
+.nav-toggle { display: none; background: none; border: 0; cursor: pointer; padding: .4rem; }
+.nav-toggle span { display: block; width: 26px; height: 2px; background: currentColor; margin: 5px 0; transition: .25s; }
+.site-header:not(.solid) .nav-toggle { color: #fff; }
+.site-header.solid .nav-toggle { color: var(--navy); }
+
+/* モバイルメニュー */
+.mobile-menu {
+  position: fixed; inset: 0 0 0 auto; width: min(84%, 340px);
+  background: var(--navy); color: #fff; transform: translateX(100%);
+  transition: transform .3s ease; z-index: 60; padding: 5.5rem 1.8rem 2rem;
+  display: flex; flex-direction: column; gap: .3rem; box-shadow: var(--shadow);
+}
+.mobile-menu.open { transform: translateX(0); }
+.mobile-menu a { padding: .9rem .4rem; border-bottom: 1px solid rgba(255,255,255,.1); font-weight: 600; }
+.mobile-menu .btn { margin-top: 1.2rem; }
+.menu-backdrop { position: fixed; inset: 0; background: rgba(0,0,0,.5); opacity: 0; visibility: hidden; transition: .3s; z-index: 55; }
+.menu-backdrop.open { opacity: 1; visibility: visible; }
+.menu-close { position: absolute; top: 1.4rem; right: 1.4rem; background: none; border: 0; color: #fff; font-size: 1.6rem; cursor: pointer; }
+
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: block; }
+}
+
+/* ---------- ヒーロー ---------- */
+.hero { position: relative; color: #fff; overflow: hidden; }
+.hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; transform: scale(1.05); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(115deg, rgba(21,38,61,.94) 0%, rgba(21,38,61,.72) 45%, rgba(21,38,61,.35) 100%),
+    linear-gradient(0deg, rgba(21,38,61,.85), rgba(21,38,61,0) 55%);
+}
+
+/* ---------- 数字（ブチアゲ） ---------- */
+.stat-num {
+  font-family: "Noto Serif JP", serif; font-weight: 700; line-height: 1;
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  background: linear-gradient(120deg, var(--amber-2), var(--orange));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.stat-card {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  padding: 1.6rem 1.4rem; text-align: center;
+}
+.stat-card.dark { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.14); }
+
+/* ---------- カード ---------- */
+.card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; transition: transform .22s ease, box-shadow .22s ease; }
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.chip { display: inline-block; padding: .28rem .8rem; border-radius: 999px; font-size: .74rem; font-weight: 700; }
+.chip-amber { background: rgba(240,180,0,.16); color: #8a6a00; }
+.chip-navy { background: rgba(21,38,61,.08); color: var(--navy); }
+
+/* ---------- 帯・区切り ---------- */
+.badge-strip { background: var(--navy); color: #fff; }
+.marquee { display: flex; gap: 3rem; white-space: nowrap; animation: marquee 26s linear infinite; }
+.marquee span { font-family: "Noto Serif JP", serif; font-weight: 700; opacity: .85; }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ---------- リビール ---------- */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.7,.2,1); }
+.reveal.in { opacity: 1; transform: none; }
+.reveal.d1 { transition-delay: .08s; } .reveal.d2 { transition-delay: .16s; }
+.reveal.d3 { transition-delay: .24s; } .reveal.d4 { transition-delay: .32s; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .marquee { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+/* ---------- フッター ---------- */
+.site-footer { background: var(--navy); color: rgba(255,255,255,.78); }
+.site-footer a { color: rgba(255,255,255,.78); }
+.site-footer a:hover { color: #fff; }
+.footer-license {
+  font-size: .8rem; background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 1rem 1.2rem;
+}
+
+/* ---------- 汎用 ---------- */
+.section { padding-block: clamp(3.5rem, 8vw, 6rem); }
+.text-sub { color: var(--sub); }
+.lead { font-size: clamp(1rem, 2.4vw, 1.15rem); color: var(--sub); }
+.divider-gold { width: 56px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--amber), var(--orange)); }
+.link-arrow { font-weight: 700; color: var(--navy); display: inline-flex; align-items: center; gap: .4rem; }
+.link-arrow::after { content: "→"; transition: transform .2s ease; }
+.link-arrow:hover::after { transform: translateX(4px); }
+
+/* テーブル */
+.tbl { width: 100%; border-collapse: collapse; }
+.tbl th, .tbl td { text-align: left; padding: 1rem 1rem; border-bottom: 1px solid var(--line); vertical-align: top; }
+.tbl th { width: 30%; color: var(--sub); font-weight: 700; white-space: nowrap; }
+@media (max-width: 640px){ .tbl th { width: 38%; font-size: .9rem; } }
+
+/* ブチアゲ：斜めストライプ背景 */
+.bg-hype {
+  background:
+    radial-gradient(1200px 500px at 80% -10%, rgba(240,180,0,.22), transparent 60%),
+    linear-gradient(160deg, var(--navy), #0e1b2c 70%);
+  color: #fff;
+}
+.hype-title {
+  font-family: "Noto Serif JP", serif; font-weight: 900; line-height: 1.12;
+  font-size: clamp(2.2rem, 8vw, 4.6rem);
+}
+.hype-mark { background: linear-gradient(120deg, var(--amber-2), var(--orange)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+/* ---------- 記事本文（ブログ） ---------- */
+.prose { font-size: 1.02rem; line-height: 2; color: #26313f; }
+.prose h2 {
+  font-family: "Noto Serif JP", serif; font-weight: 700; font-size: 1.5rem;
+  margin: 2.6rem 0 1rem; padding-left: .9rem; border-left: 5px solid var(--amber); line-height: 1.5;
+}
+.prose h3 { font-weight: 700; font-size: 1.15rem; margin: 1.8rem 0 .6rem; color: var(--navy); }
+.prose p { margin: 1rem 0; }
+.prose ul, .prose ol { margin: 1rem 0 1rem 1.4rem; }
+.prose li { margin: .4rem 0; }
+.prose a { color: #0a63b8; text-decoration: underline; }
+.prose strong { color: var(--navy); }
+.prose img { border-radius: 12px; margin: 1.4rem 0; width: 100%; height: auto; }
+.prose blockquote {
+  margin: 1.4rem 0; padding: 1rem 1.3rem; background: #fff8e6;
+  border-left: 4px solid var(--amber); border-radius: 8px; color: #6a5300;
+}
+.toc { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 1.2rem 1.4rem; margin: 1.6rem 0; }
+.toc b { display: block; margin-bottom: .5rem; }
+.toc ol { margin-left: 1.2rem; }
+.toc a { color: var(--navy); }

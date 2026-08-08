@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>お問い合わせ（入札・見積・採用）｜株式会社オールライト</title>
+<meta name="description" content="株式会社オールライトへのお問い合わせ。公共工事の入札のご相談、民間工事のお見積り、採用エントリー、その他のご質問を承ります。3営業日以内にご返信します。神戸市兵庫区。" />
+<link rel="canonical" href="https://alllight2018.com/contact.html" />
+<meta name="theme-color" content="#15263d" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="株式会社オールライト" />
+<meta property="og:title" content="お問い合わせ（入札・見積・採用）｜株式会社オールライト" />
+<meta property="og:description" content="公共工事の入札・民間工事の見積・採用エントリーを承ります。3営業日以内にご返信。" />
+<meta property="og:url" content="https://alllight2018.com/contact.html" />
+<meta property="og:image" content="https://alllight2018.com/assets/ogp.jpg" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .field { display:block; margin-bottom:1.3rem; }
+  .field > label { display:block; font-weight:700; margin-bottom:.4rem; }
+  .field .req { color:#d23; font-size:.8rem; margin-left:.3rem; }
+  .field input, .field select, .field textarea {
+    width:100%; padding:.85rem 1rem; border:1.5px solid var(--line); border-radius:10px;
+    font-family:inherit; font-size:1rem; background:#fff; transition:border-color .2s;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { outline:none; border-color:var(--amber); box-shadow:0 0 0 3px rgba(240,180,0,.18); }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav-inner">
+    <a class="brand" href="index.html" aria-label="株式会社オールライト トップへ">
+      <span class="mark" aria-hidden="true">AL</span>
+      <span class="brand-name"><b>株式会社オールライト</b><span>ALLLIGHT CO., LTD.</span></span>
+    </a>
+    <nav class="nav-links" aria-label="グローバルナビゲーション">
+      <a href="index.html">トップ</a><a href="about.html">会社案内</a><a href="works.html">公共工事実績</a>
+      <a href="recruit.html">採用情報</a><a href="blog/index.html">現場ブログ</a>
+      <a href="contact.html" class="btn btn-amber" style="padding:.6rem 1.3rem" aria-current="page">お問い合わせ</a>
+    </nav>
+    <button class="nav-toggle" aria-label="メニューを開く" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="menu-backdrop"></div>
+<nav id="mmenu" class="mobile-menu" aria-label="モバイルメニュー">
+  <button class="menu-close" aria-label="メニューを閉じる">&times;</button>
+  <a href="index.html">トップ</a><a href="about.html">会社案内</a><a href="works.html">公共工事実績</a>
+  <a href="recruit.html">採用情報</a><a href="blog/index.html">現場ブログ</a>
+  <a href="contact.html" class="btn btn-amber">お問い合わせ</a>
+</nav>
+
+<section class="hero" style="min-height:38vh; display:flex; align-items:flex-end;">
+  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2000&q=80')"></div>
+  <div class="hero-overlay"></div>
+  <div class="wrap" style="position:relative; padding-block:2.6rem;">
+    <p class="eyebrow">CONTACT</p>
+    <h1 class="serif" style="font-weight:900; font-size:clamp(1.8rem,5vw,2.8rem); margin-top:.4rem;">お問い合わせ</h1>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap" style="display:grid; grid-template-columns:1.4fr 1fr; gap:2.5rem; align-items:start;">
+    <!-- フォーム -->
+    <div class="reveal">
+      <p class="lead" style="margin-bottom:1.6rem;">
+        公共工事の入札のご相談、民間工事のお見積り、採用エントリー、その他のご質問を承ります。<br />
+        <strong>3営業日以内</strong>にご返信いたします。
+      </p>
+
+      <!-- Netlify Forms（送信後 thanks.html へ遷移） -->
+      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thanks.html">
+        <input type="hidden" name="form-name" value="contact" />
+        <p style="display:none;"><label>この項目は入力しないでください：<input name="bot-field" /></label></p>
+
+        <div class="field">
+          <label for="type">お問い合わせ種別<span class="req">必須</span></label>
+          <select id="type" name="お問い合わせ種別" required>
+            <option value="">選択してください</option>
+            <option value="公共工事の入札">公共工事の入札に関するご相談</option>
+            <option value="民間工事の見積もり">民間工事のお見積り</option>
+            <option value="採用">採用エントリー・ご質問</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="name">お名前<span class="req">必須</span></label>
+          <input id="name" name="お名前" type="text" required autocomplete="name" />
+        </div>
+
+        <div class="field">
+          <label for="company">会社名・団体名</label>
+          <input id="company" name="会社名" type="text" autocomplete="organization" />
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem;">
+          <div class="field">
+            <label for="email">メールアドレス<span class="req">必須</span></label>
+            <input id="email" name="メールアドレス" type="email" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="tel">電話番号</label>
+            <input id="tel" name="電話番号" type="tel" autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="message">お問い合わせ内容<span class="req">必須</span></label>
+          <textarea id="message" name="お問い合わせ内容" rows="6" required placeholder="案件の概要、ご希望などをご記入ください。"></textarea>
+        </div>
+
+        <label style="display:flex; gap:.6rem; align-items:flex-start; font-size:.9rem; margin-bottom:1.4rem;">
+          <input type="checkbox" required style="margin-top:.3rem;" />
+          <span><a href="https://alllight2018.jp/privacy_policy/" target="_blank" rel="noopener">プライバシーポリシー</a>に同意します<span class="req">必須</span></span>
+        </label>
+
+        <button type="submit" class="btn btn-amber" style="width:100%;">この内容で送信する</button>
+      </form>
+    </div>
+
+    <!-- 会社情報・アクセス -->
+    <aside class="reveal d1">
+      <div class="card" style="padding:1.8rem; margin-bottom:1.4rem;">
+        <h2 class="serif" style="font-weight:700; font-size:1.2rem; margin-bottom:1rem;">お電話でのお問い合わせ</h2>
+        <p style="font-size:1.6rem; font-weight:900; color:var(--navy);" class="serif">078-000-0000</p>
+        <p class="text-sub" style="font-size:.86rem;">受付時間：平日 9:00〜18:00<br />※番号は正式値に差し替え</p>
+        <hr style="border:none; border-top:1px solid var(--line); margin:1.2rem 0;" />
+        <h3 style="font-weight:700; margin-bottom:.5rem;">所在地</h3>
+        <p class="text-sub" style="font-size:.9rem;">〒652-0855<br />兵庫県神戸市兵庫区東出町2丁目8-8</p>
+      </div>
+      <div class="card" style="overflow:hidden;">
+        <iframe title="株式会社オールライト 所在地マップ"
+          src="https://www.google.com/maps?q=%E5%85%B5%E5%BA%AB%E7%9C%8C%E7%A5%9E%E6%88%B8%E5%B8%82%E5%85%B5%E5%BA%AB%E5%8C%BA%E6%9D%B1%E5%87%BA%E7%94%BA2-8-8&output=embed"
+          width="100%" height="260" style="border:0; display:block;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="wrap" style="padding-block:3.5rem;">
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:2rem;">
+      <div><div class="brand" style="color:#fff;"><span class="mark" aria-hidden="true">AL</span><span class="brand-name"><b style="color:#fff;">株式会社オールライト</b><span style="color:rgba(255,255,255,.6);">ALLLIGHT CO., LTD.</span></span></div>
+        <p style="margin-top:1rem; font-size:.86rem;">公共工事で、まちに光を灯す。<br />官公庁・公共施設の電気設備工事を全国で。</p></div>
+      <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">サイトマップ</h4>
+        <ul style="list-style:none; display:grid; gap:.5rem; font-size:.9rem;">
+          <li><a href="index.html">トップ</a></li><li><a href="about.html">会社案内</a></li><li><a href="works.html">公共工事実績</a></li>
+          <li><a href="recruit.html">採用情報</a></li><li><a href="blog/index.html">現場ブログ</a></li><li><a href="contact.html">お問い合わせ</a></li></ul></div>
+      <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">会社情報</h4>
+        <p style="font-size:.9rem;">〒652-0855<br />兵庫県神戸市兵庫区東出町2丁目8-8<br />TEL：078-000-0000（代表）<br />info@alllight2018.com</p></div>
+      <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">許可・登録</h4>
+        <div class="footer-license">建設業許可：兵庫県知事許可（電気工事業）<br />第XXXXXX号<br /><span style="opacity:.7;">※許可番号は正式値に差し替えてください</span></div></div>
+    </div>
+    <div style="margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,.12); display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:.82rem;">
+      <p>&copy; <span data-year>2026</span> ALLLIGHT CO., LTD. All rights reserved.</p>
+      <p><a href="contact.html">お問い合わせ</a>　/　<a href="https://alllight2018.jp/privacy_policy/">プライバシーポリシー</a></p>
+    </div>
+  </div>
+</footer>
+<script src="assets/site.js"></script>
+<script>
+  // 採用エントリー導線（recruit から ?type=recruit で来た場合、種別を自動選択）
+  (function(){
+    var params = new URLSearchParams(location.search);
+    if (params.get("type") === "recruit") {
+      var sel = document.getElementById("type");
+      if (sel) sel.value = "採用";
+    }
+  })();
+</script>
+</body>
+</html>

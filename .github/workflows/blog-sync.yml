@@ -1,0 +1,42 @@
+name: 現場ブログ自動連携（Supabase → Web）
+
+# 社内アプリ(Supabase)で「公開」に設定された記事を、
+# 定期的に／Webhook 経由で取り込み、静的HTMLを再生成してコミットします。
+on:
+  schedule:
+    - cron: "0 */6 * * *"        # 6時間ごと
+  workflow_dispatch:              # 手動実行
+  repository_dispatch:            # Supabase等からのWebhookで即時実行
+    types: [blog-updated]
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: 現場レポートを生成
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SITE_ORIGIN: https://alllight2018.com
+        run: npm run build:blog
+
+      - name: 変更をコミット＆プッシュ
+        run: |
+          git config user.name "alllight-blog-bot"
+          git config user.email "bot@users.noreply.github.com"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add -A
+            git commit -m "chore(blog): 現場レポートを自動更新"
+            git push
+          else
+            echo "変更はありません。"
+          fi
