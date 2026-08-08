@@ -10,17 +10,19 @@
    ========================================================= */
 
 :root {
-  --navy: #15263d;
-  --navy-2: #1e3450;
-  --amber: #f0b400;
-  --amber-2: #ffcb2e;
-  --orange: #ff7a18;
+  /* 小田島組テイスト：漆黒 × ビビッドイエロー × 極太ゴシック */
+  --navy: #111318;      /* ベースの黒（旧ネイビー枠を流用） */
+  --navy-2: #1c1f27;
+  --ink: #0b0c0f;       /* さらに濃い黒 */
+  --amber: #ffd400;     /* 光＝ビビッドイエロー */
+  --amber-2: #ffe14d;
+  --orange: #ffab00;    /* 黄グラデの温かい側 */
   --sub: #5b6470;
-  --bg: #f4f5f7;
-  --line: #e3e6ec;
-  --radius: 14px;
-  --shadow: 0 18px 50px -20px rgba(21, 38, 61, .35);
-  --maxw: 1180px;
+  --bg: #f5f5f4;
+  --line: #e5e5e2;
+  --radius: 12px;
+  --shadow: 0 18px 50px -20px rgba(0, 0, 0, .45);
+  --maxw: 1200px;
 }
 
 * { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
@@ -35,7 +37,8 @@ body {
   letter-spacing: .015em;
 }
 
-.serif { font-family: "Noto Serif JP", "Noto Sans JP", serif; }
+/* 見出しは極太ゴシック（小田島組テイスト）。旧.serif指定も一括でゴシック化 */
+.serif { font-family: "Noto Sans JP", system-ui, sans-serif; font-weight: 900; letter-spacing: .01em; }
 
 /* リンク初期化（Tailwind CDN 未読込でも崩れないための安全策）。
    記事本文リンクは .prose a で別途スタイルするため除外。 */
@@ -54,9 +57,9 @@ a:hover { color: inherit; }
   content: ""; width: 26px; height: 2px; background: var(--amber); display: inline-block;
 }
 .section-title {
-  font-family: "Noto Serif JP", serif; font-weight: 700;
-  line-height: 1.35; letter-spacing: .02em;
-  font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+  font-family: "Noto Sans JP", system-ui, sans-serif; font-weight: 900;
+  line-height: 1.18; letter-spacing: .005em;
+  font-size: clamp(1.8rem, 5.2vw, 3.1rem);
 }
 
 /* ---------- ボタン ---------- */
@@ -144,8 +147,8 @@ a:hover { color: inherit; }
 .hero-overlay {
   position: absolute; inset: 0;
   background:
-    linear-gradient(115deg, rgba(21,38,61,.94) 0%, rgba(21,38,61,.72) 45%, rgba(21,38,61,.35) 100%),
-    linear-gradient(0deg, rgba(21,38,61,.85), rgba(21,38,61,0) 55%);
+    linear-gradient(115deg, rgba(6,7,9,.92) 0%, rgba(6,7,9,.66) 45%, rgba(6,7,9,.30) 100%),
+    linear-gradient(0deg, rgba(6,7,9,.92), rgba(6,7,9,0) 60%);
 }
 
 /* ---------- 数字（ブチアゲ） ---------- */
@@ -169,9 +172,10 @@ a:hover { color: inherit; }
 .chip-navy { background: rgba(21,38,61,.08); color: var(--navy); }
 
 /* ---------- 帯・区切り ---------- */
-.badge-strip { background: var(--navy); color: #fff; }
-.marquee { display: flex; gap: 3rem; white-space: nowrap; animation: marquee 26s linear infinite; }
-.marquee span { font-family: "Noto Serif JP", serif; font-weight: 700; opacity: .85; }
+.badge-strip { background: var(--amber); color: var(--ink); }
+.marquee { display: flex; gap: 2.4rem; white-space: nowrap; animation: marquee 24s linear infinite; }
+.marquee span { font-family: "Noto Sans JP", sans-serif; font-weight: 900; opacity: 1; text-transform: uppercase; letter-spacing: .04em; }
+.marquee span::after { content: "／"; margin-left: 2.4rem; opacity: .45; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ---------- リビール ---------- */
@@ -212,13 +216,13 @@ a:hover { color: inherit; }
 /* ブチアゲ：斜めストライプ背景 */
 .bg-hype {
   background:
-    radial-gradient(1200px 500px at 80% -10%, rgba(240,180,0,.22), transparent 60%),
-    linear-gradient(160deg, var(--navy), #0e1b2c 70%);
+    radial-gradient(1100px 480px at 82% -12%, rgba(255,212,0,.16), transparent 62%),
+    linear-gradient(165deg, #0b0c0f, #050506 72%);
   color: #fff;
 }
 .hype-title {
-  font-family: "Noto Serif JP", serif; font-weight: 900; line-height: 1.12;
-  font-size: clamp(2.2rem, 8vw, 4.6rem);
+  font-family: "Noto Sans JP", system-ui, sans-serif; font-weight: 900; line-height: 1.06;
+  letter-spacing: -.01em; font-size: clamp(2.4rem, 9vw, 5.4rem);
 }
 .hype-mark { background: linear-gradient(120deg, var(--amber-2), var(--orange)); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
