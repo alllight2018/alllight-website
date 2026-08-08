@@ -1,9 +1,36 @@
-# Netlify リダイレクト
-# www → apex（正規化してSEO評価を1本化）
-https://www.alllight2018.com/*   https://alllight2018.com/:splat   301!
+# ============================================================
+#  ドメイン集約リダイレクト（Netlify）
+#  正ドメイン = https://alllight2018.com に一本化
+#  ※ 有効化には Netlify のこのサイトに alllight2018.jp / all-light.top を
+#    「Domain alias」として追加してください（DNSも当サイトへ向ける）。
+#  上から順に評価され、最初に一致したルールが使われます（具体的→包括の順）。
+# ============================================================
 
-# ルートの短縮アクセス
-/home                            /index.html                       301
-/recruit                         /recruit.html                     301
-/works                           /works.html                       301
-/contact                         /contact.html                     301
+# --- www → apex（正規化） ---
+https://www.alllight2018.com/*        https://alllight2018.com/:splat            301!
+
+# --- 旧サイト alllight2018.jp（採用系）→ 近い新ページへ個別301 ---
+https://alllight2018.jp/company/*         https://alllight2018.com/about.html      301!
+https://alllight2018.jp/staff/*           https://alllight2018.com/recruit.html    301!
+https://alllight2018.jp/recruit/*         https://alllight2018.com/recruit.html    301!
+https://alllight2018.jp/privacy_policy/*  https://alllight2018.com/                301!
+https://alllight2018.jp/*                 https://alllight2018.com/:splat          301!
+http://alllight2018.jp/*                  https://alllight2018.com/:splat          301!
+
+# --- 旧サイト all-light.top（会社系）→ 近い新ページへ個別301 ---
+https://all-light.top/about*              https://alllight2018.com/about.html      301!
+https://all-light.top/case*               https://alllight2018.com/works.html      301!
+https://all-light.top/vision*             https://alllight2018.com/about.html      301!
+https://all-light.top/recruit*            https://alllight2018.com/recruit.html    301!
+https://all-light.top/contact*            https://alllight2018.com/contact.html    301!
+https://all-light.top/*                   https://alllight2018.com/                301!
+http://all-light.top/*                    https://alllight2018.com/                301!
+
+# --- ルートの短縮アクセス（.com内） ---
+/home                                 /index.html                                301
+/recruit                              /recruit.html                              301
+/works                                /works.html                                301
+/contact                              /contact.html                              301
+/service                              /service/index.html                        301
+/area                                 /area/index.html                           301
+/blog                                 /blog/index.html                           301

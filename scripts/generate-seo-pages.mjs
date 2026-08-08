@@ -64,7 +64,7 @@ const footer = (p) => `
           <li><a href="${p}service/index.html">施工内容</a></li><li><a href="${p}area/index.html">対応エリア</a></li><li><a href="${p}recruit.html">採用情報</a></li>
           <li><a href="${p}blog/index.html">現場ブログ</a></li><li><a href="${p}contact.html">お問い合わせ</a></li></ul></div>
       <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">会社情報</h4>
-        <p style="font-size:.9rem;">〒652-0855<br />兵庫県神戸市兵庫区東出町2丁目8-8<br />TEL：078-000-0000（代表）<br />info@alllight2018.com</p></div>
+        <p style="font-size:.9rem;">〒652-0823<br />兵庫県神戸市兵庫区東出町2丁目8-8<br />TEL：078-686-7328（代表）<br />info@alllight2018.com</p></div>
       <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">許可・登録</h4>
         <div class="footer-license">建設業許可：兵庫県知事許可（電気工事業）<br />第XXXXXX号</div></div>
     </div>
@@ -123,7 +123,7 @@ function renderAreaPage(area, allAreas, services = []) {
     "@context": "https://schema.org", "@type": ["ElectricalContractor", "GeneralContractor"],
     name: "株式会社オールライト", url: SITE_ORIGIN, image: ogimg,
     areaServed: { "@type": area.isPrefecture ? "State" : "City", name: label },
-    address: { "@type": "PostalAddress", postalCode: "652-0855", addressRegion: "兵庫県", addressLocality: "神戸市兵庫区", streetAddress: "東出町2丁目8-8", addressCountry: "JP" },
+    address: { "@type": "PostalAddress", postalCode: "652-0823", addressRegion: "兵庫県", addressLocality: "神戸市兵庫区", streetAddress: "東出町2丁目8-8", addressCountry: "JP" },
     knowsAbout: ["公共工事", "電気設備工事", "受変電設備", "LED照明改修", "施工管理"]
   };
   const breadcrumb = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
