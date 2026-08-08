@@ -37,6 +37,11 @@ body {
 
 .serif { font-family: "Noto Serif JP", "Noto Sans JP", serif; }
 
+/* リンク初期化（Tailwind CDN 未読込でも崩れないための安全策）。
+   記事本文リンクは .prose a で別途スタイルするため除外。 */
+a { color: inherit; text-decoration: none; }
+a:hover { color: inherit; }
+
 .wrap { width: min(var(--maxw), 92%); margin-inline: auto; }
 
 /* ---------- 見出し ---------- */
