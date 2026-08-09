@@ -105,11 +105,11 @@ a:hover { color: inherit; }
 .brand-name b { font-size: 1.05rem; display: block; }
 .brand-name span { font-size: .64rem; letter-spacing: .22em; color: var(--sub); }
 /* 実ロゴ（ヘッダー明暗で色版/白版を切替、フッターは白版） */
-.brand-logo { height: 25px; width: auto; display: block; }
+.brand-logo { height: 32px; width: auto; display: block; }
 .brand-logo-light { display: none; }
 .site-header.solid .brand-logo-dark { display: none; }
 .site-header.solid .brand-logo-light { display: block; }
-.site-footer .brand-logo { height: 24px; }
+.site-footer .brand-logo { height: 30px; }
 
 .nav-links { display: flex; align-items: center; gap: 1.6rem; }
 .nav-links a { font-weight: 600; font-size: .92rem; position: relative; padding: .3rem 0; }
