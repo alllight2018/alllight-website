@@ -84,7 +84,7 @@ ${JSON.stringify({
   datePublished: post.published_at || post.created_at,
   dateModified: post.updated_at || post.published_at || post.created_at,
   author: { "@type": "Organization", name: "株式会社オールライト" },
-  publisher: { "@type": "Organization", name: "株式会社オールライト", logo: { "@type": "ImageObject", url: `${SITE_ORIGIN}/assets/logo.png` } },
+  publisher: { "@type": "Organization", name: "株式会社オールライト", logo: { "@type": "ImageObject", url: `${SITE_ORIGIN}/assets/logo.svg` } },
   mainEntityOfPage: url
 })}
 </script>
@@ -93,8 +93,8 @@ ${JSON.stringify({
 <header class="site-header">
   <div class="wrap nav-inner">
     <a class="brand" href="../index.html" aria-label="株式会社オールライト トップへ">
-      <span class="mark" aria-hidden="true">AL</span>
-      <span class="brand-name"><b>株式会社オールライト</b><span>ALLLIGHT CO., LTD.</span></span>
+      <img class="brand-logo brand-logo-dark" src="/assets/logo-white.svg" alt="株式会社オールライト" width="150" height="23" /><img class="brand-logo brand-logo-light" src="/assets/logo.svg" alt="株式会社オールライト" width="150" height="23" />
+      
     </a>
     <nav class="nav-links" aria-label="グローバルナビゲーション">
       <a href="../index.html">トップ</a><a href="../about.html">会社案内</a><a href="../works.html">公共工事実績</a>
@@ -134,7 +134,7 @@ ${bodyHtml}
 
 <footer class="site-footer">
   <div class="wrap" style="padding-block:3rem; text-align:center; font-size:.82rem;">
-    <div class="brand" style="color:#fff; justify-content:center; margin-bottom:1rem;"><span class="mark" aria-hidden="true">AL</span><span class="brand-name"><b style="color:#fff;">株式会社オールライト</b></span></div>
+    <div class="brand" style="color:#fff; justify-content:center; margin-bottom:1rem;"><img class="brand-logo brand-logo-dark" src="/assets/logo-white.svg" alt="株式会社オールライト" width="150" height="23" /><img class="brand-logo brand-logo-light" src="/assets/logo.svg" alt="株式会社オールライト" width="150" height="23" /></div>
     <p>&copy; <span data-year>2026</span> ALLLIGHT CO., LTD. All rights reserved.</p>
   </div>
 </footer>

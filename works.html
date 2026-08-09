@@ -38,8 +38,8 @@
 <header class="site-header">
   <div class="wrap nav-inner">
     <a class="brand" href="index.html" aria-label="株式会社オールライト トップへ">
-      <span class="mark" aria-hidden="true">AL</span>
-      <span class="brand-name"><b>株式会社オールライト</b><span>ALLLIGHT CO., LTD.</span></span>
+      <img class="brand-logo brand-logo-dark" src="/assets/logo-white.svg" alt="株式会社オールライト" width="150" height="23" /><img class="brand-logo brand-logo-light" src="/assets/logo.svg" alt="株式会社オールライト" width="150" height="23" />
+      
     </a>
     <nav class="nav-links" aria-label="グローバルナビゲーション">
       <a href="index.html">トップ</a><a href="about.html">会社案内</a>
@@ -83,7 +83,7 @@
       <!-- TODO: 実際の評定点・件数に差し替え -->
       <div class="stat-card dark reveal"><div><span class="stat-num" data-count="82" data-decimals="1">0</span><span class="stat-num" style="font-size:1.3rem;">点</span></div><p style="margin-top:.4rem; font-weight:700;">平均評定点</p></div>
       <div class="stat-card dark reveal d1"><div><span class="stat-num" data-count="85">0</span><span class="stat-num" style="font-size:1.3rem;">点</span></div><p style="margin-top:.4rem; font-weight:700;">最高評定点</p></div>
-      <div class="stat-card dark reveal d2"><div><span class="stat-num" data-count="60">0</span><span class="stat-num" style="font-size:1.3rem;">件</span></div><p style="margin-top:.4rem; font-weight:700;">公共工事 完工数</p></div>
+      <div class="stat-card dark reveal d2"><div><span class="stat-num" data-count="15">0</span><span class="stat-num" style="font-size:1.3rem;">件</span></div><p style="margin-top:.4rem; font-weight:700;">受注・施工中案件</p></div>
       <div class="stat-card dark reveal d3"><div><span class="stat-num" data-count="120">0</span><span class="stat-num" style="font-size:1.3rem;">本</span></div><p style="margin-top:.4rem; font-weight:700;">年間入札参加</p></div>
     </div>
   </div>
@@ -96,70 +96,105 @@
 
     <div class="reveal" style="display:flex; gap:.6rem; flex-wrap:wrap; margin-top:1.6rem;">
       <button class="btn btn-outline" data-filter="all" aria-pressed="true" style="padding:.55rem 1.3rem;">すべて</button>
-      <button class="btn btn-outline" data-filter="kankocho" aria-pressed="false" style="padding:.55rem 1.3rem;">官公庁・自治体</button>
-      <button class="btn btn-outline" data-filter="gakko" aria-pressed="false" style="padding:.55rem 1.3rem;">学校施設</button>
-      <button class="btn btn-outline" data-filter="infra" aria-pressed="false" style="padding:.55rem 1.3rem;">インフラ・公共施設</button>
+      <button class="btn btn-outline" data-filter="kuni" aria-pressed="false" style="padding:.55rem 1.3rem;">官公庁（国）</button>
+      <button class="btn btn-outline" data-filter="jichi" aria-pressed="false" style="padding:.55rem 1.3rem;">自治体（県・市）</button>
       <button class="btn btn-outline" data-filter="minkan" aria-pressed="false" style="padding:.55rem 1.3rem;">民間</button>
     </div>
 
-    <!-- TODO: 実案件（案件名・発注者・年度・工種・評定点）に差し替え。9件以上推奨 -->
+    <!-- AUTO:WORKS（社内DBの公開可データ。担当者個人名・金額は非掲載） -->
     <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.2rem; margin-top:2rem;">
-      <article class="card reveal" data-cat="kankocho">
-        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1590274853856-f22d5ee3d228?auto=format&fit=crop&w=900&q=80')"></div>
-        <div style="padding:1.3rem;"><span class="chip chip-amber">官公庁・自治体</span>
-          <h3 class="serif" style="font-weight:700; font-size:1.05rem; margin:.6rem 0 .3rem;">市庁舎 受変電設備改修工事</h3>
-          <p class="text-sub" style="font-size:.85rem;">発注者：○○市／2025年度／受変電・幹線</p></div>
+      <article class="card reveal" data-cat="kuni">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">官公庁（国）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">大阪港安治川突堤南岸壁 電気設備工事</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：第五管区海上保安本部／大阪府／電気設備工事／施工中</p></div>
       </article>
-      <article class="card reveal d1" data-cat="gakko">
-        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=80')"></div>
-        <div style="padding:1.3rem;"><span class="chip chip-amber">学校施設</span>
-          <h3 class="serif" style="font-weight:700; font-size:1.05rem; margin:.6rem 0 .3rem;">小中学校 LED照明改修工事</h3>
-          <p class="text-sub" style="font-size:.85rem;">発注者：○○市教育委員会／2025年度／照明改修</p></div>
+      <article class="card reveal d1" data-cat="kuni">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1565608087341-404b25492fee?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">官公庁（国）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">照明設備LED化工事（八王子年金事務所）南関東</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：日本年金機構／東京都／照明LED化／施工中</p></div>
       </article>
-      <article class="card reveal d2" data-cat="infra">
+      <article class="card reveal d2" data-cat="kuni">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1565608087341-404b25492fee?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">官公庁（国）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">木月住宅ほか 共用部照明器具改修工事</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：関東財務局／神奈川県／照明改修／施工中</p></div>
+      </article>
+      <article class="card reveal" data-cat="kuni">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1565608087341-404b25492fee?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">官公庁（国）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">上野税務署 照明改修工事</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：名古屋国税局／照明改修／施工中</p></div>
+      </article>
+      <article class="card reveal d1" data-cat="kuni">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1565608087341-404b25492fee?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">官公庁（国）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">大阪拘置所尼崎拘置支所 庁舎棟 照明設備LED化改修工事</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：法務省 大阪拘置所／兵庫県／照明LED化改修／施工中</p></div>
+      </article>
+      <article class="card reveal d2" data-cat="kuni">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1565608087341-404b25492fee?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">官公庁（国）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">小松（7）照明改修等 電気工事</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：航空自衛隊／石川県／照明改修・電気／施工中</p></div>
+      </article>
+      <article class="card reveal" data-cat="jichi">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">自治体（県・市）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">本庁舎北館・南館 自動火災報知設備更新工事</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：芦屋市／兵庫県／自動火災報知設備／施工中</p></div>
+      </article>
+      <article class="card reveal d1" data-cat="jichi">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1565608087341-404b25492fee?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">自治体（県・市）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">ルナ・ホールホワイエ等 照明設備改修工事</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：芦屋市／兵庫県／照明設備改修／施工中</p></div>
+      </article>
+      <article class="card reveal d2" data-cat="jichi">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1565608087341-404b25492fee?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">自治体（県・市）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">ポートアイランド地区他 ヤード照明LED化工事</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：神戸市／兵庫県／照明LED化／施工中</p></div>
+      </article>
+      <article class="card reveal" data-cat="jichi">
         <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80')"></div>
-        <div style="padding:1.3rem;"><span class="chip chip-amber">インフラ・公共施設</span>
-          <h3 class="serif" style="font-weight:700; font-size:1.05rem; margin:.6rem 0 .3rem;">上下水道施設 電気設備工事</h3>
-          <p class="text-sub" style="font-size:.85rem;">発注者：独立行政法人／2024年度／動力・制御盤</p></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">自治体（県・市）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">三宮中央通り駐車場 一斉開放弁取替業務</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：神戸市道路公社／兵庫県／設備更新／施工中</p></div>
       </article>
-      <article class="card reveal" data-cat="kankocho">
-        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80')"></div>
-        <div style="padding:1.3rem;"><span class="chip chip-amber">官公庁・自治体</span>
-          <h3 class="serif" style="font-weight:700; font-size:1.05rem; margin:.6rem 0 .3rem;">庁舎 非常用電源設備工事</h3>
-          <p class="text-sub" style="font-size:.85rem;">発注者：○○県／2024年度／発電・非常用</p></div>
+      <article class="card reveal d1" data-cat="jichi">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">自治体（県・市）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">奥平野浄水場 電力ケーブル他 仮設工事</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：神戸市（上下水道）／兵庫県／電力ケーブル／施工中</p></div>
       </article>
-      <article class="card reveal d1" data-cat="gakko">
-        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=900&q=80')"></div>
-        <div style="padding:1.3rem;"><span class="chip chip-amber">学校施設</span>
-          <h3 class="serif" style="font-weight:700; font-size:1.05rem; margin:.6rem 0 .3rem;">体育館 電気設備更新工事</h3>
-          <p class="text-sub" style="font-size:.85rem;">発注者：○○市／2023年度／内線・照明</p></div>
+      <article class="card reveal d2" data-cat="jichi">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">自治体（県・市）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">神戸駅南駐車場 泡消火設備整備業務</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：神戸市／兵庫県／泡消火設備／施工中</p></div>
       </article>
-      <article class="card reveal d2" data-cat="infra">
-        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1516216628859-9bccecab13ca?auto=format&fit=crop&w=900&q=80')"></div>
-        <div style="padding:1.3rem;"><span class="chip chip-amber">インフラ・公共施設</span>
-          <h3 class="serif" style="font-weight:700; font-size:1.05rem; margin:.6rem 0 .3rem;">公共施設 空調・電気設備工事</h3>
-          <p class="text-sub" style="font-size:.85rem;">発注者：○○市／2023年度／空調・弱電</p></div>
-      </article>
-      <article class="card reveal" data-cat="minkan">
-        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1503389152951-9f343605f61e?auto=format&fit=crop&w=900&q=80')"></div>
-        <div style="padding:1.3rem;"><span class="chip chip-navy">民間</span>
-          <h3 class="serif" style="font-weight:700; font-size:1.05rem; margin:.6rem 0 .3rem;">大規模マンション 電気設備工事</h3>
-          <p class="text-sub" style="font-size:.85rem;">発注者：民間ゼネコン／2024年度／新築電気一式</p></div>
+      <article class="card reveal" data-cat="jichi">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1558449028-b53a39d100fc?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-amber">自治体（県・市）</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">芦屋浜高層住宅 非常用発電設備改修工事</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：兵庫県／兵庫県／非常用発電設備／施工中</p></div>
       </article>
       <article class="card reveal d1" data-cat="minkan">
-        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=900&q=80')"></div>
         <div style="padding:1.3rem;"><span class="chip chip-navy">民間</span>
-          <h3 class="serif" style="font-weight:700; font-size:1.05rem; margin:.6rem 0 .3rem;">オフィスビル 内線・盤製作</h3>
-          <p class="text-sub" style="font-size:.85rem;">発注者：民間／2023年度／内線・盤製作</p></div>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">門真市三ツ島計画（電気設備）</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：株式会社松本組／大阪府／電気設備／施工中</p></div>
       </article>
-      <article class="card reveal d2" data-cat="kankocho">
-        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=900&q=80')"></div>
-        <div style="padding:1.3rem;"><span class="chip chip-amber">官公庁・自治体</span>
-          <h3 class="serif" style="font-weight:700; font-size:1.05rem; margin:.6rem 0 .3rem;">公共施設 防犯・弱電設備工事</h3>
-          <p class="text-sub" style="font-size:.85rem;">発注者：○○市／2022年度／防犯・放送</p></div>
+      <article class="card reveal d2" data-cat="minkan">
+        <div style="height:180px; background-size:cover; background-position:center; background-image:url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=900&q=80')"></div>
+        <div style="padding:1.3rem;"><span class="chip chip-navy">民間</span>
+          <h3 class="serif" style="font-weight:700; font-size:1.02rem; margin:.6rem 0 .3rem; line-height:1.4;">八戸ノ里マンション（電気設備）</h3>
+          <p class="text-sub" style="font-size:.83rem;">発注者：株式会社松本組／大阪府／電気設備／施工中</p></div>
       </article>
     </div>
-    <p class="text-sub reveal" style="margin-top:1.4rem; font-size:.82rem;">※掲載内容は代表的な実績例です。守秘義務のある案件は概要のみ掲載しています。</p>
+    <p class="text-sub reveal" style="margin-top:1.4rem; font-size:.82rem;">※発注機関の担当者個人名・契約金額は掲載していません。海上保安本部・日本年金機構・財務局・国税局・拘置所・航空自衛隊・兵庫県・神戸市・芦屋市など、全国の官公庁で電気設備工事を手がけています。</p>
   </div>
 </section>
 
@@ -189,7 +224,7 @@
 <footer class="site-footer">
   <div class="wrap" style="padding-block:3.5rem;">
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:2rem;">
-      <div><div class="brand" style="color:#fff;"><span class="mark" aria-hidden="true">AL</span><span class="brand-name"><b style="color:#fff;">株式会社オールライト</b><span style="color:rgba(255,255,255,.6);">ALLLIGHT CO., LTD.</span></span></div>
+      <div><div class="brand" style="color:#fff;"><img class="brand-logo brand-logo-dark" src="/assets/logo-white.svg" alt="株式会社オールライト" width="150" height="23" /><img class="brand-logo brand-logo-light" src="/assets/logo.svg" alt="株式会社オールライト" width="150" height="23" /></div>
         <p style="margin-top:1rem; font-size:.86rem;">公共工事で、まちに光を灯す。<br />官公庁・公共施設の電気設備工事を全国で。</p></div>
       <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">サイトマップ</h4>
         <ul style="list-style:none; display:grid; gap:.5rem; font-size:.9rem;">
