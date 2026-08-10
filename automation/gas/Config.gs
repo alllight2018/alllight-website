@@ -96,9 +96,9 @@ var MEETINGS = [
   {
     key: 'chorei_0808',
     displayName: '全体朝礼 8:08',
-    aliases: ['全体朝礼808', '朝礼808', '全体朝礼8時08分'],
-    recurringEventId: null,
-    meetCode: null, // createMorningAssemblies() で固定Meetを付与
+    aliases: ['全体朝礼808', '朝礼808', '全体朝礼8時08分', '全体朝礼8'],
+    recurringEventId: 'hfroeeb02k56b170fplacp43jk', // 作成済み（平日8:08）
+    meetCode: 'euq-vyiz-wss',
     mcRotation: [],
     templateKey: 'chorei',
     assetTab: '朝礼'
@@ -107,8 +107,8 @@ var MEETINGS = [
     key: 'chorei_0900',
     displayName: '全体朝礼 9:00',
     aliases: ['全体朝礼900', '朝礼900', '全体朝礼9時'],
-    recurringEventId: null,
-    meetCode: null,
+    recurringEventId: 'rbpfnj8m4lei27f3samc178h7s', // 作成済み（平日9:00）
+    meetCode: 'ehg-dihw-emz',
     mcRotation: [],
     templateKey: 'chorei',
     assetTab: '朝礼'
