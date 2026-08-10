@@ -64,10 +64,9 @@ var MEETINGS = [
     key: 'kanbu',
     displayName: '幹部会議',
     aliases: ['幹部会議'],
-    // 幹部会議は定例が2系列に分裂しているため両方を候補にする（次回が近い方を採用）
-    recurringEventId: 'lu7jutfb5u63n7n4m9vetn1i0s',
-    recurringEventIdAlt: '0i7104fqmhndn8a5pt2b6dr07m',
-    meetCode: null,
+    // 2026-08-10 に分裂していた2系列を隔週金曜の1本へ統合（対面手順つき）
+    recurringEventId: 'lnpa6p8domabq8jip91j9lkurk',
+    meetCode: 'ppn-qfwg-aus',
     mcRotation: ['木下', '井上', '真耶'],
     templateKey: 'kanbu',
     assetTab: '幹部会議'

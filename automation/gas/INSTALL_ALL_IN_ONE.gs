@@ -42,13 +42,14 @@ var ASSET_DOC_PROP   = 'ASSET_DOC_ID';     // 会議資産ログ（全文の蓄�
 var MEETINGS = [
   {
     key: 'sekokanri',
-    displayName: '施行管理部会',
-    aliases: ['施行管理部会', '施工管理部会', '施行管理勉強会', '施工管理勉強会'],
+    displayName: '施工管理部会',
+    // 旧称「施行管理部会」で届くGeminiメモも aliases で吸収（2026-08-10 に施工へ改名）
+    aliases: ['施工管理部会', '施行管理部会', '施工管理勉強会', '施行管理勉強会'],
     recurringEventId: 'aemi9o3dnjpl34pko8sdkh8e60',
     meetCode: 'zkd-gifp-res',
     mcRotation: ['井上', '木山', '渡邉', '金井'],
     templateKey: 'sekokanri',
-    assetTab: '施行管理部会'
+    assetTab: '施工管理部会'
   },
   {
     key: 'nyusatsu',
@@ -74,10 +75,9 @@ var MEETINGS = [
     key: 'kanbu',
     displayName: '幹部会議',
     aliases: ['幹部会議'],
-    // 幹部会議は定例が2系列に分裂しているため両方を候補にする（次回が近い方を採用）
-    recurringEventId: 'lu7jutfb5u63n7n4m9vetn1i0s',
-    recurringEventIdAlt: '0i7104fqmhndn8a5pt2b6dr07m',
-    meetCode: null,
+    // 2026-08-10 に分裂していた2系列を隔週金曜の1本へ統合（対面手順つき）
+    recurringEventId: 'lnpa6p8domabq8jip91j9lkurk',
+    meetCode: 'ppn-qfwg-aus',
     mcRotation: ['木下', '井上', '真耶'],
     templateKey: 'kanbu',
     assetTab: '幹部会議'
