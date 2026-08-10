@@ -7,6 +7,18 @@
  * {{DASHBOARD}}… 統合ダッシュボードURL
  */
 
+/**
+ * 全員が同じ部屋にいる「対面会議」で、Meetが自動終了したり
+ * 「ひとりで録音」と誤認されて失敗するのを防ぐための開き方ガイド。
+ * 条件付き（全員同室のとき）なので、遠隔参加の会議に入っても害はない。
+ */
+var INROOM_GUIDE = [
+  '【全員が同じ部屋にいる対面会議のときは（重要）】',
+  '・主端末（PC/タブレット）を部屋の中央に置いてMeetに入室し、「メモを取る（Gemini・日本語）」＋録音を開始。マイクON／スピーカーはOFFか最小（ハウリング防止）。',
+  '・スマホ等もう1台を同じMeetに「コンパニオンモードで参加」＝参加者を2人以上にする。これで自動終了・"ひとり録音"の誤認を防ぎます。',
+  '・マイクONは主端末の1台だけ。各自、名前を言ってから30秒以上ハッキリ日本語で話す（短い・小声だと会話量不足で失敗）。'
+].join('\n');
+
 var TEMPLATES = {
 
   // 施行管理部会（30分）
@@ -14,6 +26,8 @@ var TEMPLATES = {
     '{{MC}}',
     '',
     '{{CARRYOVER}}',
+    '',
+    '{{INROOM}}',
     '',
     '【会議開始チェック】',
     '・Gemini「メモを取る」の言語＝日本語',
@@ -45,6 +59,8 @@ var TEMPLATES = {
     '',
     '{{CARRYOVER}}',
     '',
+    '{{INROOM}}',
+    '',
     '【会議開始チェック】Gemini「メモを取る」＝日本語 / 文字起こしON / 開始1分後に記録確認',
     '',
     '【統合ダッシュボード】 {{DASHBOARD}}',
@@ -67,6 +83,8 @@ var TEMPLATES = {
     '{{MC}}',
     '',
     '{{CARRYOVER}}',
+    '',
+    '{{INROOM}}',
     '',
     '【会議開始チェック】Gemini「メモを取る」＝日本語 / 文字起こしON / 録音開始',
     '',
@@ -92,6 +110,8 @@ var TEMPLATES = {
     '{{MC}}',
     '',
     '{{CARRYOVER}}',
+    '',
+    '{{INROOM}}',
     '',
     '【会議のルール】各項目は事前にメモし、その場で考えない／報告は 結論→数字・期限→自分の意見／互いを尊重し建設的に。',
     '',
@@ -170,6 +190,7 @@ function renderTemplate_(meeting, mcName, carryover) {
   return t
     .replace('{{MC}}', mcLine)
     .replace('{{CARRYOVER}}', carryover || '')
+    .replace('{{INROOM}}', INROOM_GUIDE)
     .replace('{{DASHBOARD}}', DASHBOARD_URL)
     .replace('{{KANBU_DASHBOARD}}', KANBU_DASHBOARD_URL)
     .replace(/\n{3,}/g, '\n\n')
