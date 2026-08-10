@@ -79,17 +79,17 @@ var MEETINGS = [
     recurringEventId: 'f0dsli92n6ue6s47nuk68u1440',
     meetCode: 'aav-imey-ubu',
     mcRotation: [],
-    templateKey: 'koji_choyu',
+    templateKey: 'koji_asa',
     assetTab: '工事部朝夕'
   },
   {
     key: 'koji_yu',
     displayName: '工事部　夕礼MTG',
     aliases: ['工事部夕礼MTG', '工事部夕MTG', '工事部夕礼', '工事部夕'],
-    recurringEventId: null, // 未確定。summary 検索で拾う
-    meetCode: 'aav-imey-ubu',
+    recurringEventId: '8iq68lcf456fukiovvp73a3128', // 毎日16:15 / Meet rum-irfn-wby
+    meetCode: 'rum-irfn-wby',
     mcRotation: [],
-    templateKey: 'koji_choyu',
+    templateKey: 'koji_yu',
     assetTab: '工事部朝夕'
   },
   // ── 新規: 全体朝礼をMeet化（8:08 / 9:00）。作成後に recurringEventId を記入 ──

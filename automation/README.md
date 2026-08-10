@@ -53,7 +53,8 @@ Gmail・カレンダーを実際に点検して特定した原因は次の4つ�
 
 | 会議 | 頻度 | Meet | 司会ローテ | 定例ID (recurringEventId) |
 |------|------|------|-----------|--------------------------|
-| 工事部 朝礼MTG / 夕礼MTG | 毎日 | `aav-imey-ubu` | — | `f0dsli92n6ue6s47nuk68u1440` ほか |
+| 工事部 朝礼MTG | 毎日 6:50 | `aav-imey-ubu` | — | `f0dsli92n6ue6s47nuk68u1440` |
+| 工事部 夕礼MTG | 毎日 16:15 | `rum-irfn-wby` | — | `8iq68lcf456fukiovvp73a3128` |
 | 入札会議 | 毎週(月) | `khx-kawe-uij` | 真耶→金山→森田 | `btf7lvch8tieemkab9sqeqql0k` |
 | 施行管理部会 | 毎週(木) | `zkd-gifp-res` | 井上→木山→渡邉→金井 | `aemi9o3dnjpl34pko8sdkh8e60` |
 | 工事部会 | 隔週(金) | `anc-bxof-ugc` | 木下→澤田→辻本 | `i0a69jtfu66odtdm72rlafbvpc` |
