@@ -160,6 +160,56 @@ a:hover { color: inherit; }
     linear-gradient(0deg, rgba(6,7,9,.92), rgba(6,7,9,0) 60%);
 }
 
+/* ---------- 小田島組式センターヒーロー ---------- */
+.hero-center .hero-overlay {
+  background:
+    radial-gradient(120% 90% at 50% 42%, rgba(6,7,9,.30) 0%, rgba(6,7,9,.55) 55%, rgba(6,7,9,.82) 100%),
+    linear-gradient(0deg, rgba(6,7,9,.85), rgba(6,7,9,0) 45%),
+    linear-gradient(180deg, rgba(6,7,9,.55), rgba(6,7,9,0) 30%);
+}
+.hero-center .hero-bg { animation: heroZoom 18s ease-out forwards; }
+@keyframes heroZoom { from { transform: scale(1.14); } to { transform: scale(1.02); } }
+
+.hero-kicker {
+  color: rgba(255,255,255,.92);
+  letter-spacing: .42em; font-size: clamp(.72rem, 1.8vw, .9rem);
+  justify-content: center; text-indent: .42em;
+}
+.hero-kicker::before { display: none; }
+
+.hero-title {
+  margin-top: 1.1rem;
+  font-size: clamp(2.9rem, 12vw, 8.2rem);
+  line-height: 1.04; letter-spacing: .06em;
+  color: #fff; text-shadow: 0 6px 40px rgba(0,0,0,.45);
+}
+.hero-title .hype-mark { text-shadow: none; }
+
+.hero-lead {
+  max-width: 680px; margin: 1.6rem auto 0;
+  font-size: clamp(1rem, 2.6vw, 1.2rem); line-height: 2;
+  color: rgba(255,255,255,.9);
+}
+.hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 2.4rem; }
+
+/* SCROLL 誘導 */
+.scroll-cue {
+  position: absolute; left: 50%; bottom: 1.6rem; transform: translateX(-50%);
+  display: inline-flex; flex-direction: column; align-items: center; gap: .55rem;
+  color: rgba(255,255,255,.8); z-index: 3;
+}
+.scroll-cue span {
+  font-size: .62rem; letter-spacing: .34em; text-indent: .34em; font-weight: 700;
+}
+.scroll-cue i { position: relative; width: 1px; height: 46px; background: rgba(255,255,255,.35); overflow: hidden; }
+.scroll-cue i::after {
+  content: ""; position: absolute; left: 0; top: -50%; width: 100%; height: 50%;
+  background: #fff; animation: scrollLine 1.8s cubic-bezier(.4,0,.2,1) infinite;
+}
+@keyframes scrollLine { 0% { top: -50%; } 60%,100% { top: 100%; } }
+
+@media (max-width: 640px) { .sp-hide { display: none; } }
+
 /* ---------- 数字（ブチアゲ） ---------- */
 .stat-num {
   font-family: "Noto Serif JP", serif; font-weight: 700; line-height: 1;
