@@ -178,12 +178,13 @@ a:hover { color: inherit; }
 .hero-kicker::before { display: none; }
 
 .hero-title {
-  margin-top: 1.1rem;
-  font-size: clamp(2.9rem, 12vw, 8.2rem);
-  line-height: 1.04; letter-spacing: .06em;
-  color: #fff; text-shadow: 0 6px 40px rgba(0,0,0,.45);
+  margin-top: 1rem;
+  font-size: clamp(3.4rem, 17vw, 12rem);
+  line-height: 1.02; letter-spacing: .03em;
+  color: #fff; text-shadow: 0 6px 40px rgba(0,0,0,.5);
 }
 .hero-title .hype-mark { text-shadow: none; }
+.hero-title .ht-br { display: block; }
 
 .hero-lead {
   max-width: 680px; margin: 1.6rem auto 0;
