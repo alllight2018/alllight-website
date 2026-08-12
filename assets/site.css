@@ -178,9 +178,10 @@ a:hover { color: inherit; }
 .hero-kicker::before { display: none; }
 
 .hero-title {
+  font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 900;
   margin-top: 1rem;
-  font-size: clamp(3.4rem, 17vw, 12rem);
-  line-height: 1.02; letter-spacing: .03em;
+  font-size: clamp(3.2rem, 15vw, 10.5rem);
+  line-height: 1.06; letter-spacing: .08em;
   color: #fff; text-shadow: 0 6px 40px rgba(0,0,0,.5);
 }
 .hero-title .hype-mark { text-shadow: none; }
