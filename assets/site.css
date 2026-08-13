@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Zen+Old+Mincho:wght@600;700;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
 /* =========================================================
    株式会社オールライト コーポレートサイト
    共通スタイル（Tailwind CDN を補完するブランドレイヤー）
@@ -163,7 +163,7 @@ a:hover { color: inherit; }
 /* ---------- 小田島組式センターヒーロー ---------- */
 .hero-center .hero-overlay {
   background:
-    radial-gradient(120% 90% at 50% 42%, rgba(6,7,9,.30) 0%, rgba(6,7,9,.55) 55%, rgba(6,7,9,.82) 100%),
+    radial-gradient(115% 85% at 50% 44%, rgba(6,7,9,.48) 0%, rgba(6,7,9,.64) 55%, rgba(6,7,9,.86) 100%),
     linear-gradient(0deg, rgba(6,7,9,.85), rgba(6,7,9,0) 45%),
     linear-gradient(180deg, rgba(6,7,9,.55), rgba(6,7,9,0) 30%);
 }
@@ -178,19 +178,24 @@ a:hover { color: inherit; }
 .hero-kicker::before { display: none; }
 
 .hero-title {
-  font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 900;
-  margin-top: 1rem;
-  font-size: clamp(3.2rem, 15vw, 10.5rem);
-  line-height: 1.06; letter-spacing: .08em;
-  color: #fff; text-shadow: 0 6px 40px rgba(0,0,0,.5);
+  font-family: "Zen Old Mincho", "Noto Serif JP", serif; font-weight: 900;
+  margin-top: 1.1rem;
+  font-size: clamp(3rem, 13.5vw, 9.6rem);
+  line-height: 1.16; letter-spacing: .16em; text-indent: .16em;
+  color: #fff; text-shadow: 0 8px 44px rgba(0,0,0,.55);
 }
 .hero-title .hype-mark { text-shadow: none; }
 .hero-title .ht-br { display: block; }
 
+.hero-en {
+  font-family: "Cormorant Garamond", serif; font-style: italic; font-weight: 500;
+  margin-top: 1.1rem; font-size: clamp(1rem, 2.4vw, 1.5rem);
+  letter-spacing: .18em; text-indent: .18em; color: rgba(255,255,255,.82);
+}
 .hero-lead {
-  max-width: 680px; margin: 1.6rem auto 0;
-  font-size: clamp(1rem, 2.6vw, 1.2rem); line-height: 2;
-  color: rgba(255,255,255,.9);
+  max-width: 640px; margin: 1.5rem auto 0;
+  font-size: clamp(.95rem, 2.4vw, 1.1rem); line-height: 2.05; letter-spacing: .04em;
+  color: rgba(255,255,255,.82);
 }
 .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 2.4rem; }
 
