@@ -89,7 +89,7 @@ const head = ({ title, desc, canonical, ogimg }) => `<!DOCTYPE html>
 <meta property="og:title" content="${esc(title)}" />
 <meta property="og:description" content="${esc(desc)}" />
 <meta property="og:url" content="${canonical}" />
-<meta property="og:image" content="${ogimg}" />
+<meta property="og:image" content="${ogimg.startsWith('http') ? ogimg : SITE_ORIGIN + ogimg}" />
 <meta property="og:locale" content="ja_JP" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -110,7 +110,7 @@ function renderAreaPage(area, allAreas, services = []) {
   const kw = `${area.name} 電気工事`;
   const title = `${label}の電気工事・公共工事なら株式会社オールライト｜電気設備工事・施工管理`;
   const desc = `${label}で電気工事・公共工事の電気設備工事をお探しなら株式会社オールライトへ。${area.context} 受変電・内線・LED照明改修・施工管理まで自社一気通貫で対応。工事成績評定点でも高評価。無料お見積り・採用相談も受付中。`;
-  const ogimg = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80";
+  const ogimg = "/assets/photos/building-night.jpg";
 
   const faqs = [
     { q: `${label}で公共工事の電気設備工事を依頼できますか？`, a: `はい。オールライトは神戸市を拠点に、${label}の官公庁・自治体・独立行政法人が発注する電気設備工事に対応しています。積算・入札から施工管理、完成書類の作成までを自社で一貫してお引き受けします。` },
@@ -121,7 +121,7 @@ function renderAreaPage(area, allAreas, services = []) {
   const faqSchema = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })) };
   const bizSchema = {
     "@context": "https://schema.org", "@type": ["ElectricalContractor", "GeneralContractor"],
-    name: "株式会社オールライト", url: SITE_ORIGIN, image: ogimg,
+    name: "株式会社オールライト", url: SITE_ORIGIN, image: SITE_ORIGIN + ogimg,
     areaServed: { "@type": area.isPrefecture ? "State" : "City", name: label },
     address: { "@type": "PostalAddress", postalCode: "652-0823", addressRegion: "兵庫県", addressLocality: "神戸市兵庫区", streetAddress: "東出町2丁目8-8", addressCountry: "JP" },
     knowsAbout: ["公共工事", "電気設備工事", "受変電設備", "LED照明改修", "施工管理"]
@@ -144,7 +144,7 @@ function renderAreaPage(area, allAreas, services = []) {
 ${header(p)}
 
 <section class="hero" style="min-height:52vh; display:flex; align-items:flex-end;">
-  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=2000&q=80')"></div>
+  <div class="hero-bg" style="background-image:url('/assets/photos/genba.jpg')"></div>
   <div class="hero-overlay"></div>
   <div class="wrap" style="position:relative; padding-block:3rem;">
     <p class="eyebrow">AREA — ${esc(area.reading)}</p>
@@ -225,13 +225,13 @@ function renderAreaHub(areas) {
   const url = `${SITE_ORIGIN}/area/index.html`;
   const title = "対応エリア｜兵庫県・神戸市の電気工事・公共工事｜株式会社オールライト";
   const desc = "株式会社オールライトの対応エリア一覧。神戸市・明石市・姫路市・西宮市など兵庫県全域で電気工事・公共工事の電気設備工事に対応します。地域ごとの対応内容をご紹介。";
-  return `${head({ title, desc, canonical: url, ogimg: "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80" })}
+  return `${head({ title, desc, canonical: url, ogimg: "/assets/photos/building-night.jpg" })}
 <link rel="stylesheet" href="${p}assets/site.css" />
 </head>
 <body>
 ${header(p, "area")}
 <section class="hero" style="min-height:40vh; display:flex; align-items:flex-end;">
-  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=2000&q=80')"></div>
+  <div class="hero-bg" style="background-image:url('/assets/photos/building-night.jpg')"></div>
   <div class="hero-overlay"></div>
   <div class="wrap" style="position:relative; padding-block:2.6rem;">
     <p class="eyebrow">AREA</p>
@@ -369,13 +369,13 @@ function renderServiceHub(services) {
   const url = `${SITE_ORIGIN}/service/index.html`;
   const title = "施工内容（電気設備工事の工種）｜株式会社オールライト｜神戸・兵庫";
   const desc = "株式会社オールライトの施工内容一覧。電気設備工事・受変電（キュービクル）・LED照明改修・内線幹線・防災防犯弱電・空調設備まで、公共工事に対応する工種をご紹介します。";
-  return `${head({ title, desc, canonical: url, ogimg: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1200&q=80" })}
+  return `${head({ title, desc, canonical: url, ogimg: "/assets/photos/genba.jpg" })}
 <link rel="stylesheet" href="${p}assets/site.css" />
 </head>
 <body>
 ${header(p, "service")}
 <section class="hero" style="min-height:40vh; display:flex; align-items:flex-end;">
-  <div class="hero-bg" style="background-image:url('https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=2000&q=80')"></div>
+  <div class="hero-bg" style="background-image:url('/assets/photos/genba.jpg')"></div>
   <div class="hero-overlay"></div>
   <div class="wrap" style="position:relative; padding-block:2.6rem;">
     <p class="eyebrow">SERVICE</p>

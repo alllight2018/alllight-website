@@ -52,7 +52,7 @@ const textToParagraphs = (text = "") =>
 /* ---------- 個別記事テンプレート ---------- */
 function renderArticle(post) {
   const url = `${SITE_ORIGIN}/blog/report-${post.slug}.html`;
-  const cover = post.cover_image_url || "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80";
+  const cover = post.cover_image_url || "/assets/photos/building-night.jpg";
   const bodyHtml = post.body_format === "html" ? post.body : textToParagraphs(post.body);
   const desc = esc(post.excerpt || String(post.body).slice(0, 110));
   return `<!DOCTYPE html>
@@ -69,7 +69,7 @@ function renderArticle(post) {
 <meta property="og:title" content="${esc(post.title)}" />
 <meta property="og:description" content="${desc}" />
 <meta property="og:url" content="${url}" />
-<meta property="og:image" content="${esc(cover)}" />
+<meta property="og:image" content="${esc(cover.startsWith('http') ? cover : SITE_ORIGIN + cover)}" />
 <meta property="og:locale" content="ja_JP" />
 <meta name="twitter:card" content="summary_large_image" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -80,7 +80,7 @@ function renderArticle(post) {
 <script type="application/ld+json">
 ${JSON.stringify({
   "@context": "https://schema.org", "@type": "Article",
-  headline: post.title, description: post.excerpt || undefined, image: cover,
+  headline: post.title, description: post.excerpt || undefined, image: cover.startsWith('http') ? cover : SITE_ORIGIN + cover,
   datePublished: post.published_at || post.created_at,
   dateModified: post.updated_at || post.published_at || post.created_at,
   author: { "@type": "Organization", name: "株式会社オールライト" },
@@ -155,7 +155,7 @@ function renderCards(posts) {
       </div>`;
   }
   return posts.map((p, i) => {
-    const cover = p.cover_image_url || "https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80";
+    const cover = p.cover_image_url || "/assets/photos/building-night.jpg";
     const d = i % 3 === 1 ? " d1" : i % 3 === 2 ? " d2" : "";
     return `      <a class="card reveal${d}" href="report-${p.slug}.html" style="display:block;">
         <div style="height:180px; background-size:cover; background-position:center; background-image:url('${esc(cover)}')"></div>

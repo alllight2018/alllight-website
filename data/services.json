@@ -4,7 +4,7 @@
     {
       "slug": "denki-setsubi", "name": "電気設備工事", "en": "ELECTRICAL FACILITIES", "reading": "でんきせつびこうじ",
       "tagline": "公共施設の電気を、まるごと。",
-      "image": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=1600&q=80",
+      "image": "/assets/photos/genba.jpg",
       "intro": "官公庁・公共施設の新築・改修に伴う電気設備工事を一式でお引き受けします。設計・積算から施工管理、完成書類まで自社一気通貫。発注者の窓口を一本化し、品質と工程を確実にコントロールします。",
       "scope": ["受変電・幹線・内線工事", "照明・コンセント設備", "動力・制御設備", "防災・弱電・通信設備", "完成図書・出来形書類の作成"],
       "process": ["現地調査・積算", "施工計画・工程作成", "施工・施工管理", "検査・完成書類・引き渡し"]
@@ -12,7 +12,7 @@
     {
       "slug": "juhenden", "name": "受変電・キュービクル設備工事", "en": "SUBSTATION", "reading": "じゅへんでんせつび",
       "tagline": "電力の心臓部を、確実に。",
-      "image": "https://images.unsplash.com/photo-1558449028-b53a39d100fc?auto=format&fit=crop&w=1600&q=80",
+      "image": "/assets/photos/sekou-kanri.jpg",
       "intro": "高圧受電の要となる受変電設備（キュービクル）の新設・更新工事に対応します。停電計画から搬入・据付・結線・試験までを段取りよく管理し、施設を止めないきめ細かな施工を行います。",
       "scope": ["キュービクル新設・更新", "高圧・低圧幹線工事", "力率改善・省エネ提案", "更新時の停電・切替計画", "定期点検・保守の相談"],
       "process": ["現地調査・容量検討", "停電・搬入計画", "据付・結線・試験", "受電・引き渡し"]
@@ -20,7 +20,7 @@
     {
       "slug": "led-shoumei", "name": "LED照明・省エネ改修工事", "en": "LED / ENERGY SAVING", "reading": "エルイーディーしょうめい",
       "tagline": "コスト削減と、脱炭素を同時に。",
-      "image": "https://images.unsplash.com/photo-1565608087341-404b25492fee?auto=format&fit=crop&w=1600&q=80",
+      "image": "/assets/photos/genba.jpg",
       "intro": "学校・庁舎・公共施設のLED化・省エネ改修を得意としています。電気料金の削減とCO2削減を両立し、補助金活用のご相談にも対応。施設を使いながらの改修も計画的に進めます。",
       "scope": ["蛍光灯・水銀灯のLED化", "照明制御・人感センサー導入", "電気料金・省エネ試算", "補助金活用の相談", "施設稼働中の分割施工"],
       "process": ["現地調査・照度/省エネ試算", "改修計画・見積", "施工・点灯確認", "効果測定・引き渡し"]
@@ -28,7 +28,7 @@
     {
       "slug": "naisen-kansen", "name": "内線・幹線工事", "en": "WIRING", "reading": "ないせん・かんせん",
       "tagline": "建物の血管を、丁寧に。",
-      "image": "https://images.unsplash.com/photo-1516216628859-9bccecab13ca?auto=format&fit=crop&w=1600&q=80",
+      "image": "/assets/photos/sekou-kanri.jpg",
       "intro": "分電盤から各設備までの内線・幹線配線工事に対応します。増設・改修・レイアウト変更に伴う配線まで、図面どおりの品質と美しい納まりで施工します。",
       "scope": ["幹線・分電盤工事", "内線配線・器具付け", "増設・改修配線", "盤製作・改造", "電気室・EPS工事"],
       "process": ["現地調査・打合せ", "施工図・材料手配", "配線・器具付け・試験", "検査・引き渡し"]
@@ -36,7 +36,7 @@
     {
       "slug": "bousai-jakuden", "name": "防災・防犯・弱電設備工事", "en": "SECURITY / LOW VOLTAGE", "reading": "ぼうさい・ぼうはん・じゃくでん",
       "tagline": "施設の安心を、総合的に。",
-      "image": "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&w=1600&q=80",
+      "image": "/assets/photos/building-night.jpg",
       "intro": "公共施設の防災・防犯・弱電設備の工事に対応します。防犯カメラ、放送・インターホン、通信・LAN配線まで、施設の安全と利便を支える設備を確実に施工します。",
       "scope": ["防犯カメラ・入退室設備", "放送・インターホン設備", "通信・LAN・弱電配線", "自動火災報知設備の関連工事", "既存設備の更新・増設"],
       "process": ["現地調査・機器選定", "施工計画・見積", "配線・機器設置・調整", "動作確認・引き渡し"]
@@ -44,7 +44,7 @@
     {
       "slug": "kuchou", "name": "空調設備工事", "en": "AIR CONDITIONING", "reading": "くうちょうせつび",
       "tagline": "快適な環境を、電気の力で。",
-      "image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1600&q=80",
+      "image": "/assets/photos/genba.jpg",
       "intro": "公共施設・事業所の空調設備の新設・更新工事に、電気設備と一体で対応します。動力・制御を含めた計画で、快適性と省エネを両立します。",
       "scope": ["業務用空調の新設・更新", "動力・制御設備工事", "換気設備工事", "電気設備との一体施工", "省エネ・更新提案"],
       "process": ["現地調査・機器選定", "施工計画・見積", "据付・配管・電気工事", "試運転・引き渡し"]

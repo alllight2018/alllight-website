@@ -2,11 +2,11 @@
   "note": "Instagram連携データ。scripts/fetch-instagram.mjs がGraph APIトークン(IG_TOKEN/IG_USER_ID)で自動更新します。トークン未設定の間は、この注目投稿(プレースホルダ)が表示されます。画像は自社の実写真に差し替え推奨。",
   "profile": "https://www.instagram.com/alllight2018/",
   "posts": [
-    { "image": "https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=600&q=80", "permalink": "https://www.instagram.com/alllight2018/", "caption": "現場の一枚。安全第一で今日も稼働。" },
-    { "image": "https://images.unsplash.com/photo-1558449028-b53a39d100fc?auto=format&fit=crop&w=600&q=80", "permalink": "https://www.instagram.com/alllight2018/", "caption": "受変電設備の施工中。" },
-    { "image": "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=600&q=80", "permalink": "https://www.instagram.com/alllight2018/", "caption": "公共施設のLED改修。" },
-    { "image": "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=600&q=80", "permalink": "https://www.instagram.com/alllight2018/", "caption": "チームで段取り確認。" },
-    { "image": "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=600&q=80", "permalink": "https://www.instagram.com/alllight2018/", "caption": "完工。まちに光を灯す。" },
-    { "image": "https://images.unsplash.com/photo-1600486913747-55e5470d6f40?auto=format&fit=crop&w=600&q=80", "permalink": "https://www.instagram.com/alllight2018/", "caption": "若手も活躍中！" }
+    { "image": "/assets/photos/genba.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "現場の一枚。安全第一で今日も稼働。" },
+    { "image": "/assets/photos/sekou-kanri.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "受変電設備の施工中。" },
+    { "image": "/assets/photos/genba.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "公共施設のLED改修。" },
+    { "image": "/assets/photos/sekou-kanri.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "チームで段取り確認。" },
+    { "image": "/assets/photos/building-night.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "完工。まちに光を灯す。" },
+    { "image": "/assets/photos/genba.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "若手も活躍中！" }
   ]
 }
