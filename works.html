@@ -90,8 +90,8 @@
 
     <!-- 実績サマリー -->
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:1rem; margin-top:2.4rem;">
-      <div class="stat-card"><div class="stat-num" style="font-size:2.4rem;">7</div><p style="font-weight:700; margin-top:.3rem;">施工実績エリア（都道府県）</p></div>
-      <div class="stat-card"><div class="stat-num" style="font-size:2.4rem;">国・省庁</div><p style="font-weight:700; margin-top:.3rem;">海保・年金機構・財務局・法務省・防衛省・国税局</p></div>
+      <div class="stat-card"><div class="stat-num" style="font-size:2.4rem;">8</div><p style="font-weight:700; margin-top:.3rem;">施工実績エリア（都道府県）</p></div>
+      <div class="stat-card"><div class="stat-num" style="font-size:2.4rem;">国・省庁</div><p style="font-weight:700; margin-top:.3rem;">海保・年金機構・財務局・法務省・防衛省・国税局・東京航空局</p></div>
       <div class="stat-card"><div class="stat-num" style="font-size:2.4rem;">国立大学</div><p style="font-weight:700; margin-top:.3rem;">神戸大学・徳島大学 ほか</p></div>
       <div class="stat-card"><div class="stat-num" style="font-size:2.4rem;">工事＋役務</div><p style="font-weight:700; margin-top:.3rem;">工事のほか、設備の保守・整備業務（役務）にも対応</p></div>
     </div>
@@ -99,26 +99,7 @@
 </section>
 
 <!-- 全国実績マップ用データ（発注者担当者名・契約金額など非公開情報は含めない） -->
-<script>
-window.ALLLIGHT_MAP_DATA = [
-  { pref:"兵庫県", name:"国立大学 防災設備工事（神戸大学）", client:"国立大学法人 神戸大学", type:"工事", status:"施工実績", photo:"/assets/photos/sekou-kanri.jpg", desc:"国立大学の防災（自動火災報知・消火）設備。地元・神戸での確かな実績。" },
-  { pref:"兵庫県", name:"大阪拘置所尼崎拘置支所 庁舎棟 照明設備LED化改修工事", client:"法務省 大阪拘置所", type:"工事", status:"受注・施工中", photo:"/assets/photos/building-night.jpg" },
-  { pref:"兵庫県", name:"本庁舎北館・南館 自動火災報知設備更新工事", client:"芦屋市", type:"工事", status:"受注・施工中", photo:"/assets/photos/sekou-kanri.jpg" },
-  { pref:"兵庫県", name:"ルナ・ホールホワイエ等 照明設備改修工事", client:"芦屋市", type:"工事", status:"受注・施工中", photo:"/assets/photos/building-night.jpg" },
-  { pref:"兵庫県", name:"ポートアイランド地区他 ヤード照明LED化工事", client:"神戸市", type:"工事", status:"受注・施工中", photo:"/assets/photos/building-night.jpg" },
-  { pref:"兵庫県", name:"奥平野浄水場 電力ケーブル他 仮設工事", client:"神戸市（上下水道局）", type:"工事", status:"受注・施工中", photo:"/assets/photos/genba.jpg" },
-  { pref:"兵庫県", name:"芦屋浜高層住宅 非常用発電設備改修工事", client:"兵庫県", type:"工事", status:"受注・施工中", photo:"/assets/photos/genba.jpg" },
-  { pref:"兵庫県", name:"三宮中央通り駐車場 一斉開放弁取替業務", client:"神戸市道路公社", type:"役務", status:"受注・施工中", photo:"/assets/photos/genba.jpg" },
-  { pref:"兵庫県", name:"神戸駅南駐車場 泡消火設備整備業務", client:"神戸市", type:"役務", status:"受注・施工中", photo:"/assets/photos/sekou-kanri.jpg" },
-  { pref:"石川県", name:"小松（7）照明改修等 電気工事", client:"航空自衛隊（防衛省）", type:"工事", status:"受注・施工中", photo:"/assets/photos/genba.jpg", desc:"防衛省・航空自衛隊小松基地。北陸エリアでの省庁案件にも対応。" },
-  { pref:"東京都", name:"照明設備LED化工事（八王子年金事務所）", client:"日本年金機構", type:"工事", status:"受注・施工中", photo:"/assets/photos/building-night.jpg" },
-  { pref:"神奈川県", name:"木月住宅ほか 共用部照明器具改修工事", client:"関東財務局", type:"工事", status:"受注・施工中", photo:"/assets/photos/building-night.jpg" },
-  { pref:"大阪府", name:"大阪港安治川突堤南岸壁 電気設備工事", client:"第五管区海上保安本部", type:"工事", status:"受注・施工中", photo:"/assets/photos/genba.jpg" },
-  { pref:"大阪府", name:"門真市三ツ島計画（電気設備）", client:"元請：株式会社松本組", type:"工事", status:"受注・施工中", photo:"/assets/photos/genba.jpg" },
-  { pref:"三重県", name:"上野税務署 照明改修工事", client:"名古屋国税局", type:"工事", status:"受注・施工中", photo:"/assets/photos/building-night.jpg" },
-  { pref:"徳島県", name:"国立大学 電気設備工事（徳島大学）", client:"国立大学法人 徳島大学", type:"工事", status:"受注（新規）", photo:"/assets/photos/genba.jpg", desc:"落札・受注。四国エリアの国立大学案件。全国の国立大学・省庁案件に対応します。" }
-];
-</script>
+<script src="assets/works-data.js"></script>
 <script src="assets/japan-map.js" defer></script>
 
 <!-- ===== 工事成績（工事点数）バナー ===== -->
@@ -133,11 +114,10 @@ window.ALLLIGHT_MAP_DATA = [
       </p>
     </div>
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-top:2.2rem;">
-      <!-- TODO: 実際の評定点・件数に差し替え -->
-      <div class="stat-card dark reveal"><div><span class="stat-num" data-count="82" data-decimals="1">0</span><span class="stat-num" style="font-size:1.3rem;">点</span></div><p style="margin-top:.4rem; font-weight:700;">平均評定点</p></div>
-      <div class="stat-card dark reveal d1"><div><span class="stat-num" data-count="85">0</span><span class="stat-num" style="font-size:1.3rem;">点</span></div><p style="margin-top:.4rem; font-weight:700;">最高評定点</p></div>
-      <div class="stat-card dark reveal d2"><div><span class="stat-num" data-count="15">0</span><span class="stat-num" style="font-size:1.3rem;">件</span></div><p style="margin-top:.4rem; font-weight:700;">受注・施工中案件</p></div>
-      <div class="stat-card dark reveal d3"><div><span class="stat-num" data-count="120">0</span><span class="stat-num" style="font-size:1.3rem;">本</span></div><p style="margin-top:.4rem; font-weight:700;">年間入札参加</p></div>
+      <div class="stat-card dark reveal"><div><span class="stat-num" data-count="859">0</span><span class="stat-num" style="font-size:1.3rem;">点</span></div><p style="margin-top:.4rem; font-weight:700;">経営事項審査 総合評定値P（電気）</p><p class="text-sub" style="font-size:.76rem; color:rgba(255,255,255,.55);">審査基準日 R7.5.31</p></div>
+      <div class="stat-card dark reveal d1"><div><span class="stat-num" data-count="332">0</span><span class="stat-num" style="font-size:1.3rem;">本</span></div><p style="margin-top:.4rem; font-weight:700;">年間入札本数（2025年）</p></div>
+      <div class="stat-card dark reveal d2"><div><span class="stat-num" data-count="26">0</span><span class="stat-num" style="font-size:1.3rem;">件</span></div><p style="margin-top:.4rem; font-weight:700;">年間落札件数（2025年）</p></div>
+      <div class="stat-card dark reveal d3"><div><span class="stat-num" data-count="12">0</span><span class="stat-num" style="font-size:1.3rem;">名</span></div><p style="margin-top:.4rem; font-weight:700;">技術職員数（経審）</p></div>
     </div>
   </div>
 </section>
