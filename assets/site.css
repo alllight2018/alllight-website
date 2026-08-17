@@ -430,3 +430,9 @@ a:hover { color: inherit; }
 .jm-section .jm-star-label { background: rgba(255,255,255,.92); color: var(--ink); }
 .jm-section .jm-star.is-active .jm-star-label { background: var(--amber); color: #fff; }
 .jm-section .jm-panel { background: #fff; color: var(--navy); }
+
+/* 有資格者バッジ（会社案内・経審セクション） */
+.qual { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 12px;
+  padding: .9rem 1.1rem; display: flex; align-items: baseline; gap: .35rem; color: #fff; }
+.qual b { font-family: "Zen Kaku Gothic New", sans-serif; font-weight: 900; font-size: 1.9rem; color: var(--amber-2); line-height: 1; }
+.qual span { display: block; font-size: .84rem; font-weight: 700; margin-left: .3rem; }
