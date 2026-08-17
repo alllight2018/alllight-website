@@ -17,7 +17,7 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"石川県", name:"小松基地 高圧ケーブル等更新工事", client:"航空自衛隊（防衛省）", type:"工事", status:"施工実績", amount:"約3,670万円", photo:"/assets/photos/genba.jpg", desc:"防衛省・航空自衛隊小松基地。北陸エリアでの省庁案件にも対応。" },
 
   // ▼ 東京都
-  { pref:"東京都", name:"高圧受変電設備更新工事（八王子年金事務所）", client:"日本年金機構", type:"工事", status:"施工実績", amount:"約3,100万円", photo:"/assets/photos/building-night.jpg" },
+  { pref:"東京都", name:"高圧受変電設備更新工事（八王子年金事務所）", client:"日本年金機構", type:"工事", status:"施工実績", amount:"約3,100万円", photo:"/assets/photos/work-cubicle.jpg", desc:"屋上へキュービクル（受変電設備）をクレーンで吊り込み設置。" },
   { pref:"東京都", name:"東京国際空港 消防東庁舎 受配電設備改良作業", client:"国土交通省 東京航空局", type:"役務", status:"施工実績", amount:"約240万円", photo:"/assets/photos/sekou-kanri.jpg", desc:"羽田空港（東京国際空港）の受配電設備。国交省案件。" },
 
   // ▼ 長野県（陸上自衛隊）
