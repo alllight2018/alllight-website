@@ -14,7 +14,7 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"兵庫県", name:"神戸駅南駐車場 泡消火設備整備業務", client:"神戸市", type:"役務", status:"受注・施工中", photo:"/assets/photos/sekou-kanri.jpg" },
 
   // ▼ 石川県（防衛省・航空自衛隊）
-  { pref:"石川県", name:"小松基地 高圧ケーブル等更新工事", client:"航空自衛隊（防衛省）", type:"工事", status:"施工実績", amount:"約3,670万円", photo:"/assets/photos/genba.jpg", desc:"防衛省・航空自衛隊小松基地。北陸エリアでの省庁案件にも対応。" },
+  { pref:"石川県", name:"小松基地 高圧ケーブル等更新工事（CET38 約3km）", client:"航空自衛隊（防衛省）", type:"工事", status:"施工実績", amount:"約3,670万円", photo:"/assets/photos/work-cable-komatsu.jpg", desc:"防衛省・航空自衛隊小松基地。高圧ケーブル(CET38)を約3km更新。高圧工事を得意としています。" },
 
   // ▼ 東京都
   { pref:"東京都", name:"高圧受変電設備更新工事（八王子年金事務所）", client:"日本年金機構", type:"工事", status:"施工実績", amount:"約3,100万円", photo:"/assets/photos/work-cubicle.jpg", desc:"屋上へキュービクル（受変電設備）をクレーンで吊り込み設置。" },
