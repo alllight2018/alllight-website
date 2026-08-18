@@ -12,6 +12,7 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"兵庫県", name:"ポートアイランド地区他 ヤード照明LED化工事", client:"神戸市", type:"工事", status:"受注・施工中", photo:"/assets/photos/building-night.jpg" },
   { pref:"兵庫県", name:"大阪拘置所尼崎拘置支所 庁舎棟 照明設備LED化改修工事", client:"法務省 大阪拘置所", type:"工事", status:"受注・施工中", photo:"/assets/photos/building-night.jpg" },
   { pref:"兵庫県", name:"神戸駅南駐車場 泡消火設備整備業務", client:"神戸市", type:"役務", status:"受注・施工中", photo:"/assets/photos/sekou-kanri.jpg" },
+  { pref:"兵庫県", name:"東クリーンセンター 煙突（高さ100m）航空障害灯 更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-koushougai.jpg", desc:"高さ100mの煙突頂部で航空障害灯を更新。高所・特殊環境での電気工事にも対応します。" },
 
   // ▼ 石川県（防衛省・航空自衛隊）
   { pref:"石川県", name:"小松基地 高圧ケーブル等更新工事（CET38 約3km）", client:"航空自衛隊（防衛省）", type:"工事", status:"施工実績", amount:"約3,670万円", photo:"/assets/photos/work-cable-komatsu.jpg", desc:"防衛省・航空自衛隊小松基地。高圧ケーブル(CET38)を約3km更新。高圧工事を得意としています。" },
