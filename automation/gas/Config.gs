@@ -46,7 +46,7 @@ var MEETINGS = [
     aliases: ['入札会議'],
     recurringEventId: 'btf7lvch8tieemkab9sqeqql0k',
     meetCode: 'khx-kawe-uij',
-    mcRotation: ['名里真耶', '金山', '森田'],
+    mcRotation: ['名里真耶', '金山'], // 森田は退職のため除外（2026-08）
     templateKey: 'nyusatsu',
     assetTab: '入札会議'
   },
