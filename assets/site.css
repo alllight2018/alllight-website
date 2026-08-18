@@ -435,3 +435,7 @@ a:hover { color: inherit; }
 .client-list { list-style: none; }
 .client-list li { font-size: .9rem; font-weight: 600; padding: .3rem 0 .3rem 1.1rem; position: relative; line-height: 1.6; }
 .client-list li::before { content: "▪"; color: var(--amber); position: absolute; left: 0; }
+
+/* 工事点数ランキングのバッジ */
+.rank-badge { display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%;
+  background:var(--amber); color:#fff; font-weight:900; font-size:.85rem; flex:none; }
