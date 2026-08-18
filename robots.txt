@@ -1,5 +1,43 @@
+# robots.txt — 株式会社オールライト（公共工事・電気設備工事／神戸）
+# 検索エンジン・AIアシスタント（生成AI検索）双方の巡回を歓迎します。
+
 User-agent: *
 Allow: /
 Disallow: /thanks.html
 
+# --- AI / LLM クローラーを明示的に許可（AI検索での引用を歓迎） ---
+User-agent: GPTBot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+User-agent: anthropic-ai
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: Perplexity-User
+Allow: /
+User-agent: Google-Extended
+Allow: /
+User-agent: Applebot
+Allow: /
+User-agent: Applebot-Extended
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: CCBot
+Allow: /
+User-agent: Amazonbot
+Allow: /
+User-agent: Bytespider
+Allow: /
+User-agent: Meta-ExternalAgent
+Allow: /
+
 Sitemap: https://alllight2018.com/sitemap.xml
+# AI向け会社要約: https://alllight2018.com/llms.txt

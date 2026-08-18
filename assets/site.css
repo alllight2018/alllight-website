@@ -439,3 +439,15 @@ a:hover { color: inherit; }
 /* 工事点数ランキングのバッジ */
 .rank-badge { display:inline-grid; place-items:center; width:26px; height:26px; border-radius:50%;
   background:var(--amber); color:#fff; font-weight:900; font-size:.85rem; flex:none; }
+
+/* FAQ（よくある質問／AI回答最適化） */
+.faq-list { display: grid; gap: .8rem; }
+.faq-item { border: 1px solid var(--line); border-radius: 12px; background: #fbfcfd; overflow: hidden; }
+.faq-item summary { cursor: pointer; list-style: none; padding: 1.1rem 1.3rem; font-weight: 800;
+  display: flex; align-items: center; gap: .6rem; position: relative; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::before { content: "Q"; display: inline-grid; place-items: center; width: 24px; height: 24px;
+  border-radius: 50%; background: var(--amber); color: #fff; font-size: .85rem; flex: none; }
+.faq-item summary::after { content: "＋"; margin-left: auto; color: var(--amber); font-weight: 900; }
+.faq-item[open] summary::after { content: "−"; }
+.faq-a { padding: 0 1.3rem 1.2rem 3.3rem; color: var(--sub); font-size: .95rem; line-height: 1.9; }
