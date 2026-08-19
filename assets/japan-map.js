@@ -77,7 +77,7 @@
         '<span class="jm-count">' + items.length + '件の実績</span></div><div class="jm-cards">';
       items.forEach(function (p) {
         h += '<article class="jm-card">';
-        h += '<div class="jm-card-photo" style="background-image:url(\'' + (p.photo || "/assets/photos/noimage-general.svg") + '\')"></div>';
+        h += '<img class="jm-card-photo" src="' + (p.photo || "/assets/photos/noimage-general.svg") + '" alt="" loading="lazy" decoding="async" width="92" height="120">';
         h += '<div class="jm-card-body">' +
           '<div class="jm-card-tags">' + catBadge(p.type) +
           (p.status ? '<span class="jm-status">' + p.status + '</span>' : '') + '</div>' +
