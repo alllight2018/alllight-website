@@ -47,6 +47,8 @@ function onOpen() {
     .addSeparator()
     .addItem('今すぐGmailからAI反映', 'autoRunFromGmail')
     .addItem('ダッシュボードを再生成（データのみ）', 'rebuildDashboard')
+    .addSeparator()
+    .addItem('ラクリツ判定を並べ替え（再ランク）', 'resortRakuritsu')
     .addToUi();
 }
 
@@ -462,6 +464,12 @@ function estimateRow_(sheet, row) {
     var memo = 'AI概算：' + yen_(Math.round(yenVal)) + '／信頼度' + (result.confidence || '中') + '／' + (result.basis || '') +
       (breakdown ? '　内訳：' + breakdown : '');
     mCell.setValue(appendMemo_(oldMemo, memo));
+
+    // 続けてラクリツ判定（狙う案件スコアリング）も自動更新
+    try {
+      var caseNo = String(sheet.getRange(row, 1).getDisplayValue() || '').trim(); // A列＝案件No
+      scoreAndUpsertRakuritsu_(info, pageText, caseNo);
+    } catch (e2) { Logger.log('ラクリツ採点失敗: ' + e2); }
   } catch (err) {
     mCell.setValue(appendMemo_(oldMemo, 'AI概算エラー・手動確認：' + err.message));
   }
@@ -502,6 +510,129 @@ function fetchPageText_(url) {
     }
   } catch (e) {}
   return '';
+}
+
+// ============================================================
+//  ラクリツ判定（狙う案件を100点ルーブリックで採点しランキング）
+// ============================================================
+var RAK = {
+  SHEET: 'ラクリツ_判定',
+  DATA_START: 3, MAXCOL: 17,
+  C_JUDGE: 16,
+  MAX: { q: 25, r: 20, a: 15, p: 15, pa: 10, co: 10, e: 5 }, // 各項目の満点
+};
+
+/** 1案件をGeminiで採点 → ラクリツ_判定へ upsert してランキング更新 */
+function scoreAndUpsertRakuritsu_(info, pageText, caseNo) {
+  var rk = scoreRakuritsuWithGemini_(info, pageText);
+  if (!rk || !rk.scores) return;
+  var s = rk.scores;
+  var clamp = function (v, mx) { v = num_(v); return v < 0 ? 0 : (v > mx ? mx : v); };
+  rakuritsuUpsert_({
+    no: caseNo, name: info.案件名 || '', area: info.都道府県 || '', orderer: info.発注機関 || '',
+    s: {
+      q: clamp(s.qualification, RAK.MAX.q), r: clamp(s.track_record, RAK.MAX.r), a: clamp(s.area, RAK.MAX.a),
+      p: clamp(s.profit, RAK.MAX.p), pa: clamp(s.partner, RAK.MAX.pa), co: clamp(s.competition, RAK.MAX.co), e: clamp(s.engineer, RAK.MAX.e)
+    },
+    reason: rk.reason || ''
+  });
+}
+
+function scoreRakuritsuWithGemini_(info, pageText) {
+  var key = PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY');
+  if (!key) return null;
+  var prompt = [
+    'あなたは株式会社オールライトの入札案件を「狙うべきか」100点満点で採点する参謀AIです。利益重視。',
+    '次の配点で各項目を0〜満点で整数採点し、合計と理由を返してください。',
+    '・資格等級(満点25)：登録等級・営業所要件・許可・施工実績条件を満たすか',
+    '・自社実績(満点20)：受変電/照明/発電機/通信等の自社元請実績との近さ',
+    '・地域発注(満点15)：近距離・既存発注者との関係',
+    '・金額利益(満点15)：金額規模と利益の取りやすさ（近畿内1,000万円以上・近畿以外3,000万円以上を高評価、それ未満は低評価）',
+    '・協力会社(満点10)：協力会社・見積の確保しやすさ',
+    '・競争性(満点10)：指名/再公告など競争の少なさ',
+    '・技術者工程(満点5)：専任・常駐期間と社内で技術者を配置できるか',
+    'JSONのみで返す：',
+    '{"scores":{"qualification":整数,"track_record":整数,"area":整数,"profit":整数,"partner":整数,"competition":整数,"engineer":整数},',
+    ' "reason":"80字以内。狙う理由＋次に確認すべき点"}',
+    '', '案件情報：' + JSON.stringify(info),
+    (pageText ? ('--- 公告/仕様本文（抜粋）---\n' + cut_(pageText, 6000)) : '')
+  ].join('\n');
+  return callGeminiJson_(key, prompt);
+}
+
+/** ラクリツ_判定の1件をupsert → D見送りを除外 → 合計降順に並べ替え → 判定色 → 基準日更新 */
+function rakuritsuUpsert_(c) {
+  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(RAK.SHEET);
+  if (!sh) return;
+  var total = c.s.q + c.s.r + c.s.a + c.s.p + c.s.pa + c.s.co + c.s.e;
+  var judge = judgeOf_(total);
+  var newRow = [0, c.no, c.name, c.area, c.orderer, '', '', c.s.q, c.s.r, c.s.a, c.s.p, c.s.pa, c.s.co, c.s.e, total, judge, c.reason || ''];
+
+  var last = sh.getLastRow();
+  var region = last >= RAK.DATA_START ? sh.getRange(RAK.DATA_START, 1, last - RAK.DATA_START + 1, RAK.MAXCOL).getValues() : [];
+  var data = [], markers = [];
+  region.forEach(function (r) {
+    var a = String(r[0]).trim();
+    if (a === '判定基準' || a === '採点ルール') { markers.push(r); return; }
+    if (!String(r[1]).trim() && !String(r[2]).trim()) return; // 空行
+    data.push(r);
+  });
+
+  // 案件Noで upsert（Noが空なら案件名で照合）
+  var key = String(c.no || c.name).trim();
+  var idx = -1;
+  for (var i = 0; i < data.length; i++) {
+    var k = String(data[i][1] || data[i][2]).trim();
+    if (k === key) { idx = i; break; }
+  }
+  if (idx >= 0) { newRow[5] = data[idx][5]; newRow[6] = data[idx][6]; data[idx] = newRow; } // 申請期限/入札日は既存を保持
+  else data.push(newRow);
+
+  data = data.filter(function (r) { return String(r[15]).indexOf('見送り') === -1; }); // Q1=A：D見送りは載せない
+  data.sort(function (x, y) { return num_(y[14]) - num_(x[14]); });
+  data.forEach(function (r, i) { r[0] = i + 1; });
+
+  if (last >= RAK.DATA_START) sh.getRange(RAK.DATA_START, 1, last - RAK.DATA_START + 1, RAK.MAXCOL).clearContent();
+  var out = data.concat(markers);
+  if (out.length) {
+    var norm = out.map(function (r) { var o = []; for (var k = 0; k < RAK.MAXCOL; k++) o.push(r[k] !== undefined && r[k] !== null ? r[k] : ''); return o; });
+    sh.getRange(RAK.DATA_START, 1, norm.length, RAK.MAXCOL).setValues(norm);
+  }
+  for (var j = 0; j < data.length; j++) {
+    var jd = String(data[j][15]);
+    var bg = jd.indexOf('最優先') >= 0 ? '#E1F5EE' : (jd.indexOf('積極') >= 0 ? '#FAEEDA' : (jd.indexOf('条件') >= 0 ? '#FCEBEB' : '#FFFFFF'));
+    sh.getRange(RAK.DATA_START + j, RAK.C_JUDGE).setBackground(bg);
+  }
+  try {
+    var today = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy/MM/dd');
+    sh.getRange(1, 3).setValue(today + ' 案件リスト連動。利益・落札確率・実績・地域・資格・技術者から最終判定する。');
+  } catch (e) {}
+}
+
+function judgeOf_(t) { return t >= 85 ? 'A 最優先' : (t >= 75 ? 'B 積極' : (t >= 65 ? 'C 条件付き' : 'D 見送り')); }
+
+/** メニュー：既存のラクリツ行を合計降順に並べ替えるだけ（新規採点なし） */
+function resortRakuritsu_() { rakuritsuResort_(); }
+function resortRakuritsu() { rakuritsuResort_(); }
+function rakuritsuResort_() {
+  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(RAK.SHEET);
+  if (!sh) { SpreadsheetApp.getUi().alert('「ラクリツ_判定」シートが見つかりません。'); return; }
+  var last = sh.getLastRow();
+  var region = last >= RAK.DATA_START ? sh.getRange(RAK.DATA_START, 1, last - RAK.DATA_START + 1, RAK.MAXCOL).getValues() : [];
+  var data = [], markers = [];
+  region.forEach(function (r) {
+    var a = String(r[0]).trim();
+    if (a === '判定基準' || a === '採点ルール') { markers.push(r); return; }
+    if (!String(r[1]).trim() && !String(r[2]).trim()) return;
+    data.push(r);
+  });
+  data = data.filter(function (r) { return String(r[15]).indexOf('見送り') === -1; });
+  data.sort(function (x, y) { return num_(y[14]) - num_(x[14]); });
+  data.forEach(function (r, i) { r[0] = i + 1; });
+  if (last >= RAK.DATA_START) sh.getRange(RAK.DATA_START, 1, last - RAK.DATA_START + 1, RAK.MAXCOL).clearContent();
+  var out = data.concat(markers);
+  if (out.length) sh.getRange(RAK.DATA_START, 1, out.length, RAK.MAXCOL).setValues(out.map(function (r) { var o = []; for (var k = 0; k < RAK.MAXCOL; k++) o.push(r[k] !== undefined && r[k] !== null ? r[k] : ''); return o; }));
+  SpreadsheetApp.getUi().alert('ラクリツ判定を合計点の高い順に並べ替えました。');
 }
 
 // ============================================================
