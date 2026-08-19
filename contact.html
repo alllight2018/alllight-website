@@ -91,6 +91,7 @@
             <option value="公共工事の入札">公共工事の入札に関するご相談</option>
             <option value="民間工事の見積もり">民間工事のお見積り</option>
             <option value="採用">採用エントリー・ご質問</option>
+            <option value="協力会社">協力会社・協業のご相談</option>
             <option value="その他">その他</option>
           </select>
         </div>
@@ -171,12 +172,14 @@
 </footer>
 <script src="assets/site.js"></script>
 <script>
-  // 採用エントリー導線（recruit から ?type=recruit で来た場合、種別を自動選択）
+  // 種別の自動選択（recruit→採用 / partner→協力会社）
   (function(){
     var params = new URLSearchParams(location.search);
-    if (params.get("type") === "recruit") {
+    var map = { recruit: "採用", partner: "協力会社" };
+    var v = map[params.get("type")];
+    if (v) {
       var sel = document.getElementById("type");
-      if (sel) sel.value = "採用";
+      if (sel) sel.value = v;
     }
   })();
 </script>
