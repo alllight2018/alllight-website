@@ -6,8 +6,8 @@
 window.ALLLIGHT_MAP_DATA = [
   // ▼ 兵庫県（本社エリア）
   { pref:"兵庫県", name:"神戸大学 自然科学総合研究棟 火災報知設備改修工事", client:"国立大学法人 神戸大学", type:"工事", status:"施工実績", amount:"約600万円", score:"81点", photo:"/assets/photos/sekou-kanri.jpg", desc:"国立大学の防災（自動火災報知）設備。地元・神戸での確かな実績。" },
-  { pref:"兵庫県", name:"市街地各所 直流無停電電源設備更新工事", client:"神戸市", type:"工事", status:"施工実績", amount:"約7,370万円", photo:"/assets/photos/sekou-kanri.jpg" },
-  { pref:"兵庫県", name:"市立岩園小学校 受変電設備更新工事", client:"芦屋市", type:"工事", status:"施工実績", amount:"約970万円", score:"86点", photo:"/assets/photos/work-cubicle.jpg" },
+  { pref:"兵庫県", name:"市街地各所 直流無停電電源設備更新工事", client:"神戸市", type:"工事", status:"施工実績", amount:"約7,370万円", photo:"/assets/photos/work-shigaichi-museiden.jpg", desc:"浄水統括事務所ほかの直流無停電電源装置（バッテリー）を更新。停電時も監視・制御を止めない重要設備。" },
+  { pref:"兵庫県", name:"市立岩園小学校 受変電設備更新工事", client:"芦屋市", type:"工事", status:"施工実績", amount:"約970万円", score:"86点", photo:"/assets/photos/work-iwazono-cubicle.jpg", desc:"小学校の受変電設備（キュービクル）を更新。屋上での試験調整まで自社で実施。工事成績評定点86点（ベスト1）。" },
   { pref:"兵庫県", name:"本庁舎北館・南館 自動火災報知設備更新工事", client:"芦屋市", type:"工事", status:"受注・施工中", photo:"/assets/photos/sekou-kanri.jpg" },
   { pref:"兵庫県", name:"ポートアイランド地区他 ヤード照明LED化工事", client:"神戸市", type:"工事", status:"受注・施工中", photo:"/assets/photos/kobe-harbor.jpg" },
   { pref:"兵庫県", name:"大阪拘置所尼崎拘置支所 庁舎棟 照明設備LED化改修工事", client:"法務省 大阪拘置所", type:"工事", status:"受注・施工中", photo:"/assets/photos/sannomiya-mansion.jpg" },
@@ -15,10 +15,10 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"兵庫県", name:"東クリーンセンター 煙突（高さ100m）航空障害灯 更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-koushougai.jpg", desc:"高さ100mの煙突頂部で航空障害灯を更新。高所・特殊環境での電気工事にも対応します。" },
   { pref:"兵庫県", name:"非常用発電設備 更新工事", client:"兵庫県住宅供給公社", type:"工事", status:"施工実績", score:"78点", photo:"/assets/photos/building-night.jpg", desc:"停電時に人命と設備を守る非常用発電設備の更新。防災設備にも強み。" },
   { pref:"兵庫県", name:"神戸市立青少年科学館 非常用発電機更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-seishonen-generator.jpg", desc:"公共施設の非常用発電機（発電設備）をクレーンで搬入・更新。停電・災害時に施設機能を守る防災の要となる設備工事。" },
-  { pref:"兵庫県", name:"東灘処理場 管理本館 照明設備更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/sekou-kanri.jpg", desc:"下水処理場・管理本館（中央監視室ほか）の照明設備をLED化更新。省エネと維持管理コスト削減に貢献。" },
-  { pref:"兵庫県", name:"垂水駅前立体駐輪場 消防設備工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/genba.jpg", desc:"公共駐輪場の消防設備（消火栓・自動火災報知設備ほか）を施工。消防検査にも立会い、防災設備の安全を確保。" },
-  { pref:"兵庫県", name:"鶴トンネルほか 電源設備維持工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/kobe-harbor.jpg", desc:"道路トンネルの照明・電源設備を維持・更新。屋外・インフラ設備の保守にも対応し、地域の安全を支えます。" },
-  { pref:"兵庫県", name:"東灘処理場 汚泥ポンプ棟 制御盤設置工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-cubicle.jpg", desc:"下水処理場の汚泥ポンプ棟に動力制御盤を新設。プラント設備の電気・制御工事にも対応します。" },
+  { pref:"兵庫県", name:"東灘処理場 管理本館 照明設備更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-higashinada-shomei.jpg", desc:"下水処理場・管理本館（事務室・中央監視室ほか）の照明設備をLED化更新。省エネと維持管理コスト削減に貢献。" },
+  { pref:"兵庫県", name:"垂水駅前立体駐輪場 消防設備工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-tarumi-shobo.jpg", desc:"公共駐輪場の消防設備（消火栓・自動火災報知設備ほか）を施工。消防検査にも立会い、防災設備の安全を確保。" },
+  { pref:"兵庫県", name:"鵯（ひよどり）トンネルほか 電源設備維持工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-hiyodori-tunnel.jpg", desc:"道路トンネル（鵯トンネル・鉄拐山）の電源設備を維持・更新。夜間・高所のインフラ工事にも対応し、地域の安全を支えます。" },
+  { pref:"兵庫県", name:"東灘処理場 汚泥ポンプ棟 制御盤設置工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-higashinada-seigyoban.jpg", desc:"下水処理場の制御盤・UV計配線ほか電気設備を施工。プラント設備の電気・制御工事にも対応します。" },
 
   // ▼ 石川県（防衛省・航空自衛隊）
   { pref:"石川県", name:"小松基地 高圧ケーブル等更新工事（CET38 約3km）", client:"航空自衛隊（防衛省）", type:"工事", status:"施工実績", amount:"約3,670万円", photo:"/assets/photos/work-cable-komatsu.jpg", desc:"防衛省・航空自衛隊小松基地。高圧ケーブル(CET38)を約3km更新。高圧工事を得意としています。" },
