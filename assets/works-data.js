@@ -19,16 +19,21 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"兵庫県", name:"垂水駅前立体駐輪場 消防設備工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-tarumi-shobo.jpg", desc:"公共駐輪場の消防設備（消火栓・自動火災報知設備ほか）を施工。消防検査にも立会い、防災設備の安全を確保。" },
   { pref:"兵庫県", name:"鵯（ひよどり）トンネルほか 電源設備維持工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-hiyodori-tunnel.jpg", desc:"道路トンネル（鵯トンネル・鉄拐山）の電源設備を維持・更新。夜間・高所のインフラ工事にも対応し、地域の安全を支えます。" },
   { pref:"兵庫県", name:"東灘処理場 汚泥ポンプ棟 制御盤設置工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-higashinada-seigyoban.jpg", desc:"下水処理場の制御盤・UV計配線ほか電気設備を施工。プラント設備の電気・制御工事にも対応します。" },
+  { pref:"兵庫県", name:"青野原駐屯地 電気設備工事", client:"陸上自衛隊（防衛省）", type:"工事", status:"施工実績", photo:"/assets/photos/work-aonogahara.jpg", desc:"陸上自衛隊 青野原駐屯地の電気設備を施工。地元・兵庫の防衛省施設にも対応。" },
+  { pref:"兵庫県", name:"中央車庫 泡消火設備工事", client:"神戸市交通局", type:"工事", status:"施工実績", photo:"/assets/photos/work-chuoshako-awa.jpg", desc:"市バス車庫の泡消火設備（一斉開放弁・配管）を施工。大空間の防災設備に対応。" },
+  { pref:"兵庫県", name:"神戸視力障害センター 照明設備工事", client:"国（厚生労働省）", type:"工事", status:"施工実績", photo:"/assets/photos/work-shiryoku-center.jpg", desc:"国の福祉施設の照明設備をLED化。国の機関の施設工事にも対応します。" },
+  { pref:"兵庫県", name:"北学校給食共同調理場 受変電設備更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-kita-kyushoku.jpg", desc:"学校給食センターの受変電設備（高圧機器）を更新。公共施設の心臓部を止めずに施工。" },
+  { pref:"兵庫県", name:"湊川駐車場 泡消火設備工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-minatogawa-awa.jpg", desc:"地下駐車場の泡消火設備（一斉開放弁・配管取替）を施工。防災設備の更新に強み。" },
 
   // ▼ 石川県（防衛省・航空自衛隊）
   { pref:"石川県", name:"小松基地 高圧ケーブル等更新工事（CET38 約3km）", client:"航空自衛隊（防衛省）", type:"工事", status:"施工実績", amount:"約3,670万円", photo:"/assets/photos/work-cable-komatsu.jpg", desc:"防衛省・航空自衛隊小松基地。高圧ケーブル(CET38)を約3km更新。高圧工事を得意としています。" },
 
   // ▼ 東京都
   { pref:"東京都", name:"高圧受変電設備更新工事（八王子年金事務所）", client:"日本年金機構", type:"工事", status:"施工実績", amount:"約3,100万円", photo:"/assets/photos/work-cubicle.jpg", desc:"屋上へキュービクル（受変電設備）をクレーンで吊り込み設置。" },
-  { pref:"東京都", name:"東京国際空港 消防東庁舎 受配電設備改良作業", client:"国土交通省 東京航空局", type:"役務", status:"施工実績", amount:"約240万円", photo:"/assets/photos/building-night.jpg", desc:"羽田空港（東京国際空港）の受配電設備。国交省案件。" },
+  { pref:"東京都", name:"東京国際空港 消防東庁舎 受配電設備改良作業", client:"国土交通省 東京航空局", type:"役務", status:"施工実績", amount:"約240万円", photo:"/assets/photos/work-tokyo-airport.jpg", desc:"羽田空港（東京国際空港）の受配電設備をトルク確認まで丁寧に施工。国交省案件。" },
 
   // ▼ 長野県（陸上自衛隊）
-  { pref:"長野県", name:"2号建物他 電源改修工事", client:"陸上自衛隊（防衛省）", type:"工事", status:"施工実績", amount:"約86万円", photo:"/assets/photos/genba.jpg", desc:"信州・松本の陸上自衛隊施設。全国の防衛省案件に対応。" },
+  { pref:"長野県", name:"松本駐屯地 電源改修工事", client:"陸上自衛隊（防衛省）", type:"工事", status:"施工実績", amount:"約86万円", photo:"/assets/photos/work-matsumoto-nigo.jpg", desc:"信州・松本の陸上自衛隊松本駐屯地。分電盤の材料検査から施工まで。全国の防衛省案件に対応。" },
 
   // ▼ 神奈川県
   { pref:"神奈川県", name:"木月住宅ほか 共用部照明器具改修工事", client:"関東財務局", type:"工事", status:"受注・施工中", photo:"/assets/photos/kobe-yakei.jpg" },
