@@ -14,7 +14,7 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"兵庫県", name:"神戸駅南駐車場 泡消火設備整備業務", client:"神戸市", type:"役務", status:"受注・施工中", photo:"/assets/photos/genba.jpg" },
   { pref:"兵庫県", name:"東クリーンセンター 煙突（高さ100m）航空障害灯 更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-koushougai.jpg", desc:"高さ100mの煙突頂部で航空障害灯を更新。高所・特殊環境での電気工事にも対応します。" },
   { pref:"兵庫県", name:"非常用発電設備 更新工事", client:"兵庫県住宅供給公社", type:"工事", status:"施工実績", score:"78点", photo:"/assets/photos/building-night.jpg", desc:"停電時に人命と設備を守る非常用発電設備の更新。防災設備にも強み。" },
-  { pref:"兵庫県", name:"神戸市立青少年科学館 非常用発電機更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/genba.jpg", desc:"公共施設の非常用発電機（発電設備）を更新。停電・災害時に施設機能を守る防災の要となる設備工事。" },
+  { pref:"兵庫県", name:"神戸市立青少年科学館 非常用発電機更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-seishonen-generator.jpg", desc:"公共施設の非常用発電機（発電設備）をクレーンで搬入・更新。停電・災害時に施設機能を守る防災の要となる設備工事。" },
   { pref:"兵庫県", name:"東灘処理場 管理本館 照明設備更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/sekou-kanri.jpg", desc:"下水処理場・管理本館（中央監視室ほか）の照明設備をLED化更新。省エネと維持管理コスト削減に貢献。" },
   { pref:"兵庫県", name:"垂水駅前立体駐輪場 消防設備工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/genba.jpg", desc:"公共駐輪場の消防設備（消火栓・自動火災報知設備ほか）を施工。消防検査にも立会い、防災設備の安全を確保。" },
   { pref:"兵庫県", name:"鶴トンネルほか 電源設備維持工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/kobe-harbor.jpg", desc:"道路トンネルの照明・電源設備を維持・更新。屋外・インフラ設備の保守にも対応し、地域の安全を支えます。" },
