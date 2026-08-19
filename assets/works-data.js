@@ -24,12 +24,18 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"兵庫県", name:"神戸視力障害センター 照明設備工事", client:"国（厚生労働省）", type:"工事", status:"施工実績", photo:"/assets/photos/work-shiryoku-center.jpg", desc:"国の福祉施設の照明設備をLED化。国の機関の施設工事にも対応します。" },
   { pref:"兵庫県", name:"北学校給食共同調理場 受変電設備更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-kita-kyushoku.jpg", desc:"学校給食センターの受変電設備（高圧機器）を更新。公共施設の心臓部を止めずに施工。" },
   { pref:"兵庫県", name:"湊川駐車場 泡消火設備工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-minatogawa-awa.jpg", desc:"地下駐車場の泡消火設備（一斉開放弁・配管取替）を施工。防災設備の更新に強み。" },
+  { pref:"兵庫県", name:"長田駅 電気室 蓄電池更新工事", client:"神戸市交通局", type:"工事", status:"施工実績", photo:"/assets/photos/work-nagata-chikuden.jpg", desc:"地下鉄・長田駅 電気室の蓄電池設備を更新。公共交通インフラの電気設備にも対応。" },
+  { pref:"兵庫県", name:"西部高齢者介護支援センター 電気設備工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-seibu-kaigo.jpg", desc:"福祉施設の受変電・電気設備を施工。送電を止めずに更新。公共福祉施設にも対応します。" },
+  { pref:"兵庫県", name:"廃棄物用パイプライン施設 ブロワ起動盤更新工事", client:"芦屋市", type:"工事", status:"施工実績", photo:"/assets/photos/work-ashiya-blower.jpg", desc:"ごみ収集パイプライン施設のブロワ起動盤（大型動力盤）を更新。プラント動力設備の実績。" },
+  { pref:"兵庫県", name:"舞子駅前 分電盤改修工事", client:"神戸市建設局", type:"工事", status:"施工実績", photo:"/assets/photos/work-maiko-bunden.jpg", desc:"駅前の分電盤を改修。道路・公共インフラの電気設備を安全に更新。" },
+  { pref:"兵庫県", name:"中央幹線 ライトアップ工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-chuokansen-lightup.jpg", desc:"三宮・中央幹線の街路樹ライトアップ照明を施工。まちを彩る景観照明も手がけます。" },
+  { pref:"兵庫県", name:"大池アンダーパス 遮断器補修工事", client:"神戸市建設局", type:"工事", status:"施工実績", photo:"/assets/photos/work-oike-underpass.jpg", desc:"アンダーパス（道路）の冠水対策・遮断器を補修し動作試験まで実施。道路防災の電気設備。" },
 
   // ▼ 石川県（防衛省・航空自衛隊）
   { pref:"石川県", name:"小松基地 高圧ケーブル等更新工事（CET38 約3km）", client:"航空自衛隊（防衛省）", type:"工事", status:"施工実績", amount:"約3,670万円", photo:"/assets/photos/work-cable-komatsu.jpg", desc:"防衛省・航空自衛隊小松基地。高圧ケーブル(CET38)を約3km更新。高圧工事を得意としています。" },
 
   // ▼ 東京都
-  { pref:"東京都", name:"高圧受変電設備更新工事（八王子年金事務所）", client:"日本年金機構", type:"工事", status:"施工実績", amount:"約3,100万円", photo:"/assets/photos/work-cubicle.jpg", desc:"屋上へキュービクル（受変電設備）をクレーンで吊り込み設置。" },
+  { pref:"東京都", name:"高圧受変電設備更新工事（八王子年金事務所）", client:"日本年金機構", type:"工事", status:"施工実績", amount:"約3,100万円", photo:"/assets/photos/work-hachioji-nenkin.jpg", desc:"屋上へキュービクル（受変電設備）をクレーンで吊り込み設置。都市部・稼働施設での確実な施工。" },
   { pref:"東京都", name:"東京国際空港 消防東庁舎 受配電設備改良作業", client:"国土交通省 東京航空局", type:"役務", status:"施工実績", amount:"約240万円", photo:"/assets/photos/work-tokyo-airport.jpg", desc:"羽田空港（東京国際空港）の受配電設備をトルク確認まで丁寧に施工。国交省案件。" },
 
   // ▼ 長野県（陸上自衛隊）
