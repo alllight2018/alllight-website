@@ -18,6 +18,7 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"兵庫県", name:"東灘処理場 管理本館 照明設備更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/sekou-kanri.jpg", desc:"下水処理場・管理本館（中央監視室ほか）の照明設備をLED化更新。省エネと維持管理コスト削減に貢献。" },
   { pref:"兵庫県", name:"垂水駅前立体駐輪場 消防設備工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/genba.jpg", desc:"公共駐輪場の消防設備（消火栓・自動火災報知設備ほか）を施工。消防検査にも立会い、防災設備の安全を確保。" },
   { pref:"兵庫県", name:"鶴トンネルほか 電源設備維持工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/kobe-harbor.jpg", desc:"道路トンネルの照明・電源設備を維持・更新。屋外・インフラ設備の保守にも対応し、地域の安全を支えます。" },
+  { pref:"兵庫県", name:"東灘処理場 汚泥ポンプ棟 制御盤設置工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-cubicle.jpg", desc:"下水処理場の汚泥ポンプ棟に動力制御盤を新設。プラント設備の電気・制御工事にも対応します。" },
 
   // ▼ 石川県（防衛省・航空自衛隊）
   { pref:"石川県", name:"小松基地 高圧ケーブル等更新工事（CET38 約3km）", client:"航空自衛隊（防衛省）", type:"工事", status:"施工実績", amount:"約3,670万円", photo:"/assets/photos/work-cable-komatsu.jpg", desc:"防衛省・航空自衛隊小松基地。高圧ケーブル(CET38)を約3km更新。高圧工事を得意としています。" },
