@@ -51,7 +51,10 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"三重県", name:"上野税務署 照明改修工事", client:"名古屋国税局", type:"工事", status:"受注・施工中", photo:"/assets/photos/building-night.jpg" },
 
   // ▼ 徳島県（新規受注）
-  { pref:"徳島県", name:"国立大学 電気設備工事（徳島大学）", client:"国立大学法人 徳島大学", type:"工事", status:"受注（新規）", photo:"/assets/photos/genba.jpg", desc:"落札・受注。四国エリアの国立大学案件。全国の国立大学・省庁案件に対応します。" }
+  { pref:"徳島県", name:"国立大学 電気設備工事（徳島大学）", client:"国立大学法人 徳島大学", type:"工事", status:"受注（新規）", photo:"/assets/photos/genba.jpg", desc:"落札・受注。四国エリアの国立大学案件。全国の国立大学・省庁案件に対応します。" },
+
+  // ▼ 山口県（中国地方）
+  { pref:"山口県", name:"移動式泡消火設備 保守点検業務", client:"防衛省（自衛隊）", type:"役務", status:"施工実績", photo:"/assets/photos/work-yamaguchi-shobo.jpg", desc:"中国地方・山口県の自衛隊施設で移動式泡消火設備を保守点検。防災設備の維持管理まで全国対応。" }
 ];
 
 /* 全国実績サマリー（2025年 年間実績・経審など） */
@@ -59,5 +62,5 @@ window.ALLLIGHT_STATS = {
   keishin: 859,          // 経営事項審査 総合評定値（P点）
   bids: 332,             // 年間入札本数（2025年）
   wins: 26,              // 年間落札件数（2025年）
-  prefectures: 8         // 施工実績エリア（都道府県数）
+  prefectures: 9         // 施工実績エリア（都道府県数）
 };
