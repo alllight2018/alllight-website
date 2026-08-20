@@ -36,7 +36,7 @@ const BID = {
       tasks: ['協力業者リスト管理', '架電・メール取得', '図面・数量表送付'], kpi: '架電件数・見積受領数' },
   ],
 };
-var GEMINI_MODEL = 'gemini-2.0-flash'; // 広く使える高速モデル（キー権限で失敗しにくい）
+var GEMINI_MODEL = 'gemini-3.6-flash'; // 既定。廃止された場合はAPIの提案を読んで自動追従（callGeminiJson_）
 
 // ============================================================
 //  メニュー
@@ -179,41 +179,64 @@ function summarizeWithGemini_(memo) {
   return callGeminiJson_(key, prompt);
 }
 
-/** 接続診断：実際のHTTPステータス/エラー文を返す（原因特定用） */
-function geminiDiag_(key) {
-  try {
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + GEMINI_MODEL + ':generateContent?key=' + encodeURIComponent(key);
-    var res = UrlFetchApp.fetch(url, {
-      method: 'post', contentType: 'application/json',
-      payload: JSON.stringify({ contents: [{ parts: [{ text: 'ping' }] }] }),
-      muteHttpExceptions: true
-    });
-    var code = res.getResponseCode();
-    if (code === 200) return 'OK';
-    return 'HTTP' + code + '：' + cut_(String(res.getContentText()).replace(/\s+/g, ' '), 180);
-  } catch (e) { return '例外：' + e; }
+/** 試すモデルの順番（成功したものはプロパティに記憶して次回優先） */
+function geminiModels_() {
+  var list = [];
+  var saved = PropertiesService.getScriptProperties().getProperty('GEMINI_MODEL_OK');
+  if (saved) list.push(saved);
+  ['gemini-3.6-flash', GEMINI_MODEL, 'gemini-flash-latest', 'gemini-2.5-flash', 'gemini-2.0-flash'].forEach(function (m) {
+    if (m && list.indexOf(m) < 0) list.push(m);
+  });
+  return list;
+}
+function callGeminiRaw_(key, model, payload) {
+  var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + model + ':generateContent?key=' + encodeURIComponent(key);
+  return UrlFetchApp.fetch(url, {
+    method: 'post', contentType: 'application/json',
+    payload: JSON.stringify(payload), muteHttpExceptions: true
+  });
 }
 
+/** 接続診断：使えるモデルを探し、OKならそのモデル名／NGなら実エラーを返す */
+function geminiDiag_(key) {
+  var models = geminiModels_(), lastErr = '';
+  for (var i = 0; i < models.length && i < 8; i++) {
+    try {
+      var res = callGeminiRaw_(key, models[i], { contents: [{ parts: [{ text: 'ping' }] }] });
+      var code = res.getResponseCode();
+      var body = String(res.getContentText() || '');
+      if (code === 200) { PropertiesService.getScriptProperties().setProperty('GEMINI_MODEL_OK', models[i]); return 'OK（' + models[i] + '）'; }
+      var sug = body.match(/models\/(gemini[\w.\-]+)/);
+      if (sug && models.indexOf(sug[1]) < 0) models.push(sug[1]); // APIが薦めるモデルを追加
+      lastErr = 'HTTP' + code + '：' + cut_(body.replace(/\s+/g, ' '), 140);
+    } catch (e) { lastErr = '例外：' + e; }
+  }
+  return lastErr;
+}
+
+/** JSON応答を取得。複数モデルを順に試し、APIが薦める後継モデルにも自動追従。 */
 function callGeminiJson_(key, prompt) {
-  try {
-    var url = 'https://generativelanguage.googleapis.com/v1beta/models/' +
-      GEMINI_MODEL + ':generateContent?key=' + encodeURIComponent(key);
-    var payload = {
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: { responseMimeType: 'application/json' }
-    };
-    var res = UrlFetchApp.fetch(url, {
-      method: 'post', contentType: 'application/json',
-      payload: JSON.stringify(payload), muteHttpExceptions: true
-    });
-    if (res.getResponseCode() !== 200) { Logger.log('Gemini ' + res.getResponseCode() + ':' + res.getContentText()); return null; }
-    var data = JSON.parse(res.getContentText());
-    var text = data && data.candidates && data.candidates[0] && data.candidates[0].content &&
-      data.candidates[0].content.parts && data.candidates[0].content.parts[0] &&
-      data.candidates[0].content.parts[0].text;
-    if (!text) return null;
-    return JSON.parse(extractJson_(text));
-  } catch (e) { Logger.log('Gemini呼び出し失敗: ' + e); return null; }
+  var payload = { contents: [{ parts: [{ text: prompt }] }], generationConfig: { responseMimeType: 'application/json' } };
+  var models = geminiModels_();
+  for (var i = 0; i < models.length && i < 8; i++) {
+    try {
+      var res = callGeminiRaw_(key, models[i], payload);
+      var code = res.getResponseCode();
+      var body = String(res.getContentText() || '');
+      if (code === 200) {
+        PropertiesService.getScriptProperties().setProperty('GEMINI_MODEL_OK', models[i]);
+        var data = JSON.parse(body);
+        var text = data && data.candidates && data.candidates[0] && data.candidates[0].content &&
+          data.candidates[0].content.parts && data.candidates[0].content.parts[0] &&
+          data.candidates[0].content.parts[0].text;
+        return text ? JSON.parse(extractJson_(text)) : null;
+      }
+      var sug = body.match(/models\/(gemini[\w.\-]+)/);
+      if (sug && models.indexOf(sug[1]) < 0) models.push(sug[1]);
+      Logger.log('Gemini ' + code + '(' + models[i] + '): ' + cut_(body, 150));
+    } catch (e) { Logger.log('Gemini例外(' + models[i] + '): ' + e); }
+  }
+  return null;
 }
 
 // ============================================================
