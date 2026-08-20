@@ -36,7 +36,7 @@ const BID = {
       tasks: ['協力業者リスト管理', '架電・メール取得', '図面・数量表送付'], kpi: '架電件数・見積受領数' },
   ],
 };
-const GEMINI_MODEL = 'gemini-2.5-flash';
+var GEMINI_MODEL = 'gemini-2.0-flash'; // 広く使える高速モデル（キー権限で失敗しにくい）
 
 // ============================================================
 //  メニュー
@@ -177,6 +177,21 @@ function summarizeWithGemini_(memo) {
     '', '--- 会議メモ ---', memo
   ].join('\n');
   return callGeminiJson_(key, prompt);
+}
+
+/** 接続診断：実際のHTTPステータス/エラー文を返す（原因特定用） */
+function geminiDiag_(key) {
+  try {
+    var url = 'https://generativelanguage.googleapis.com/v1beta/models/' + GEMINI_MODEL + ':generateContent?key=' + encodeURIComponent(key);
+    var res = UrlFetchApp.fetch(url, {
+      method: 'post', contentType: 'application/json',
+      payload: JSON.stringify({ contents: [{ parts: [{ text: 'ping' }] }] }),
+      muteHttpExceptions: true
+    });
+    var code = res.getResponseCode();
+    if (code === 200) return 'OK';
+    return 'HTTP' + code + '：' + cut_(String(res.getContentText()).replace(/\s+/g, ' '), 180);
+  } catch (e) { return '例外：' + e; }
 }
 
 function callGeminiJson_(key, prompt) {
@@ -472,10 +487,9 @@ function bidSelfTest() {
   var ui = SpreadsheetApp.getUi();
   var key = PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY');
   var lines = [];
-  lines.push('① Geminiキー：' + (key ? 'あり' : '⚠️ 未設定（プロジェクト設定→スクリプトプロパティで GEMINI_API_KEY を保存）'));
+  lines.push('① Geminiキー：' + (key ? ('あり（末尾…' + key.slice(-4) + '／' + key.length + '文字）') : '⚠️ 未設定'));
   if (key) {
-    var t = callGeminiJson_(key, 'JSONのみ：{"ok":true}');
-    lines.push('② Gemini接続：' + (t && t.ok ? 'OK' : '⚠️ 失敗（キーが無効か、モデル権限なし）'));
+    lines.push('② Gemini接続（' + GEMINI_MODEL + '）：' + geminiDiag_(key));
   }
   var found = false, subj = '';
   var threads = GmailApp.search('from:gemini-notes@google.com newer_than:14d', 0, 30);
