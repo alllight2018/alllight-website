@@ -46,7 +46,8 @@ function onOpen() {
     .createMenu('入札AI')
     .addItem('① 初期設定（自動反映をON）', 'installBidTriggers')
     .addSeparator()
-    .addItem('今すぐGmailからAI反映', 'autoRunFromGmail')
+    .addItem('最新の入札会議メモで更新（手動）', 'reprocessLatestBidMeeting')
+    .addItem('今すぐGmailからAI反映（未処理のみ）', 'autoRunFromGmail')
     .addItem('ダッシュボードを再生成（データのみ）', 'rebuildDashboard')
     .addSeparator()
     .addItem('注力案件をクリア（全消去）', 'clearFocusCases')
@@ -97,6 +98,24 @@ function autoRunFromGmail() {
   });
 
   if (memo) pasteMemoAndUpdate_(memo);
+}
+
+/** メニュー：直近14日で最新の「入札会議」Geminiメモを取り込み直す（処理済みラベル無視） */
+function reprocessLatestBidMeeting() {
+  var threads = GmailApp.search('from:gemini-notes@google.com newer_than:14d', 0, 30);
+  var memo = null, when = 0;
+  threads.forEach(function (th) {
+    th.getMessages().forEach(function (msg) {
+      var subj = msg.getSubject() || '';
+      var name = (subj.match(/[「『](.+?)[」』]/) || [])[1] || '';
+      if (norm_(name).indexOf('入札会議') === -1) return;
+      var t = msg.getDate().getTime();
+      if (t > when) { when = t; memo = msg.getPlainBody() || ''; }
+    });
+  });
+  if (!memo) { SpreadsheetApp.getUi().alert('直近14日に「入札会議」のGeminiメモが見つかりませんでした。メモが届いてから実行してください。'); return; }
+  pasteMemoAndUpdate_(memo);
+  SpreadsheetApp.getUi().alert('直近の入札会議メモで、注力案件・要約・アラート・アクションを更新しました。');
 }
 
 // ============================================================
