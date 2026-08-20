@@ -146,9 +146,12 @@ function summarizeWithGemini_(memo) {
     'あなたは株式会社オールライトの入札会議の参謀AIです。',
     '次の入札会議メモを読み、毎週の入札PDCAダッシュボード更新用に日本語で整理してください。',
     '観点：ピックアップ数/検討数/入札数/落札率/落札金額/億案件、電子証明書・期限管理、入札ミス、協力業者、次回確認事項。',
+    '★最重要：会議で「狙う・注力する・入札を進める・準備する・応募する」と話した具体案件を focus_cases に、締切と次の一手つきで全部抽出する（例：三島病院・海野・浜松・トンべ消防など）。',
     'アラートは重要度順に色分けの語(赤/黄/緑)を先頭に付ける。',
     'JSONのみで返す。形式：',
-    '{"summary":"3〜5行","decisions":["決定事項"],"issues":["課題/リスク"],',
+    '{"summary":"3〜5行",',
+    '"focus_cases":[{"name":"案件名","deadline":"締切(あれば)","note":"状況/次の一手/担当"}],',
+    '"decisions":["決定事項"],"issues":["課題/リスク"],',
     '"alerts":["🔴/🟡/🟢 で始まる最大6件"],"dashboard_actions":["今週やる最大7件"],',
     '"owners":["担当者"],"deadlines":["期限"]}',
     '', '--- 会議メモ ---', memo
@@ -616,15 +619,34 @@ function clearFocusCases() {
   SpreadsheetApp.getUi().alert('注力案件をクリアしました。');
 }
 
-/** ダッシュボード内「注力案件」欄（内部リストの上位を表示） */
+/** ダッシュボード内「注力案件」欄。直近の入札会議で狙うと決めた案件を最優先で表示 */
 function secFocusCases_(sheet, row) {
-  secTitle_(sheet, row, '🎯  注力案件（ラクリツ判定・上位）');
+  secTitle_(sheet, row, '🎯  注力案件（直近の入札会議より）');
   row++;
   sheet.setRowHeight(row, 8); row++;
+
+  var ai = readAi_();
+  var mtg = (ai && ai.focus_cases && ai.focus_cases.length) ? ai.focus_cases : null;
+  if (mtg) {
+    mtg.slice(0, 10).forEach(function (c) {
+      merge_(sheet, row, 2, row, 5);
+      var name = (typeof c === 'string') ? c : (c.name || '');
+      var dl = (c && c.deadline) ? '（締切 ' + c.deadline + '）' : '';
+      var note = (c && c.note) ? '　→ ' + c.note : '';
+      sheet.getRange(row, 2).setValue('● ' + name + dl + note)
+        .setFontSize(11).setFontColor('#1a1a2e').setBackground('#EEF4FF').setWrap(true).setVerticalAlignment('middle')
+        .setBorder(false, false, true, false, false, false, '#D6E0F5', SpreadsheetApp.BorderStyle.SOLID);
+      sheet.setRowHeight(row, 30);
+      row++;
+    });
+    return row;
+  }
+
+  // フォールバック：案件リストのURLから採点した"狙う案件"（会議メモがまだ無いとき）
   var list = focusList_().slice(0, 6);
   if (!list.length) {
     merge_(sheet, row, 2, row, 5);
-    sheet.getRange(row, 2).setValue('（案件リストにURLを入れると、AIが採点して"狙う案件"をここに表示します）')
+    sheet.getRange(row, 2).setValue('（入札会議のメモが届くと、会議で狙うと決めた案件をここに自動表示します）')
       .setFontSize(11).setFontColor('#666666').setBackground('#F8F8FF').setWrap(true).setVerticalAlignment('middle');
     sheet.setRowHeight(row, 28);
     return row + 1;
@@ -634,8 +656,8 @@ function secFocusCases_(sheet, row) {
     var j = String(c.judge);
     var bg = j.indexOf('最優先') >= 0 ? '#E1F5EE' : (j.indexOf('積極') >= 0 ? '#FAEEDA' : '#FCEBEB');
     var fg = j.indexOf('最優先') >= 0 ? '#085041' : (j.indexOf('積極') >= 0 ? '#633806' : '#A32D2D');
-    var text = '【' + j + '｜' + c.total + '点】' + (c.name || '') + (c.orderer ? '（' + c.orderer + '）' : '') + (c.reason ? '　→ ' + c.reason : '');
-    sheet.getRange(row, 2).setValue(text).setFontSize(11).setFontColor(fg).setBackground(bg).setWrap(true).setVerticalAlignment('middle');
+    sheet.getRange(row, 2).setValue('【' + j + '｜' + c.total + '点】' + (c.name || '') + (c.orderer ? '（' + c.orderer + '）' : '') + (c.reason ? '　→ ' + c.reason : ''))
+      .setFontSize(11).setFontColor(fg).setBackground(bg).setWrap(true).setVerticalAlignment('middle');
     sheet.setRowHeight(row, 32);
     row++;
   });
