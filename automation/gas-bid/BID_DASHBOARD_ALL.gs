@@ -305,9 +305,56 @@ function rebuildDashboard() {
   wbFooter_(sheet, Math.max(L, R) + 1);
 
   try { writeLookerData_(ai); } catch (e) { Logger.log('Looker用データ書き出し失敗: ' + e); }
+  try { addCharts_(sheet); } catch (e) { Logger.log('グラフ挿入失敗: ' + e); }
 
   ss.setActiveSheet(sheet);
   SpreadsheetApp.flush();
+}
+
+/** ダッシュボードに本物のグラフ（棒）を挿入。LK_月次を元データにする。 */
+function addCharts_(sheet) {
+  var lk = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('LK_月次');
+  if (!lk) return;
+  var last = lk.getLastRow();
+  if (last < 2) return;
+
+  // 月次 落札金額（年月=A / 落札金額=H）
+  var c1 = sheet.newChart().asColumnChart()
+    .addRange(lk.getRange(1, 1, last, 1))
+    .addRange(lk.getRange(1, 8, last, 1))
+    .setNumHeaders(1)
+    .setPosition(5, 12, 0, 0)
+    .setOption('title', '月次 落札金額')
+    .setOption('width', 470).setOption('height', 250)
+    .setOption('colors', ['#A32D2D'])
+    .setOption('legend', { position: 'none' })
+    .build();
+  sheet.insertChart(c1);
+
+  // 月次 入札・落札 件数（年月=A / 入札=F,落札=G）
+  var c2 = sheet.newChart().asColumnChart()
+    .addRange(lk.getRange(1, 1, last, 1))
+    .addRange(lk.getRange(1, 6, last, 2))
+    .setNumHeaders(1)
+    .setPosition(19, 12, 0, 0)
+    .setOption('title', '月次 入札・落札 件数')
+    .setOption('width', 470).setOption('height', 250)
+    .setOption('colors', ['#0F6E56', '#854F0B'])
+    .build();
+  sheet.insertChart(c2);
+
+  // 月次 ピックアップ（折れ線）（年月=A / ピックアップ=D）
+  var c3 = sheet.newChart().asLineChart()
+    .addRange(lk.getRange(1, 1, last, 1))
+    .addRange(lk.getRange(1, 4, last, 1))
+    .setNumHeaders(1)
+    .setPosition(33, 12, 0, 0)
+    .setOption('title', '月次 ピックアップ推移')
+    .setOption('width', 470).setOption('height', 230)
+    .setOption('colors', ['#185FA5'])
+    .setOption('legend', { position: 'none' })
+    .build();
+  sheet.insertChart(c3);
 }
 
 // ============================================================
