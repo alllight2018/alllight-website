@@ -275,7 +275,7 @@ function latestYearWithData_() {
 // ============================================================
 function rebuildDashboard() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
-  importRakuritsuSheetIfNeeded_(); // 既存のラクリツ_判定シートを一度だけ内部へ取り込む
+  importRakuritsuSheetIfNeeded_();
   var year = latestYearWithData_();
   var months = readMonthly_(year).filter(function (m) { return m.pickup || m.review || m.bid || m.amount; });
   var ai = readAi_();
@@ -285,35 +285,190 @@ function rebuildDashboard() {
   sheet = ss.insertSheet(BID.DASH, 0);
   sheet.setHiddenGridlines(true);
   sheet.setTabColor('#534AB7');
-  sheet.setColumnWidth(1, 20);
-  [2, 3, 4, 5].forEach(function (c) { sheet.setColumnWidth(c, 165); });
-  sheet.setColumnWidth(6, 20);
+  sheet.setColumnWidth(1, 14);
+  [2, 3, 4, 5].forEach(function (c) { sheet.setColumnWidth(c, 150); }); // 左：会議まわり
+  sheet.setColumnWidth(6, 14);
+  [7, 8, 9, 10].forEach(function (c) { sheet.setColumnWidth(c, 128); }); // 右：実績
+  sheet.setColumnWidth(11, 14);
 
-  var row = 2;
-  row = secHeader_(sheet, row, year);
-  row++;
-  row = secAiSummary_(sheet, row, ai);
-  row++;
-  row = secFocusCases_(sheet, row);
-  row++;
-  row = secThisWeek_(sheet, row, ai);
-  row++;
-  row = secObservations_(sheet, row, ai);
-  row++;
-  row = secAlerts_(sheet, row, ai);
-  row++;
-  row = secAnnualKpi_(sheet, row, months);
-  row++;
-  row = secMonthly_(sheet, row, months);
-  row++;
-  row = secReverseKpi_(sheet, row, months);
-  row++;
-  row = secMembers_(sheet, row);
-  row++;
-  secFooter_(sheet, row);
+  wbHeader_(sheet, 2, year);   // ヘッダー全幅（行2-3）
+  var L = 5, R = 5;            // 左右カラムの開始行
+  L = wbSummary_(sheet, L, ai);
+  L = wbFocus_(sheet, L, ai);
+  L = wbThisWeek_(sheet, L, ai);
+  L = wbObs_(sheet, L, ai);
+  L = wbAlerts_(sheet, L, ai);
+  R = wbKpi_(sheet, R, months);
+  R = wbMonthly_(sheet, R, months);
+  R = wbReverse_(sheet, R, months);
+  R = wbMembers_(sheet, R);
+  wbFooter_(sheet, Math.max(L, R) + 1);
 
   ss.setActiveSheet(sheet);
   SpreadsheetApp.flush();
+}
+
+// ── 横長2カラム用パーツ（左=会議 col2-5／右=実績 col7-10）──
+function wbTitle_(sheet, row, c1, c2, title) {
+  merge_(sheet, row, c1, row, c2);
+  sheet.getRange(row, c1).setValue(title).setFontSize(11).setFontWeight('bold').setFontColor('#2D2A6E').setBackground('#EEEDFE').setVerticalAlignment('middle');
+  sheet.setRowHeight(row, 26);
+  return row + 1;
+}
+function wbLine_(sheet, row, c1, c2, text, bg, fg, h) {
+  merge_(sheet, row, c1, row, c2);
+  sheet.getRange(row, c1).setValue(text).setFontSize(10).setFontColor(fg || '#1a1a2e').setBackground(bg || '#FFFFFF').setWrap(true).setVerticalAlignment('middle')
+    .setBorder(false, false, true, false, false, false, '#EEEEEE', SpreadsheetApp.BorderStyle.SOLID);
+  sheet.setRowHeight(row, h || 26);
+  return row + 1;
+}
+function wbHeader_(sheet, row, year) {
+  var dateStr = Utilities.formatDate(new Date(), Session.getScriptTimeZone(), 'yyyy/M/d HH:mm');
+  merge_(sheet, row, 2, row, 10);
+  sheet.getRange(row, 2).setValue('📊 入札チーム PDCA ダッシュボード').setFontSize(16).setFontWeight('bold').setFontColor('#FFFFFF').setBackground('#2D2A6E').setVerticalAlignment('middle');
+  sheet.setRowHeight(row, 40);
+  merge_(sheet, row + 1, 2, row + 1, 10);
+  sheet.getRange(row + 1, 2).setValue('年間売上目標7億円 ／ ' + year + '年実績 ／ ' + dateStr + ' 更新 ／ 会議メモ受信で自動更新').setFontSize(10).setFontColor('#534AB7').setBackground('#EEEDFE').setVerticalAlignment('middle');
+  sheet.setRowHeight(row + 1, 22);
+}
+function wbSummary_(sheet, row, ai) {
+  row = wbTitle_(sheet, row, 2, 5, '📝 直近の入札会議 要約');
+  var text = (ai && ai.summary) ? ai.summary : '（メニュー「最新の入札会議メモで更新」を押すと要約が入ります）';
+  merge_(sheet, row, 2, row, 5);
+  sheet.getRange(row, 2).setValue(text).setFontSize(10).setFontColor('#1a1a2e').setBackground('#F8F8FF').setWrap(true).setVerticalAlignment('top')
+    .setBorder(true, true, true, true, false, false, '#DDDDDD', SpreadsheetApp.BorderStyle.SOLID);
+  sheet.setRowHeight(row, 70);
+  return row + 2;
+}
+function wbFocus_(sheet, row, ai) {
+  row = wbTitle_(sheet, row, 2, 5, '🎯 注力案件（会議で狙う案件）');
+  var mtg = (ai && ai.focus_cases && ai.focus_cases.length) ? ai.focus_cases : null;
+  if (mtg) {
+    mtg.slice(0, 6).forEach(function (c) {
+      var name = (typeof c === 'string') ? c : (c.name || '');
+      var dl = (c && c.deadline) ? '（締切' + c.deadline + '）' : '';
+      var note = (c && c.note) ? ' → ' + c.note : '';
+      row = wbLine_(sheet, row, 2, 5, '● ' + name + dl + note, '#EEF4FF', '#1a1a2e', 28);
+    });
+  } else {
+    var list = focusList_().slice(0, 5);
+    if (!list.length) row = wbLine_(sheet, row, 2, 5, '（会議メモを取り込むと、狙う案件が入ります）', '#F8F8FF', '#666666', 24);
+    else list.forEach(function (c) {
+      var j = String(c.judge); var bg = j.indexOf('最優先') >= 0 ? '#E1F5EE' : (j.indexOf('積極') >= 0 ? '#FAEEDA' : '#FCEBEB');
+      row = wbLine_(sheet, row, 2, 5, '【' + j + '｜' + c.total + '点】' + (c.name || '') + (c.reason ? ' → ' + c.reason : ''), bg, '#1a1a2e', 28);
+    });
+  }
+  return row + 1;
+}
+function wbThisWeek_(sheet, row, ai) {
+  row = wbTitle_(sheet, row, 2, 5, '🗓 今週やること（担当・期限）');
+  var items = (ai && ai.this_week && ai.this_week.length) ? ai.this_week : null;
+  if (!items) return wbLine_(sheet, row, 2, 5, '（会議メモを取り込むと自動で入ります）', '#F8F8FF', '#666666', 24) + 1;
+  items.slice(0, 7).forEach(function (t) {
+    var task = (typeof t === 'string') ? t : (t.task || '');
+    var owner = (t && t.owner) ? '【' + t.owner + '】' : '';
+    var due = (t && t.due) ? '（〜' + t.due + '）' : '';
+    row = wbLine_(sheet, row, 2, 5, '☐ ' + owner + task + due, '#FFFFFF', '#1a1a2e', 26);
+  });
+  return row + 1;
+}
+function wbObs_(sheet, row, ai) {
+  row = wbTitle_(sheet, row, 2, 5, '💡 きづき・方針');
+  var items = (ai && ai.observations && ai.observations.length) ? ai.observations : null;
+  if (!items) return wbLine_(sheet, row, 2, 5, '（会議メモを取り込むと自動で入ります）', '#F8F8FF', '#666666', 24) + 1;
+  items.slice(0, 6).forEach(function (o) { row = wbLine_(sheet, row, 2, 5, '・' + ((typeof o === 'string') ? o : (o.text || '')), '#FFFDF5', '#1a1a2e', 26); });
+  return row + 1;
+}
+function wbAlerts_(sheet, row, ai) {
+  row = wbTitle_(sheet, row, 2, 5, '🚨 気を付けること');
+  var alerts = (ai && ai.alerts && ai.alerts.length) ? ai.alerts : ['（会議メモを取り込むと自動で入ります）'];
+  alerts.slice(0, 6).forEach(function (a) {
+    var bg = '#EEEDFE', fg = '#26215C';
+    if (a.indexOf('🔴') === 0 || a.indexOf('赤') === 0) { bg = '#FCEBEB'; fg = '#A32D2D'; }
+    else if (a.indexOf('🟡') === 0 || a.indexOf('黄') === 0) { bg = '#FAEEDA'; fg = '#633806'; }
+    else if (a.indexOf('🟢') === 0 || a.indexOf('緑') === 0) { bg = '#E1F5EE'; fg = '#085041'; }
+    row = wbLine_(sheet, row, 2, 5, a, bg, fg, 26);
+  });
+  return row + 1;
+}
+function wbKpi_(sheet, row, months) {
+  row = wbTitle_(sheet, row, 7, 10, '📊 実績（今年の累計）');
+  var t = totals_(months);
+  var cards = [
+    { label: 'ピックアップ', value: t.pickup + '件', sub: '月平均' + (months.length ? Math.round(t.pickup / months.length) : 0), color: '#185FA5', bg: '#E6F1FB' },
+    { label: '入札', value: t.bid + '件', sub: '落札率' + t.winRate + '%', color: '#0F6E56', bg: '#E1F5EE' },
+    { label: '落札', value: t.win + '件', sub: '単価' + yen_(t.avg), color: '#854F0B', bg: '#FAEEDA' },
+    { label: '落札額', value: oku_(t.amount), sub: '達成' + t.goalRate + '%', color: '#A32D2D', bg: '#FCEBEB' }
+  ];
+  cards.forEach(function (k, i) {
+    var col = 7 + i;
+    sheet.getRange(row, col).setValue(k.label).setFontSize(9).setFontColor(k.color).setBackground(k.bg).setFontWeight('bold').setHorizontalAlignment('center').setVerticalAlignment('middle');
+    sheet.getRange(row + 1, col).setValue(k.value).setFontSize(15).setFontWeight('bold').setFontColor(k.color).setBackground(k.bg).setHorizontalAlignment('center').setVerticalAlignment('middle');
+    sheet.getRange(row + 2, col).setValue(k.sub).setFontSize(8).setFontColor('#666666').setBackground(k.bg).setHorizontalAlignment('center').setVerticalAlignment('middle');
+  });
+  sheet.setRowHeight(row, 20); sheet.setRowHeight(row + 1, 32); sheet.setRowHeight(row + 2, 16);
+  row += 3;
+  merge_(sheet, row, 7, row, 10);
+  var filled = Math.max(0, Math.round(Number(t.goalRate) / 2)), empty = Math.max(0, 50 - filled);
+  sheet.getRange(row, 7).setValue('目標進捗 ' + t.goalRate + '% ' + rep_('█', filled) + rep_('░', empty)).setFontSize(9).setFontColor('#534AB7').setBackground('#EEEDFE').setFontFamily('Courier New').setVerticalAlignment('middle');
+  sheet.setRowHeight(row, 22);
+  return row + 2;
+}
+function wbMonthly_(sheet, row, months) {
+  row = wbTitle_(sheet, row, 7, 10, '📅 月次推移');
+  ['月', 'ピック', '入札', '落札/額'].forEach(function (h, i) {
+    sheet.getRange(row, 7 + i).setValue(h).setFontSize(9).setFontWeight('bold').setFontColor('#FFFFFF').setBackground('#534AB7').setHorizontalAlignment('center').setVerticalAlignment('middle');
+  });
+  sheet.setRowHeight(row, 22); row++;
+  months.forEach(function (m) {
+    var amt = m.amount > 0 ? oku_(m.amount) : (m.win === 0 ? '0' : '—');
+    [m.month + '月', m.pickup || '—', m.bid || '—', (m.win || 0) + '/' + amt].forEach(function (v, i) {
+      sheet.getRange(row, 7 + i).setValue(v).setFontSize(9).setBackground('#FFFFFF').setHorizontalAlignment('center').setVerticalAlignment('middle')
+        .setBorder(true, true, true, true, false, false, '#DDDDDD', SpreadsheetApp.BorderStyle.SOLID);
+    });
+    sheet.setRowHeight(row, 20); row++;
+  });
+  var t = totals_(months);
+  ['合計', t.pickup, t.bid, t.win + '/' + oku_(t.amount)].forEach(function (v, i) {
+    sheet.getRange(row, 7 + i).setValue(v).setFontSize(9).setFontWeight('bold').setBackground('#EEEDFE').setFontColor('#26215C').setHorizontalAlignment('center').setVerticalAlignment('middle');
+  });
+  sheet.setRowHeight(row, 22);
+  return row + 2;
+}
+function wbReverse_(sheet, row, months) {
+  row = wbTitle_(sheet, row, 7, 10, '🎯 7億円 逆算KPI');
+  var t = totals_(months), n = months.length || 1, rem = Math.max(1, 12 - n);
+  var needPer = Math.round((BID.GOAL_AMOUNT - t.amount) / rem);
+  var rows = [
+    ['指標', '現状/月', '目標/月', '差'],
+    ['ピック', Math.round(t.pickup / n), BID.GOAL_PICKUP, '▲' + (BID.GOAL_PICKUP - Math.round(t.pickup / n))],
+    ['入札', Math.round(t.bid / n), BID.GOAL_BIDS, '▲' + (BID.GOAL_BIDS - Math.round(t.bid / n))],
+    ['落札率', t.winRate + '%', BID.GOAL_WINRATE + '%', '▲' + (BID.GOAL_WINRATE - Number(t.winRate)).toFixed(1)],
+    ['月落札額', yen_(Math.round(t.amount / n)), yen_(needPer), '—']
+  ];
+  rows.forEach(function (rd, ri) {
+    rd.forEach(function (v, ci) {
+      var cell = sheet.getRange(row + ri, 7 + ci);
+      if (ri === 0) cell.setValue(v).setFontSize(9).setFontWeight('bold').setFontColor('#FFFFFF').setBackground('#534AB7').setHorizontalAlignment('center').setVerticalAlignment('middle');
+      else cell.setValue(v).setFontSize(9).setFontColor(ci === 3 ? '#A32D2D' : '#1a1a2e').setBackground(ci === 3 ? '#FFF5F5' : (ri % 2 === 0 ? '#F8F8FF' : '#FFFFFF')).setHorizontalAlignment('center').setVerticalAlignment('middle')
+        .setBorder(true, true, true, true, false, false, '#DDDDDD', SpreadsheetApp.BorderStyle.SOLID);
+    });
+    sheet.setRowHeight(row + ri, 22);
+  });
+  return row + rows.length + 1;
+}
+function wbMembers_(sheet, row) {
+  row = wbTitle_(sheet, row, 7, 10, '👥 メンバー');
+  BID.MEMBERS.forEach(function (m) {
+    merge_(sheet, row, 7, row, 10);
+    sheet.getRange(row, 7).setValue(m.name + '（' + m.role + '）：' + m.tasks.slice(0, 3).join('・')).setFontSize(9).setFontColor(m.color).setBackground(m.bg).setWrap(true).setVerticalAlignment('middle');
+    sheet.setRowHeight(row, 26); row++;
+  });
+  return row + 1;
+}
+function wbFooter_(sheet, row) {
+  merge_(sheet, row, 2, row, 10);
+  sheet.getRange(row, 2).setValue('入札会議のGeminiメモ受信で自動更新／実績＝入札・落札分析タブ').setFontSize(8).setFontColor('#999999').setHorizontalAlignment('center');
 }
 
 function secHeader_(sheet, row, year) {
