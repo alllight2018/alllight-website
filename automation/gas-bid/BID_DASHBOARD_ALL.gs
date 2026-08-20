@@ -50,6 +50,7 @@ function onOpen() {
     .addItem('今すぐGmailからAI反映（未処理のみ）', 'autoRunFromGmail')
     .addItem('ダッシュボードを再生成（データのみ）', 'rebuildDashboard')
     .addSeparator()
+    .addItem('接続テスト（AI・メモ確認）', 'bidSelfTest')
     .addItem('注力案件をクリア（全消去）', 'clearFocusCases')
     .addToUi();
 }
@@ -163,16 +164,16 @@ function summarizeWithGemini_(memo) {
   if (!key || !memo) return null;
   var prompt = [
     'あなたは株式会社オールライトの入札会議の参謀AIです。',
-    '次の入札会議メモを読み、毎週の入札PDCAダッシュボード更新用に日本語で整理してください。',
-    '観点：ピックアップ数/検討数/入札数/落札率/落札金額/億案件、電子証明書・期限管理、入札ミス、協力業者、次回確認事項。',
-    '★最重要：会議で「狙う・注力する・入札を進める・準備する・応募する」と話した具体案件を focus_cases に、締切と次の一手つきで全部抽出する（例：三島病院・海野・浜松・トンべ消防など）。',
-    'アラートは重要度順に色分けの語(赤/黄/緑)を先頭に付ける。',
+    '次の入札会議メモを読み、社長が今週を一目で把握できる「週次ダッシュボード」用に日本語で整理してください。',
+    'メモの「概要」「各見出し」「推奨される次のステップ」を必ず反映すること。空欄は作らず、メモに書かれた具体名（案件名・業者名・大学名・担当者）をそのまま使う。',
     'JSONのみで返す。形式：',
-    '{"summary":"3〜5行",',
-    '"focus_cases":[{"name":"案件名","deadline":"締切(あれば)","note":"状況/次の一手/担当"}],',
-    '"decisions":["決定事項"],"issues":["課題/リスク"],',
-    '"alerts":["🔴/🟡/🟢 で始まる最大6件"],"dashboard_actions":["今週やる最大7件"],',
-    '"owners":["担当者"],"deadlines":["期限"]}',
+    '{',
+    '"summary":"会議全体の要約を3〜4行",',
+    '"focus_cases":[{"name":"狙う/注力する案件名","deadline":"締切(あれば)","note":"状況・次の一手・金額感"}],',
+    '"this_week":[{"task":"今週やること(次のステップ)","owner":"担当","due":"期限(あれば)"}],',
+    '"observations":["会議での気づき・決めた方針・判断基準を1件ずつ"],',
+    '"alerts":["🔴/🟡/🟢 で始まる 気を付けること/期限/リスク を最大6件"]',
+    '}',
     '', '--- 会議メモ ---', memo
   ].join('\n');
   return callGeminiJson_(key, prompt);
@@ -255,17 +256,19 @@ function rebuildDashboard() {
   row++;
   row = secAiSummary_(sheet, row, ai);
   row++;
-  row = secAnnualKpi_(sheet, row, months);
-  row++;
   row = secFocusCases_(sheet, row);
   row++;
+  row = secThisWeek_(sheet, row, ai);
+  row++;
+  row = secObservations_(sheet, row, ai);
+  row++;
   row = secAlerts_(sheet, row, ai);
+  row++;
+  row = secAnnualKpi_(sheet, row, months);
   row++;
   row = secMonthly_(sheet, row, months);
   row++;
   row = secReverseKpi_(sheet, row, months);
-  row++;
-  row = secActions_(sheet, row, ai);
   row++;
   row = secMembers_(sheet, row);
   row++;
@@ -292,10 +295,10 @@ function secHeader_(sheet, row, year) {
 }
 
 function secAiSummary_(sheet, row, ai) {
-  secTitle_(sheet, row, '🧠  前回会議のAI要約');
+  secTitle_(sheet, row, '📝  直近の入札会議 要約');
   row++;
   merge_(sheet, row, 2, row, 5);
-  var text = ai && ai.summary ? ai.summary : '（入札会議のGeminiメモが届くと、ここに自動で要約が入ります）';
+  var text = ai && ai.summary ? ai.summary : '（まだ会議メモを取り込んでいません。メニュー「入札AI →最新の入札会議メモで更新」を押してください）';
   sheet.getRange(row, 2).setValue(text)
     .setFontSize(11).setFontColor('#1a1a2e').setBackground('#F8F8FF').setWrap(true).setVerticalAlignment('top')
     .setBorder(true, true, true, true, false, false, '#DDDDDD', SpreadsheetApp.BorderStyle.SOLID);
@@ -305,7 +308,7 @@ function secAiSummary_(sheet, row, ai) {
 
 function secAnnualKpi_(sheet, row, months) {
   var t = totals_(months);
-  secTitle_(sheet, row, '📈  累計KPI');
+  secTitle_(sheet, row, '📊  実績（今年の累計KPI）');
   row++;
   sheet.setRowHeight(row, 8); row++;
   var cards = [
@@ -332,7 +335,7 @@ function secAnnualKpi_(sheet, row, months) {
 }
 
 function secAlerts_(sheet, row, ai) {
-  secTitle_(sheet, row, '🚨  課題アラート（今週）');
+  secTitle_(sheet, row, '🚨  気を付けること（今週）');
   row++;
   sheet.setRowHeight(row, 8); row++;
   var alerts = (ai && ai.alerts && ai.alerts.length) ? ai.alerts
@@ -415,6 +418,77 @@ function secActions_(sheet, row, ai) {
     sheet.setRowHeight(row, 30); row++;
   });
   return row;
+}
+
+function secThisWeek_(sheet, row, ai) {
+  secTitle_(sheet, row, '🗓  今週やること（担当・期限）');
+  row++;
+  sheet.setRowHeight(row, 8); row++;
+  var items = (ai && ai.this_week && ai.this_week.length) ? ai.this_week : null;
+  if (!items) {
+    merge_(sheet, row, 2, row, 5);
+    sheet.getRange(row, 2).setValue('（入札会議のメモを取り込むと、今週やることが自動で入ります）')
+      .setFontSize(11).setFontColor('#666666').setBackground('#F8F8FF').setWrap(true).setVerticalAlignment('middle');
+    sheet.setRowHeight(row, 28);
+    return row + 1;
+  }
+  items.slice(0, 8).forEach(function (t) {
+    merge_(sheet, row, 2, row, 5);
+    var task = (typeof t === 'string') ? t : (t.task || '');
+    var owner = (t && t.owner) ? '【' + t.owner + '】' : '';
+    var due = (t && t.due) ? '（〜' + t.due + '）' : '';
+    sheet.getRange(row, 2).setValue('☐ ' + owner + task + due)
+      .setFontSize(11).setFontColor('#1a1a2e').setBackground('#FFFFFF').setWrap(true).setVerticalAlignment('middle')
+      .setBorder(false, false, true, false, false, false, '#EEEEEE', SpreadsheetApp.BorderStyle.SOLID);
+    sheet.setRowHeight(row, 28); row++;
+  });
+  return row;
+}
+
+function secObservations_(sheet, row, ai) {
+  secTitle_(sheet, row, '💡  きづき・方針（会議より）');
+  row++;
+  sheet.setRowHeight(row, 8); row++;
+  var items = (ai && ai.observations && ai.observations.length) ? ai.observations : null;
+  if (!items) {
+    merge_(sheet, row, 2, row, 5);
+    sheet.getRange(row, 2).setValue('（入札会議のメモを取り込むと、会議での気づき・方針が自動で入ります）')
+      .setFontSize(11).setFontColor('#666666').setBackground('#F8F8FF').setWrap(true).setVerticalAlignment('middle');
+    sheet.setRowHeight(row, 28);
+    return row + 1;
+  }
+  items.slice(0, 6).forEach(function (o) {
+    merge_(sheet, row, 2, row, 5);
+    sheet.getRange(row, 2).setValue('・' + ((typeof o === 'string') ? o : (o.text || '')))
+      .setFontSize(11).setFontColor('#1a1a2e').setBackground('#FFFDF5').setWrap(true).setVerticalAlignment('middle')
+      .setBorder(false, false, true, false, false, false, '#EFE7C8', SpreadsheetApp.BorderStyle.SOLID);
+    sheet.setRowHeight(row, 28); row++;
+  });
+  return row;
+}
+
+/** メニュー：AIキーと会議メモの接続テスト（何が足りないか一目で分かる） */
+function bidSelfTest() {
+  var ui = SpreadsheetApp.getUi();
+  var key = PropertiesService.getScriptProperties().getProperty('GEMINI_API_KEY');
+  var lines = [];
+  lines.push('① Geminiキー：' + (key ? 'あり' : '⚠️ 未設定（プロジェクト設定→スクリプトプロパティで GEMINI_API_KEY を保存）'));
+  if (key) {
+    var t = callGeminiJson_(key, 'JSONのみ：{"ok":true}');
+    lines.push('② Gemini接続：' + (t && t.ok ? 'OK' : '⚠️ 失敗（キーが無効か、モデル権限なし）'));
+  }
+  var found = false, subj = '';
+  var threads = GmailApp.search('from:gemini-notes@google.com newer_than:14d', 0, 30);
+  threads.forEach(function (th) {
+    th.getMessages().forEach(function (m) {
+      var nm = (m.getSubject() || '').match(/[「『](.+?)[」』]/);
+      if (nm && norm_(nm[1]).indexOf('入札会議') !== -1 && !found) { found = true; subj = m.getSubject(); }
+    });
+  });
+  lines.push('③ 直近14日の入札会議メモ：' + (found ? ('あり（' + subj + '）') : '⚠️ 見つからない'));
+  var ai = readAi_();
+  lines.push('④ 取込済みの注力案件：' + ((ai && ai.focus_cases) ? ai.focus_cases.length + '件' : '0件'));
+  ui.alert('入札AI 接続テスト\n\n' + lines.join('\n'));
 }
 
 function secMembers_(sheet, row) {
