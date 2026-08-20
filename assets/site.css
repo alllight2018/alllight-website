@@ -280,6 +280,9 @@ a:hover { color: inherit; }
 .reveal.d5 { transition-delay: .40s; } .reveal.d6 { transition-delay: .48s; }
 
 /* ---------- スクロール演出（強化）---------- */
+/* ソフトフェード（動かず、静かに浮かぶ＝“動”に対する“静”） */
+.reveal-soft { opacity: 0; transition: opacity 1.5s ease; }
+.reveal-soft.in { opacity: 1; }
 /* 方向つきスライド */
 .reveal-l { opacity: 0; transform: translateX(-54px); transition: opacity 1.2s ease, transform 1.5s cubic-bezier(.16,.8,.24,1); }
 .reveal-r { opacity: 0; transform: translateX(54px);  transition: opacity 1.2s ease, transform 1.5s cubic-bezier(.16,.8,.24,1); }
@@ -317,7 +320,7 @@ a:hover { color: inherit; }
 .reveal-l.d3,.reveal-r.d3,.reveal-scale.d3,.reveal-wipe.d3,.frame-draw.d3 { transition-delay: .24s; }
 
 @media (prefers-reduced-motion: reduce) {
-  .reveal, .reveal-l, .reveal-r, .reveal-scale { opacity: 1; transform: none; transition: none; }
+  .reveal, .reveal-l, .reveal-r, .reveal-scale, .reveal-soft { opacity: 1; transform: none; transition: none; }
   .reveal-wipe { clip-path: none; }
   .reveal-wipe img, .reveal-wipe .wipe-zoom { transform: none; }
   .frame-draw::before, .frame-draw::after { transform: scaleX(1); }

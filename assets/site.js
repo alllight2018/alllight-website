@@ -32,7 +32,7 @@
   });
 
   /* ---- スクロールリビール（各種演出を一括監視）---- */
-  var revealEls = document.querySelectorAll(".reveal, .reveal-l, .reveal-r, .reveal-scale, .reveal-wipe, .frame-draw");
+  var revealEls = document.querySelectorAll(".reveal, .reveal-soft, .reveal-l, .reveal-r, .reveal-scale, .reveal-wipe, .frame-draw");
   if ("IntersectionObserver" in window && revealEls.length) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
