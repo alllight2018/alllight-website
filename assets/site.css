@@ -488,3 +488,12 @@ a:hover { color: inherit; }
 .qs-result-main { font-size: clamp(1.2rem, 3.2vw, 1.7rem); font-weight: 900; color: #fff; margin: .3rem 0; }
 .qs-result-main b { color: var(--amber-2); }
 .qs-result-sub { font-size: .86rem; color: rgba(255,255,255,.72); line-height: 1.8; max-width: 640px; }
+
+/* ナビの YouTube 導線 */
+.nav-links a.nav-youtube { display:inline-flex; align-items:center; gap:.3rem; }
+.nav-links a.nav-youtube::before,
+.mobile-menu a.nav-youtube::before {
+  content:"▶"; font-size:.72em; color:#ff0033;
+  background:#fff; border-radius:3px; padding:0 .18em; line-height:1.35;
+}
+.mobile-menu a.nav-youtube { display:flex; align-items:center; gap:.4rem; }
