@@ -171,6 +171,7 @@ a:hover { color: inherit; }
 @keyframes heroZoom { from { transform: scale(1.14); } to { transform: scale(1.02); } }
 
 /* ヒーロー スライドショー（枚数自由・JS制御で3秒ごとにクロスフェード） */
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #06070a; z-index: 0; }
 .hero-slideshow { position: absolute; inset: 0; background: #06070a; overflow: hidden; }
 .hero-slide {
   position: absolute; inset: 0; background-size: cover; background-position: center;
