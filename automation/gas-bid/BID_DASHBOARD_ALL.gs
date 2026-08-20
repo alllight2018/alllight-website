@@ -358,11 +358,10 @@ function addCharts_(sheet) {
 }
 
 // ============================================================
-//  Looker Studio用：きれいなデータタブ（1行1データ）を自動生成
+//  グラフ用のクリーンな月次データタブ（LK_月次）だけを自動生成し、非表示にする
 // ============================================================
 function writeLookerData_(ai) {
   var y = latestYearWithData_();
-  // 月次（前年＋当年）
   var m = [['年月', '年', '月', 'ピックアップ', '検討', '入札', '落札', '落札金額']];
   [y - 1, y].forEach(function (yy) {
     readMonthly_(yy).forEach(function (r) {
@@ -370,37 +369,16 @@ function writeLookerData_(ai) {
       m.push([yy + '-' + ('0' + r.month).slice(-2), yy, r.month, r.pickup, r.review, r.bid, r.win, r.amount]);
     });
   });
-  upsertTab_('LK_月次', m);
-
-  // 注力案件
-  var fc = [['案件名', '締切', '状況']];
-  ((ai && ai.focus_cases) || []).forEach(function (c) {
-    if (typeof c === 'string') fc.push([c, '', '']);
-    else fc.push([c.name || '', c.deadline || '', c.note || '']);
-  });
-  upsertTab_('LK_注力案件', fc);
-
-  // 今週やること
-  var tw = [['やること', '担当', '期限']];
-  ((ai && ai.this_week) || []).forEach(function (t) {
-    if (typeof t === 'string') tw.push([t, '', '']);
-    else tw.push([t.task || '', t.owner || '', t.due || '']);
-  });
-  upsertTab_('LK_今週やること', tw);
-
-  // きづき・気を付けること
-  var ob = [['種別', '内容']];
-  ((ai && ai.observations) || []).forEach(function (o) { ob.push(['きづき', (typeof o === 'string') ? o : (o.text || '')]); });
-  ((ai && ai.alerts) || []).forEach(function (a) { ob.push(['気を付ける', String(a)]); });
-  upsertTab_('LK_メモ', ob);
+  upsertTab_('LK_月次', m, true); // true = 非表示にする
 }
 
-function upsertTab_(name, rows) {
+function upsertTab_(name, rows, hide) {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sh = ss.getSheetByName(name);
   if (!sh) sh = ss.insertSheet(name);
   sh.clearContents();
   if (rows && rows.length) sh.getRange(1, 1, rows.length, rows[0].length).setValues(rows);
+  if (hide) { try { sh.hideSheet(); } catch (e) {} }
 }
 
 // ── 横長2カラム用パーツ（左=会議 col2-5／右=実績 col7-10）──
