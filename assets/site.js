@@ -31,17 +31,38 @@
     el.addEventListener("click", function () { setMenu(false); });
   });
 
-  /* ---- スクロールリビール ---- */
-  var revealEls = document.querySelectorAll(".reveal");
+  /* ---- スクロールリビール（各種演出を一括監視）---- */
+  var revealEls = document.querySelectorAll(".reveal, .reveal-l, .reveal-r, .reveal-scale, .reveal-wipe, .frame-draw");
   if ("IntersectionObserver" in window && revealEls.length) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
       });
-    }, { threshold: 0.14 });
+    }, { threshold: 0.14, rootMargin: "0px 0px -8% 0px" });
     revealEls.forEach(function (el) { io.observe(el); });
   } else {
     revealEls.forEach(function (el) { el.classList.add("in"); });
+  }
+
+  /* ---- ゆるやかなパララックス（[data-parallax] 要素）---- */
+  var plxEls = document.querySelectorAll("[data-parallax]");
+  if (plxEls.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var ticking = false;
+    function updatePlx() {
+      var vh = window.innerHeight;
+      plxEls.forEach(function (el) {
+        var rect = el.getBoundingClientRect();
+        if (rect.bottom < 0 || rect.top > vh) return;
+        var rate = parseFloat(el.getAttribute("data-parallax")) || 0.12;
+        var offset = (rect.top + rect.height / 2 - vh / 2);
+        el.style.transform = "translate3d(0," + (-offset * rate).toFixed(1) + "px,0)";
+      });
+      ticking = false;
+    }
+    window.addEventListener("scroll", function () {
+      if (!ticking) { window.requestAnimationFrame(updatePlx); ticking = true; }
+    }, { passive: true });
+    updatePlx();
   }
 
   /* ---- 数字カウントアップ ---- */
