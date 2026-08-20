@@ -214,6 +214,7 @@ function latestYearWithData_() {
 // ============================================================
 function rebuildDashboard() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
+  importRakuritsuSheetIfNeeded_(); // 既存のラクリツ_判定シートを一度だけ内部へ取り込む
   var year = latestYearWithData_();
   var months = readMonthly_(year).filter(function (m) { return m.pickup || m.review || m.bid || m.amount; });
   var ai = readAi_();
@@ -526,6 +527,31 @@ function focusList_() {
   var p = PropertiesService.getScriptProperties().getProperty(BID.FOCUS_PROP);
   if (!p) return [];
   try { return JSON.parse(p) || []; } catch (e) { return []; }
+}
+
+/** 既存の「ラクリツ_判定」シートを一度だけ内部リストへ取り込む（以後シート削除OK） */
+function importRakuritsuSheetIfNeeded_() {
+  if (focusList_().length) return; // 既に取り込み済み
+  var sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('ラクリツ_判定');
+  if (!sh) return;
+  var last = sh.getLastRow();
+  if (last < 3) return;
+  var vals = sh.getRange(3, 1, last - 2, 17).getValues();
+  var list = [];
+  vals.forEach(function (r) {
+    var a = String(r[0]).trim();
+    if (a === '判定基準' || a === '採点ルール') return;
+    var name = String(r[2]).trim();   // C 案件名
+    var judge = String(r[15]).trim(); // P 判定
+    if (!name || !judge) return;
+    if (judge.indexOf('見送り') !== -1) return;
+    list.push({
+      no: String(r[1]).trim(), name: name, orderer: String(r[4]).trim(), area: String(r[3]).trim(),
+      total: num_(r[14]), judge: judge, reason: String(r[16]).trim()
+    });
+  });
+  list.sort(function (a, b) { return num_(b.total) - num_(a.total); });
+  if (list.length) saveFocus_(list);
 }
 function saveFocus_(list) {
   PropertiesService.getScriptProperties().setProperty(BID.FOCUS_PROP, JSON.stringify(list || []));
