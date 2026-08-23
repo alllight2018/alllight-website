@@ -33,6 +33,12 @@
     return '<span class="' + cls + '">' + (t || "工事") + "</span>";
   }
 
+  // 実績エリア（本州中心）を大きく見せるためのズーム投影
+  var ZOOM = 1.52, CX = 54, CY = 48;
+  function proj(c) {
+    return [CX + (c[0] - CX) * ZOOM, CY + (c[1] - CY) * ZOOM];
+  }
+
   function render(root, data) {
     // 県ごとに案件をまとめる
     var byPref = {};
@@ -46,8 +52,9 @@
     Object.keys(PREF).forEach(function (name) {
       var c = PREF[name];
       var dot = el("span", "jm-dot");
-      dot.style.left = c[0] + "%";
-      dot.style.top = c[1] + "%";
+      var dc = proj(c);
+      dot.style.left = dc[0] + "%";
+      dot.style.top = dc[1] + "%";
       if (byPref[name]) dot.classList.add("jm-dot-on");
       map.appendChild(dot);
     });
@@ -57,8 +64,9 @@
       var c = PREF[name];
       var star = el("button", "jm-star");
       star.type = "button";
-      star.style.left = c[0] + "%";
-      star.style.top = c[1] + "%";
+      var sc = proj(c);
+      star.style.left = sc[0] + "%";
+      star.style.top = sc[1] + "%";
       star.setAttribute("aria-label", name + "の実績を見る");
       star.innerHTML = '<span class="jm-star-mark">★</span><span class="jm-star-label">' + name.replace(/[都道府県]$/, "") + "</span>";
       star.addEventListener("click", function () {
