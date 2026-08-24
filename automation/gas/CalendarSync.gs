@@ -45,8 +45,10 @@ function findNextInstance_(meeting) {
   var candidates = [];
   [meeting.recurringEventId, meeting.recurringEventIdAlt].forEach(function (rid) {
     if (!rid) return;
-    var e = nextInstanceOfSeries_(rid);
-    if (e) candidates.push(e);
+    try { // 期限切れ/無効な定例IDでも落とさず、summary検索へフォールバック
+      var e = nextInstanceOfSeries_(rid);
+      if (e) candidates.push(e);
+    } catch (err) { Logger.log('instances取得失敗(' + rid + '): ' + err); }
   });
 
   // recurringEventId 不明な会議は summary で検索

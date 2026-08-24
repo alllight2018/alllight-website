@@ -44,7 +44,8 @@ var MEETINGS = [
     key: 'nyusatsu',
     displayName: '入札会議',
     aliases: ['入札会議'],
-    recurringEventId: 'btf7lvch8tieemkab9sqeqql0k',
+    // 旧IDは2026-07-26で終了。現行の分裂シリーズ(毎週月)に更新（2026-08）
+    recurringEventId: 'btf7lvch8tieemkab9sqeqql0k_R20260810T023000',
     meetCode: 'khx-kawe-uij',
     mcRotation: ['名里真耶', '金山'], // 森田は退職のため除外（2026-08）
     templateKey: 'nyusatsu',
