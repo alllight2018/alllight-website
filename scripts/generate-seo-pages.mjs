@@ -39,7 +39,7 @@ const header = (p, current) => `
       <a href="${p}works.html">公共工事実績</a><a href="${p}service/index.html"${current === "service" ? ' aria-current="page"' : ""}>施工内容</a>
       <a href="${p}area/index.html"${current === "area" ? ' aria-current="page"' : ""}>対応エリア</a>
       <a href="${p}recruit.html">採用情報</a><a href="${p}blog/index.html">現場ブログ</a>
-      <a href="${p}contact.html" class="btn btn-amber" style="padding:.6rem 1.3rem">お問い合わせ</a>
+      <a href="https://www.youtube.com/@all-light" target="_blank" rel="noopener" class="nav-youtube">YouTube</a><a href="${p}contact.html" class="btn btn-amber" style="padding:.6rem 1.3rem">お問い合わせ</a>
     </nav>
     <button class="nav-toggle" aria-label="メニューを開く" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
   </div>
@@ -49,7 +49,7 @@ const header = (p, current) => `
   <button class="menu-close" aria-label="メニューを閉じる">&times;</button>
   <a href="${p}index.html">トップ</a><a href="${p}about.html">会社案内</a><a href="${p}works.html">公共工事実績</a>
   <a href="${p}service/index.html">施工内容</a><a href="${p}area/index.html">対応エリア</a><a href="${p}recruit.html">採用情報</a><a href="${p}blog/index.html">現場ブログ</a>
-  <a href="${p}contact.html" class="btn btn-amber">お問い合わせ</a>
+  <a href="https://www.youtube.com/@all-light" target="_blank" rel="noopener" class="nav-youtube">YouTube</a><a href="${p}contact.html" class="btn btn-amber">お問い合わせ</a>
 </nav>`;
 
 const footer = (p) => `
@@ -57,7 +57,8 @@ const footer = (p) => `
   <div class="wrap" style="padding-block:3.5rem;">
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:2rem;">
       <div><div class="brand" style="color:#fff;"><img class="brand-logo brand-logo-dark" src="/assets/logo-white.svg" alt="株式会社オールライト" width="150" height="23" /><img class="brand-logo brand-logo-light" src="/assets/logo.svg" alt="株式会社オールライト" width="150" height="23" /></div>
-        <p style="margin-top:1rem; font-size:.86rem;">公共工事で、まちに光を灯す。<br />官公庁・公共施設の電気設備工事を全国で。</p></div>
+        <p style="margin-top:1rem; font-size:.86rem;">公共工事で、まちに光を灯す。<br />官公庁・公共施設の電気設備工事を全国で。</p>
+        <div class="footer-social-links" style="display:flex; gap:.9rem; margin-top:1rem;"><a href="https://www.instagram.com/alllight2018/" target="_blank" rel="noopener" style="font-size:.86rem; color:#fff; text-decoration:underline;">Instagram</a><a href="https://www.youtube.com/@all-light" target="_blank" rel="noopener" style="font-size:.86rem; color:#fff; text-decoration:underline;">YouTube</a></div></div>
       <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">サイトマップ</h4>
         <ul style="list-style:none; display:grid; gap:.5rem; font-size:.9rem;">
           <li><a href="${p}index.html">トップ</a></li><li><a href="${p}about.html">会社案内</a></li><li><a href="${p}works.html">公共工事実績</a></li>
@@ -70,7 +71,7 @@ const footer = (p) => `
     </div>
     <div style="margin-top:2.5rem; padding-top:1.5rem; border-top:1px solid rgba(255,255,255,.12); display:flex; justify-content:space-between; flex-wrap:wrap; gap:1rem; font-size:.82rem;">
       <p>&copy; <span data-year>2026</span> ALLLIGHT CO., LTD. All rights reserved.</p>
-      <p><a href="${p}contact.html">お問い合わせ</a>　/　<a href="https://alllight2018.jp/privacy_policy/">プライバシーポリシー</a></p>
+      <p><a href="${p}contact.html">お問い合わせ</a>　/　<a href="${p}privacy.html">プライバシーポリシー</a></p>
     </div>
   </div>
 </footer>`;
@@ -97,8 +98,7 @@ const head = ({ title, desc, canonical, ogimg }) => `<!DOCTYPE html>
 <link rel="manifest" href="/site.webmanifest" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet" />
-<script src="https://cdn.tailwindcss.com"></script>`;
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet" />`;
 
 const labelOf = (area) => area.isPrefecture ? area.name + "全域" : (area.parent ? area.parent + area.name : area.name);
 
@@ -134,6 +134,14 @@ function renderAreaPage(area, allAreas, services = []) {
 
   const neighbors = allAreas.filter((a) => a.slug !== area.slug).slice(0, 8);
 
+  // ヒーロー写真を地域ごとにローテーション（毎回genba.jpgでなく変化をつける）
+  const heroPhotos = [
+    "/assets/photos/building-night.jpg", "/assets/photos/genba.jpg", "/assets/photos/work-cubicle.jpg",
+    "/assets/photos/work-chuokansen-lightup.jpg", "/assets/photos/sekou-kanri.jpg", "/assets/photos/work-hiyodori-tunnel.jpg",
+    "/assets/photos/work-higashinada-shomei.jpg", "/assets/photos/work-iwazono-cubicle.jpg"
+  ];
+  const heroImg = heroPhotos[Math.max(0, allAreas.indexOf(area)) % heroPhotos.length];
+
   return `${head({ title, desc, canonical: url, ogimg })}
 <link rel="stylesheet" href="${p}assets/site.css" />
 <script type="application/ld+json">${JSON.stringify(bizSchema)}</script>
@@ -144,12 +152,12 @@ function renderAreaPage(area, allAreas, services = []) {
 ${header(p)}
 
 <section class="hero" style="min-height:52vh; display:flex; align-items:flex-end;">
-  <div class="hero-bg" style="background-image:url('/assets/photos/genba.jpg')"></div>
+  <div class="hero-bg" style="background-image:url('${heroImg}')"></div>
   <div class="hero-overlay"></div>
   <div class="wrap" style="position:relative; padding-block:3rem;">
-    <p class="eyebrow">AREA — ${esc(area.reading)}</p>
+    <p class="eyebrow">対応エリア</p>
     <h1 class="serif" style="font-weight:900; font-size:clamp(1.7rem,5vw,2.8rem); margin-top:.4rem; line-height:1.4;">
-      ${esc(label)}の電気工事・公共工事なら<br /><span class="hype-mark" style="background:linear-gradient(120deg,var(--amber),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent;">株式会社オールライト</span>
+      ${esc(label)}の電気工事・公共工事なら<br /><span class="hype-mark">株式会社オールライト</span>
     </h1>
     <p style="color:rgba(255,255,255,.88); margin-top:.8rem; max-width:640px;">${esc(area.context)}</p>
     <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.6rem;">
@@ -172,7 +180,12 @@ ${header(p)}
         発注者の「安心して任せられる」にお応えします。
       </p>
     </div>
-
+${area.detail && area.detail.length ? `
+    <div class="reveal area-detail-block" style="margin-top:1.8rem;">
+      <h2 class="serif" style="font-weight:700; font-size:1.4rem; margin:0 0 1rem;">${esc(area.detailTitle || `${label}の電気設備工事について`)}</h2>
+      ${area.detail.map((para) => `<p style="margin-bottom:1rem;">${esc(para)}</p>`).join("\n      ")}
+    </div>
+` : ""}
     <h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">${esc(label)}で対応できる主な施設・工事</h2>
     <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:.8rem;">
       ${area.facilities.map((f) => `<div class="card" style="padding:1rem 1.2rem;"><b>▹ ${esc(f)}</b></div>`).join("\n      ")}
@@ -234,14 +247,14 @@ ${header(p, "area")}
   <div class="hero-bg" style="background-image:url('/assets/photos/building-night.jpg')"></div>
   <div class="hero-overlay"></div>
   <div class="wrap" style="position:relative; padding-block:2.6rem;">
-    <p class="eyebrow">AREA</p>
+    <p class="eyebrow">対応エリア</p>
     <h1 class="serif" style="font-weight:900; font-size:clamp(1.7rem,5vw,2.6rem); margin-top:.4rem;">対応エリア（兵庫県）</h1>
     <p style="color:rgba(255,255,255,.85); margin-top:.5rem;">神戸を拠点に、兵庫県全域の電気工事・公共工事に対応します。</p>
   </div>
 </section>
 <section class="section">
   <div class="wrap">
-    <div class="reveal"><p class="eyebrow">SERVICE AREA</p><h2 class="section-title">地域から探す</h2><div class="divider-gold" style="margin-top:1rem;"></div></div>
+    <div class="reveal"><p class="eyebrow">地域から探す</p><h2 class="section-title">地域から探す</h2><div class="divider-gold" style="margin-top:1rem;"></div></div>
     <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; margin-top:2rem;">
       ${areas.map((a, i) => `<a class="card reveal${i % 3 === 1 ? " d1" : i % 3 === 2 ? " d2" : ""}" href="${a.slug}.html" style="display:block; padding:1.6rem;">
         <span class="chip chip-amber">${esc(a.reading)}</span>
@@ -298,7 +311,7 @@ ${header(p, "service")}
   <div class="hero-bg" style="background-image:url('${esc(svc.image)}')"></div>
   <div class="hero-overlay"></div>
   <div class="wrap" style="position:relative; padding-block:3rem;">
-    <p class="eyebrow">${esc(svc.en)}</p>
+    <p class="eyebrow">${esc(svc.cat || "施工内容")}</p>
     <h1 class="serif" style="font-weight:900; font-size:clamp(1.7rem,5vw,2.8rem); margin-top:.4rem; line-height:1.4;">${esc(svc.name)}</h1>
     <p style="color:rgba(255,255,255,.9); margin-top:.6rem; font-weight:700;">${esc(svc.tagline)}</p>
     <div style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:1.6rem;">
@@ -378,18 +391,18 @@ ${header(p, "service")}
   <div class="hero-bg" style="background-image:url('/assets/photos/genba.jpg')"></div>
   <div class="hero-overlay"></div>
   <div class="wrap" style="position:relative; padding-block:2.6rem;">
-    <p class="eyebrow">SERVICE</p>
+    <p class="eyebrow">施工内容</p>
     <h1 class="serif" style="font-weight:900; font-size:clamp(1.7rem,5vw,2.6rem); margin-top:.4rem;">施工内容</h1>
     <p style="color:rgba(255,255,255,.85); margin-top:.5rem;">公共工事に対応する、電気設備の工種一覧。</p>
   </div>
 </section>
 <section class="section">
   <div class="wrap">
-    <div class="reveal"><p class="eyebrow">WHAT WE DO</p><h2 class="section-title">工種から探す</h2><div class="divider-gold" style="margin-top:1rem;"></div></div>
+    <div class="reveal"><p class="eyebrow">施工内容</p><h2 class="section-title">工種から探す</h2><div class="divider-gold" style="margin-top:1rem;"></div></div>
     <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.2rem; margin-top:2rem;">
       ${services.map((s, i) => `<a class="card reveal${i % 3 === 1 ? " d1" : i % 3 === 2 ? " d2" : ""}" href="${s.slug}.html" style="display:block;">
         <div style="height:170px; background-size:cover; background-position:center; background-image:url('${esc(s.image)}')"></div>
-        <div style="padding:1.4rem;"><span class="chip chip-amber">${esc(s.en)}</span>
+        <div style="padding:1.4rem;"><span class="chip chip-amber">${esc(s.cat || s.name)}</span>
           <h3 class="serif" style="font-weight:700; font-size:1.15rem; margin:.6rem 0 .3rem;">${esc(s.name)}</h3>
           <p class="text-sub" style="font-size:.88rem;">${esc(s.tagline)}</p>
           <span class="link-arrow" style="margin-top:.5rem;">詳しく見る</span></div>
