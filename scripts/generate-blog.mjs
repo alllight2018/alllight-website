@@ -18,7 +18,7 @@
  *   SUPABASE_URL=... SUPABASE_ANON_KEY=... node scripts/generate-blog.mjs
  * ------------------------------------------------------------------
  */
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile, readdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
@@ -174,17 +174,35 @@ async function loadJsonSlugs(file, key, prefix) {
   } catch { return []; }
 }
 
+async function listBlogHtml() {
+  // blog/ 配下の全HTML（朝メモ・夕方メモ・コラム・現場レポート等）を自動収集し、
+  // sitemap から記事が抜け落ちないようにする（手動リストのメンテ不要）。
+  try {
+    const files = await readdir(join(ROOT, "blog"));
+    return files.filter((f) => f.endsWith(".html")).sort().map((f) => `blog/${f}`);
+  } catch { return []; }
+}
+
 async function renderSitemap(posts) {
   const areaPages = await loadJsonSlugs("areas.json", "areas", "area");
   const servicePages = await loadJsonSlugs("services.json", "services", "service");
-  const staticPages = ["index.html","about.html","works.html","recruit.html","contact.html",
+  const blogPages = await listBlogHtml();
+  const rootPages = ["index.html","about.html","works.html","recruit.html","contact.html","privacy.html","jigyou-shokei.html"]
+    .filter((p) => existsSync(join(ROOT, p)));
+  const staticPages = [
+    ...rootPages,
     "service/index.html", ...servicePages,
     "area/index.html", ...areaPages,
-    "blog/index.html","blog/koukyou-kouji-denki-setsubi.html","blog/koujiseiseki-hyoutei.html","blog/sekou-kanri-miryoku.html",
-    "blog/denki-koujigaisha-erabikata.html","blog/koukyou-kouji-nyusatsu.html","blog/cubicle-koushin-hiyou.html","blog/sekou-kanri-mikeiken.html"];
+    ...blogPages];
   const today = new Date().toISOString().slice(0, 10);
-  const urls = staticPages.map((p) => ({ loc: `${SITE_ORIGIN}/${p}`, lastmod: today }))
-    .concat(posts.map((p) => ({ loc: `${SITE_ORIGIN}/blog/report-${p.slug}.html`, lastmod: (p.updated_at || p.published_at || today).slice(0, 10) })));
+  const seen = new Set();
+  const urls = [];
+  for (const p of staticPages) { if (seen.has(p)) continue; seen.add(p); urls.push({ loc: `${SITE_ORIGIN}/${p}`, lastmod: today }); }
+  for (const post of posts) {
+    const rp = `blog/report-${post.slug}.html`;
+    if (seen.has(rp)) continue; seen.add(rp);
+    urls.push({ loc: `${SITE_ORIGIN}/${rp}`, lastmod: (post.updated_at || post.published_at || today).slice(0, 10) });
+  }
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `  <url><loc>${u.loc}</loc><lastmod>${u.lastmod}</lastmod></url>`).join("\n")}
