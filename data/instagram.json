@@ -1,12 +1,12 @@
 {
-  "note": "Instagram連携データ。scripts/fetch-instagram.mjs がGraph APIトークン(IG_TOKEN/IG_USER_ID)で自動更新します。トークン未設定の間は、この注目投稿(プレースホルダ)が表示されます。画像は自社の実写真に差し替え推奨。",
+  "note": "Instagram連携データ。scripts/fetch-instagram.mjs がGraph APIトークン(IG_TOKEN/IG_USER_ID)で自動更新します。トークン未設定の間は、この注目投稿(プレースホルダ)が表示されます。画像は重複しない自社の実写真を使用。",
   "profile": "https://www.instagram.com/alllight2018/",
   "posts": [
-    { "image": "/assets/photos/genba.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "現場の一枚。安全第一で今日も稼働。" },
-    { "image": "/assets/photos/sekou-kanri.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "受変電設備の施工中。" },
-    { "image": "/assets/photos/genba.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "公共施設のLED改修。" },
-    { "image": "/assets/photos/sekou-kanri.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "チームで段取り確認。" },
-    { "image": "/assets/photos/building-night.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "完工。まちに光を灯す。" },
-    { "image": "/assets/photos/genba.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "若手も活躍中！" }
+    { "image": "/assets/photos/work-iwazono-cubicle.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "受変電（キュービクル）設備の施工。まちの電気を支える心臓部です。" },
+    { "image": "/assets/photos/work-higashinada-shomei.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "公共施設のLED照明改修。明るく、省エネに。" },
+    { "image": "/assets/photos/chourei-ky.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "一日の始まりは朝礼・KYから。安全第一で今日も現場へ。" },
+    { "image": "/assets/photos/work-hiyodori-tunnel.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "夜間のトンネル工事。人が休む時間に、まちのインフラを守る。" },
+    { "image": "/assets/photos/building-night.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "完工。まちに、光を灯す。" },
+    { "image": "/assets/photos/team-genba.jpg", "permalink": "https://www.instagram.com/alllight2018/", "caption": "現場は、チームで動く。資材・工具の確認も全員で。" }
   ]
 }
