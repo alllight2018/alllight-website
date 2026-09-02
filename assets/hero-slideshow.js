@@ -1,4 +1,4 @@
-/* トップのヒーロー背景スライドショー（枚数自由・3秒ごとにクロスフェード） */
+/* トップのヒーロー背景スライドショー（枚数自由・5秒ごとにゆっくりクロスフェード） */
 (function () {
   function init() {
     var box = document.querySelector(".hero-slideshow");
@@ -13,7 +13,7 @@
       slides[i].classList.remove("is-shown");
       i = (i + 1) % slides.length;
       slides[i].classList.add("is-shown");
-    }, 3000);
+    }, 5000);
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();

@@ -174,13 +174,14 @@ a:hover { color: inherit; }
 .hero-slideshow { position: absolute; inset: 0; background: #06070a; overflow: hidden; }
 .hero-slide {
   position: absolute; inset: 0; background-size: cover; background-position: center;
-  opacity: 0; transform: scale(1.06); transition: opacity 1s ease; will-change: opacity, transform;
+  opacity: 0; transition: opacity 1.8s ease-in-out; will-change: opacity;
+  /* 全スライドを常時ゆっくりズーム（切替時にリセットされないので“カクつき”が出ない） */
+  animation: heroKen 20s ease-in-out infinite alternate;
 }
-.hero-slide.is-shown { opacity: 1; animation: heroKen 4.2s ease-out forwards; }
-@keyframes heroKen { from { transform: scale(1.06); } to { transform: scale(1.16); } }
+.hero-slide.is-shown { opacity: 1; }
+@keyframes heroKen { from { transform: scale(1.04); } to { transform: scale(1.13); } }
 @media (prefers-reduced-motion: reduce) {
-  .hero-slide { transition: none; transform: none; }
-  .hero-slide.is-shown { animation: none; }
+  .hero-slide { transition: none; animation: none; transform: none; }
 }
 
 /* ヒーロー隅の「イメージ」注記 */
