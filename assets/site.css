@@ -594,3 +594,10 @@ a:hover { color: inherit; }
   .tbl th { color: var(--amber); font-size: .8rem; margin-bottom: .3rem; }
   .tbl td { font-size: .95rem; line-height: 1.8; }
 }
+
+/* 工事成績評定点パネル：スマホでは縦積み（右列が1文字ずつ縦折れするのを防ぐ） */
+@media (max-width: 640px) {
+  .score-panel { grid-template-columns: 1fr !important; gap: 1.2rem !important; padding: 1.4rem !important; }
+  .score-panel > div:first-child { border-right: 0 !important; padding-right: 0 !important; border-bottom: 1px solid rgba(255,255,255,.14); padding-bottom: 1.1rem; }
+  .score-panel ol li { font-size: .92rem; }
+}
