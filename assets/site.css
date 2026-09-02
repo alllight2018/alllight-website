@@ -174,10 +174,14 @@ a:hover { color: inherit; }
 .hero-slideshow { position: absolute; inset: 0; background: #06070a; overflow: hidden; }
 .hero-slide {
   position: absolute; inset: 0; background-size: cover; background-position: center;
-  opacity: 0; transition: opacity .8s ease; will-change: opacity;
+  opacity: 0; transform: scale(1.06); transition: opacity 1s ease; will-change: opacity, transform;
 }
-.hero-slide.is-shown { opacity: 1; }
-@media (prefers-reduced-motion: reduce) { .hero-slide { transition: none; } }
+.hero-slide.is-shown { opacity: 1; animation: heroKen 4.2s ease-out forwards; }
+@keyframes heroKen { from { transform: scale(1.06); } to { transform: scale(1.16); } }
+@media (prefers-reduced-motion: reduce) {
+  .hero-slide { transition: none; transform: none; }
+  .hero-slide.is-shown { animation: none; }
+}
 
 /* ヒーロー隅の「イメージ」注記 */
 .hero-note {
