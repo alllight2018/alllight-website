@@ -30,6 +30,7 @@
 
 html { scroll-behavior: smooth; scroll-padding-top: 84px; }
 
+html, body { overflow-x: hidden; max-width: 100%; }
 body {
   font-family: "Zen Kaku Gothic New", "Noto Sans JP", system-ui, sans-serif;
   color: var(--navy);
@@ -37,6 +38,7 @@ body {
   line-height: 1.85;
   letter-spacing: .015em;
 }
+img, video, svg { max-width: 100%; }
 
 /* 見出しはインパクト表示ゴシック（小田島組テイスト）。旧.serif指定も一括でゴシック化 */
 .serif { font-family: "Zen Kaku Gothic New", "Noto Sans JP", sans-serif; font-weight: 900; letter-spacing: .01em; }
@@ -562,3 +564,33 @@ a:hover { color: inherit; }
   background:#fff; border-radius:3px; padding:0 .18em; line-height:1.35;
 }
 .mobile-menu a.nav-youtube { display:flex; align-items:center; gap:.4rem; }
+
+/* ============================================================
+   スマホの整理整頓（可読性・余白・不要要素の非表示）
+   整理＝スマホで不要な装飾は隠す／整頓＝行間・余白・整列を揃える
+   ============================================================ */
+@media (max-width: 640px) {
+  /* 整理：装飾の英字タグラインはスマホでは隠す */
+  .hero-en { display: none; }
+  /* 本文の読みやすさ（文字は大きめ・行間ゆったり・字間は詰める） */
+  .hero-lead { font-size: .98rem; line-height: 1.95; letter-spacing: .01em; margin-top: 1.2rem; }
+  .lead { font-size: 1rem; line-height: 1.9; letter-spacing: .01em; }
+  .prose p, .prose li { font-size: 1rem; line-height: 1.95; }
+  .section-title { font-size: clamp(1.45rem, 6.6vw, 2rem); line-height: 1.35; }
+  .eyebrow { font-size: .68rem; }
+  /* 整頓：セクションの上下余白を揃える（詰めすぎない） */
+  .section { padding-block: 3.2rem; }
+  /* 「私たちの想い」：間延びを抑えて読みやすく */
+  #omoi .reveal.d2 { font-size: .96rem; line-height: 1.95; }
+  #omoi h2 { font-size: 1.55rem; line-height: 1.5; }
+  #omoi p.serif { font-size: 1.2rem; }
+  /* お知らせ：日付＋カテゴリを1行、見出しは次の行にそろえる */
+  .news-row { padding: .9rem .2rem; gap: .45rem .8rem; }
+  .news-ttl { flex-basis: 100%; font-size: .92rem; line-height: 1.7; }
+  /* 会社概要テーブル：ラベルと内容を縦積みで読みやすく整列 */
+  .tbl, .tbl tbody, .tbl tr, .tbl th, .tbl td { display: block; width: auto; }
+  .tbl tr { border-bottom: 1px solid var(--line); padding: .85rem 0; }
+  .tbl th, .tbl td { border: 0; padding: 0; white-space: normal; }
+  .tbl th { color: var(--amber); font-size: .8rem; margin-bottom: .3rem; }
+  .tbl td { font-size: .95rem; line-height: 1.8; }
+}
