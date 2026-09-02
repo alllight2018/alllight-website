@@ -104,6 +104,22 @@
     });
   });
 
+  /* ---- 追従お問い合わせボタン（全ページ共通・contactページ以外）---- */
+  (function () {
+    var path = location.pathname.replace(/\/index\.html$/, "/");
+    var onContact = /contact(\.html)?$/.test(path) || /\/contact\/?$/.test(path);
+    if (onContact) return;
+    if (document.querySelector(".floating-cta")) return;
+    var a = document.createElement("a");
+    a.href = "/contact.html";
+    a.className = "floating-cta";
+    a.setAttribute("aria-label", "お問い合わせ");
+    a.innerHTML =
+      '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H5.2L4 17.2V4z"/></svg>' +
+      '<span class="fc-label">お問い合わせ</span>';
+    document.body.appendChild(a);
+  })();
+
   /* ---- 現在年をフッターへ ---- */
   var y = document.querySelector("[data-year]");
   if (y) y.textContent = new Date().getFullYear();

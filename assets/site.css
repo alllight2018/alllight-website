@@ -355,7 +355,10 @@ a:hover { color: inherit; }
 .footer-license {
   font-size: .8rem; background: rgba(255,255,255,.05);
   border: 1px solid rgba(255,255,255,.12); border-radius: 10px; padding: 1rem 1.2rem;
+  display: flex; flex-direction: column; gap: .4rem; line-height: 1.6;
 }
+.footer-license .fl-head { font-weight: 700; }
+.footer-license .fl-line { color: rgba(255,255,255,.82); }
 
 /* ---------- 汎用 ---------- */
 .section { padding-block: clamp(3.5rem, 8vw, 6rem); }
@@ -624,4 +627,30 @@ a:hover { color: inherit; }
 @media (max-width: 640px) {
   .msg-grid { grid-template-columns: 1fr !important; gap: 1.4rem !important; }
   .msg-grid img { min-height: 0 !important; max-height: 360px; }
+}
+
+/* ============================================================
+   追従お問い合わせボタン（スクロールしても常時表示）
+   ============================================================ */
+.floating-cta {
+  position: fixed; z-index: 90; right: 1.4rem; bottom: 1.4rem;
+  display: inline-flex; align-items: center; gap: .55rem;
+  padding: .95rem 1.5rem; border-radius: 999px;
+  background: var(--amber); color: #fff !important;
+  font-weight: 800; font-size: .98rem; letter-spacing: .02em;
+  text-decoration: none; line-height: 1;
+  box-shadow: 0 10px 26px -8px rgba(36,169,224,.65), 0 3px 10px -4px rgba(0,0,0,.4);
+  transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.floating-cta:hover {
+  transform: translateY(-2px);
+  background: var(--amber-2);
+  color: #fff !important;
+  box-shadow: 0 16px 32px -8px rgba(36,169,224,.75), 0 4px 12px -4px rgba(0,0,0,.45);
+}
+.floating-cta svg { flex: 0 0 auto; }
+@media (max-width: 640px) {
+  .floating-cta { right: 1rem; bottom: 1rem; padding: .85rem 1.15rem; font-size: .9rem; }
+  /* スマホでは文字を省きアイコン＋短縮ラベルで省スペースに */
+  .floating-cta .fc-label { font-size: .88rem; }
 }

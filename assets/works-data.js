@@ -43,7 +43,7 @@ window.ALLLIGHT_MAP_DATA = [
 
   // ▼ 神奈川県
   { pref:"神奈川県", name:"木月住宅ほか 共用部照明器具改修工事", client:"関東財務局", type:"工事", status:"受注・施工中", photo:"/assets/photos/noimage-shomei.svg" },
-  { pref:"神奈川県", name:"竹山駐屯地 電気設備工事", client:"陸上自衛隊（防衛省）", type:"工事", status:"受注・施工中", photo:"/assets/photos/noimage-general.svg", desc:"陸上自衛隊 竹山駐屯地（神奈川県）の電気設備工事。防衛省施設にも対応しています。" },
+  { pref:"神奈川県", name:"武山駐屯地 倉庫撤去役務", client:"陸上自衛隊（防衛省）", type:"役務", status:"受注・施工中", photo:"/assets/photos/noimage-general.svg", desc:"陸上自衛隊 武山駐屯地（神奈川県）の倉庫撤去役務。防衛省施設にも対応しています。" },
 
   // ▼ 大阪府
   { pref:"大阪府", name:"大阪港安治川突堤南岸壁 電気設備工事", client:"第五管区海上保安本部", type:"工事", status:"受注・施工中", photo:"/assets/photos/noimage-general.svg" },
