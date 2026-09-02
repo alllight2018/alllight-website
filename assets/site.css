@@ -619,3 +619,9 @@ a:hover { color: inherit; }
 .jm-pref.is-active .jm-pref-count { background: rgba(255,255,255,.3); color: #fff; }
 .jm-star.is-active { z-index: 6; }
 @media (max-width: 640px) { .jm-pref { font-size: .84rem; padding: .45rem .8rem; } }
+
+/* 代表メッセージ：スマホでは写真を上・本文を下に縦積み（本文が細い列に潰れるのを防ぐ） */
+@media (max-width: 640px) {
+  .msg-grid { grid-template-columns: 1fr !important; gap: 1.4rem !important; }
+  .msg-grid img { min-height: 0 !important; max-height: 360px; }
+}
