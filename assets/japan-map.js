@@ -58,27 +58,43 @@
       if (byPref[name]) dot.classList.add("jm-dot-on");
       map.appendChild(dot);
     });
+    // 実績のある県（件数の多い順）
+    var worked = Object.keys(byPref).sort(function (a, b) { return byPref[b].length - byPref[a].length; });
+
     // 実績県の星
-    var worked = Object.keys(byPref);
     worked.forEach(function (name) {
       var c = PREF[name];
       var star = el("button", "jm-star");
       star.type = "button";
+      star.dataset.pref = name;
       var sc = proj(c);
       star.style.left = sc[0] + "%";
       star.style.top = sc[1] + "%";
       star.setAttribute("aria-label", name + "の実績を見る");
       star.innerHTML = '<span class="jm-star-mark">★</span><span class="jm-star-label">' + name.replace(/[都道府県]$/, "") + "</span>";
-      star.addEventListener("click", function () {
-        map.querySelectorAll(".jm-star").forEach(function (s) { s.classList.remove("is-active"); });
-        star.classList.add("is-active");
-        showDetail(name, byPref[name]);
-      });
+      star.addEventListener("click", function () { select(name); });
       map.appendChild(star);
     });
 
+    // 都道府県ボタン（星が重なってもタップで確実に選べる分かりやすいUI）
+    var prefs = el("div", "jm-prefs");
+    worked.forEach(function (name) {
+      var btn = el("button", "jm-pref");
+      btn.type = "button";
+      btn.dataset.pref = name;
+      btn.innerHTML = '<span class="jm-pref-name">' + name + '</span><span class="jm-pref-count">' + byPref[name].length + '</span>';
+      btn.addEventListener("click", function () { select(name); });
+      prefs.appendChild(btn);
+    });
+
     var panel = el("div", "jm-panel");
-    panel.innerHTML = '<div class="jm-panel-empty">地図の <span class="jm-star-mark">★</span> をタップすると、その地域の施工実績が表示されます。</div>';
+    panel.innerHTML = '<div class="jm-panel-empty">上のボタン、または地図の <span class="jm-star-mark">★</span> をタップすると、その地域の施工実績が表示されます。</div>';
+
+    function select(name) {
+      map.querySelectorAll(".jm-star").forEach(function (s) { s.classList.toggle("is-active", s.dataset.pref === name); });
+      prefs.querySelectorAll(".jm-pref").forEach(function (b) { b.classList.toggle("is-active", b.dataset.pref === name); });
+      showDetail(name, byPref[name]);
+    }
 
     function showDetail(name, items) {
       var h = '<div class="jm-panel-head"><span class="jm-pin">' + name + '</span>' +
@@ -104,6 +120,7 @@
     }
 
     root.innerHTML = "";
+    root.appendChild(prefs);
     var grid = el("div", "jm-grid");
     grid.appendChild(map);
     grid.appendChild(panel);
@@ -111,10 +128,7 @@
 
     // 初期表示：兵庫（本社）を選択
     var first = byPref["兵庫県"] ? "兵庫県" : worked[0];
-    if (first) {
-      var b = map.querySelector('.jm-star[aria-label="' + first + 'の実績を見る"]');
-      if (b) b.click();
-    }
+    if (first) select(first);
   }
 
   function init() {
