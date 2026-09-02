@@ -187,7 +187,7 @@ async function renderSitemap(posts) {
   const areaPages = await loadJsonSlugs("areas.json", "areas", "area");
   const servicePages = await loadJsonSlugs("services.json", "services", "service");
   const blogPages = await listBlogHtml();
-  const rootPages = ["index.html","about.html","works.html","recruit.html","contact.html","privacy.html","jigyou-shokei.html"]
+  const rootPages = ["index.html","about.html","works.html","recruit.html","contact.html","privacy.html","jigyou-shokei.html","hacchusha.html"]
     .filter((p) => existsSync(join(ROOT, p)));
   const staticPages = [
     ...rootPages,
