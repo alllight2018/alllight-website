@@ -180,6 +180,16 @@ a:hover { color: inherit; }
 }
 .hero-slide.is-shown { opacity: 1; }
 @keyframes heroKen { from { transform: scale(1.04); } to { transform: scale(1.13); } }
+
+/* お知らせ（News）— 企業サイト定番の日付入りリスト */
+.news-list { border-top: 2px solid var(--navy); }
+.news-row { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 1.1rem; padding: 1.05rem .3rem; border-bottom: 1px solid var(--line); text-decoration: none; color: inherit; transition: background .2s ease; }
+.news-row:hover { background: #f6f9fc; }
+.news-row time { font-weight: 700; color: var(--sub); font-size: .85rem; white-space: nowrap; min-width: 5.6em; }
+.news-cat { font-size: .72rem; font-weight: 700; letter-spacing: .02em; padding: .22rem .7rem; border-radius: 4px; white-space: nowrap; background: var(--navy); color: #fff; }
+.news-cat--amber { background: var(--amber); }
+.news-ttl { font-size: .95rem; flex: 1 1 auto; min-width: 0; }
+.news-row:hover .news-ttl { color: var(--amber); }
 @media (prefers-reduced-motion: reduce) {
   .hero-slide { transition: none; animation: none; transform: none; }
 }
