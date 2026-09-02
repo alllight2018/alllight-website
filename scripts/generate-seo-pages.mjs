@@ -236,8 +236,16 @@ ${footer(p)}
 function renderAreaHub(areas) {
   const p = "../";
   const url = `${SITE_ORIGIN}/area/index.html`;
-  const title = "対応エリア｜兵庫県・神戸市の電気工事・公共工事｜株式会社オールライト";
-  const desc = "株式会社オールライトの対応エリア一覧。神戸市・明石市・姫路市・西宮市など兵庫県全域で電気工事・公共工事の電気設備工事に対応します。地域ごとの対応内容をご紹介。";
+  const title = "対応エリア｜兵庫県・大阪府を中心に全国対応｜株式会社オールライト";
+  const desc = "株式会社オールライトの対応エリア。兵庫県（神戸市ほか）・大阪府を中心に、東京・石川・長野・神奈川・三重・徳島など全国の官公庁・公共施設の電気設備工事に施工実績があります。";
+
+  const kobe = areas.find((a) => a.slug === "kobe");
+  const wards = areas.filter((a) => a.type === "ward");
+  const cities = areas.filter((a) => a.type === "city" && a.slug !== "kobe");
+  // 全国の施工実績がある都道府県（兵庫・大阪以外／works-data.js と整合）
+  const recordPrefs = ["東京都", "石川県", "長野県", "神奈川県", "三重県", "徳島県", "山口県"];
+  const chip = (label, href) => `<a class="chip chip-navy" style="text-decoration:none;" href="${href}">${esc(label)}</a>`;
+
   return `${head({ title, desc, canonical: url, ogimg: "/assets/photos/building-night.jpg" })}
 <link rel="stylesheet" href="${p}assets/site.css" />
 </head>
@@ -248,20 +256,67 @@ ${header(p, "area")}
   <div class="hero-overlay"></div>
   <div class="wrap" style="position:relative; padding-block:2.6rem;">
     <p class="eyebrow">対応エリア</p>
-    <h1 class="serif" style="font-weight:900; font-size:clamp(1.7rem,5vw,2.6rem); margin-top:.4rem;">対応エリア（兵庫県）</h1>
-    <p style="color:rgba(255,255,255,.85); margin-top:.5rem;">神戸を拠点に、兵庫県全域の電気工事・公共工事に対応します。</p>
+    <h1 class="serif" style="font-weight:900; font-size:clamp(1.7rem,5vw,2.6rem); margin-top:.4rem;">対応エリア（兵庫県・大阪府を中心に、全国）</h1>
+    <p style="color:rgba(255,255,255,.85); margin-top:.5rem;">神戸を拠点に、兵庫・大阪はもちろん、各地方の官公庁案件にも施工実績があります。</p>
   </div>
 </section>
+
 <section class="section">
   <div class="wrap">
-    <div class="reveal"><p class="eyebrow">地域から探す</p><h2 class="section-title">地域から探す</h2><div class="divider-gold" style="margin-top:1rem;"></div></div>
-    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; margin-top:2rem;">
-      ${areas.map((a, i) => `<a class="card reveal${i % 3 === 1 ? " d1" : i % 3 === 2 ? " d2" : ""}" href="${a.slug}.html" style="display:block; padding:1.6rem;">
-        <span class="chip chip-amber">${esc(a.reading)}</span>
-        <h3 class="serif" style="font-weight:700; font-size:1.2rem; margin:.6rem 0 .3rem;">${esc(labelOf(a))}の電気工事</h3>
-        <p class="text-sub" style="font-size:.86rem;">${esc(a.context.slice(0, 46))}…</p>
-        <span class="link-arrow" style="margin-top:.6rem;">詳しく見る</span>
-      </a>`).join("\n      ")}
+    <div class="reveal"><p class="eyebrow">県から探す</p><h2 class="section-title">県から探す</h2><div class="divider-gold" style="margin-top:1rem;"></div></div>
+
+    <!-- 兵庫県・大阪府（メイン2県） -->
+    <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:1.4rem; margin-top:2rem;">
+      <div class="card reveal" style="padding:1.8rem;">
+        <div style="display:flex; align-items:center; gap:.7rem; flex-wrap:wrap;">
+          <span class="chip chip-amber">本社エリア</span>
+          <h3 class="serif" style="font-weight:900; font-size:1.6rem;">兵庫県</h3>
+        </div>
+        <p class="text-sub" style="font-size:.92rem; margin:.7rem 0 1.1rem;">神戸市に本社。県全域の公共施設・官公庁の電気設備工事に、積算から書類まで自社一貫で対応します。</p>
+        <p style="font-weight:700; font-size:.9rem; margin-bottom:.5rem;">神戸市</p>
+        <div style="display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom:1rem;">
+          ${chip("神戸市全域", `${kobe.slug}.html`)}
+          ${wards.map((w) => chip(w.name, `${w.slug}.html`)).join("\n          ")}
+        </div>
+        <p style="font-weight:700; font-size:.9rem; margin-bottom:.5rem;">兵庫県の主要市</p>
+        <div style="display:flex; gap:.5rem; flex-wrap:wrap;">
+          ${cities.map((c) => chip(c.name, `${c.slug}.html`)).join("\n          ")}
+        </div>
+      </div>
+
+      <div class="card reveal d1" style="padding:1.8rem;">
+        <div style="display:flex; align-items:center; gap:.7rem; flex-wrap:wrap;">
+          <span class="chip chip-amber">主要エリア</span>
+          <h3 class="serif" style="font-weight:900; font-size:1.6rem;">大阪府</h3>
+        </div>
+        <p class="text-sub" style="font-size:.92rem; margin:.7rem 0 1.1rem;">神戸の隣接圏として、大阪府内の官公庁案件にも対応。大阪港（海上保安庁）の電気設備工事、法務省・大阪拘置所の照明LED化改修などの実績があります。</p>
+        <div style="display:grid; gap:.6rem; font-size:.92rem;">
+          <div class="card" style="padding:.9rem 1.1rem;"><b>▹ 大阪港安治川突堤南岸壁 電気設備工事</b><span class="text-sub" style="font-size:.84rem;">　発注：第五管区海上保安本部</span></div>
+          <div class="card" style="padding:.9rem 1.1rem;"><b>▹ 大阪拘置所尼崎拘置支所 照明設備LED化改修</b><span class="text-sub" style="font-size:.84rem;">　発注：法務省 大阪拘置所</span></div>
+        </div>
+        <div style="display:flex; gap:.8rem; flex-wrap:wrap; margin-top:1.2rem;">
+          <a href="${p}works.html" class="btn btn-navy" style="padding:.6rem 1.2rem;">大阪の実績を見る</a>
+          <a href="${p}contact.html" class="btn btn-ghost" style="padding:.6rem 1.2rem;">大阪の案件を相談する</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 各地方の施工実績 -->
+    <div class="reveal" style="margin-top:3rem;">
+      <p class="eyebrow">全国の施工実績</p>
+      <h2 class="section-title" style="font-size:clamp(1.4rem,3.8vw,2rem);">各地方にも、<span class="hype-mark">施工実績があります。</span></h2>
+      <p class="lead" style="margin-top:.9rem; max-width:760px;">
+        「遠方だから」で判断しません。防衛省・国土交通省・日本年金機構など、<strong>全国の官公庁案件</strong>を手がけてきました。
+        地方・広域の案件も、自社の施工管理のもとで体制を組んで対応します。
+      </p>
+      <div style="display:flex; gap:.5rem; flex-wrap:wrap; margin-top:1.2rem;">
+        ${chip("大阪府", `${p}works.html`)}
+        ${recordPrefs.map((pf) => chip(pf, `${p}works.html`)).join("\n        ")}
+      </div>
+      <p class="text-sub" style="font-size:.86rem; margin-top:1rem;">※ 例：小松基地 高圧ケーブル更新（石川）、羽田空港 受配電設備（東京）、八王子年金事務所 受変電更新（東京）ほか。</p>
+      <div style="margin-top:1.4rem;">
+        <a href="${p}works.html#map" class="link-arrow" style="font-weight:700;">全国の施工実績マップを見る</a>
+      </div>
     </div>
   </div>
 </section>
