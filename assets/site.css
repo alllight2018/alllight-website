@@ -90,12 +90,18 @@ a:hover { color: inherit; }
   background: rgba(21, 38, 61, .0);
   transition: background .3s ease, box-shadow .3s ease;
 }
+/* 透明時：上から薄い暗のグラデーションを敷き、明るい空の上でも白文字が読めるようにする */
+.site-header:not(.solid)::before {
+  content: ""; position: absolute; inset: 0 0 auto 0; height: 200%;
+  background: linear-gradient(to bottom, rgba(4,7,12,.58) 0%, rgba(4,7,12,.28) 55%, rgba(4,7,12,0) 100%);
+  pointer-events: none; z-index: 0;
+}
 .site-header.solid {
   background: rgba(255,255,255,.92);
   backdrop-filter: saturate(160%) blur(10px);
   box-shadow: 0 1px 0 var(--line);
 }
-.nav-inner { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+.nav-inner { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; height: 76px; }
 .brand { display: flex; align-items: center; gap: .7rem; font-weight: 800; letter-spacing: .02em; }
 .brand .mark {
   width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center;
@@ -123,8 +129,8 @@ a:hover { color: inherit; }
 
 /* ヘッダー配色：透明時は白文字、solid 時はネイビー文字 */
 .site-header:not(.solid) .brand-name b,
-.site-header:not(.solid) .nav-links a { color: #fff; }
-.site-header:not(.solid) .brand-name span { color: rgba(255,255,255,.7); }
+.site-header:not(.solid) .nav-links a { color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,.55); }
+.site-header:not(.solid) .brand-name span { color: rgba(255,255,255,.75); text-shadow: 0 1px 4px rgba(0,0,0,.5); }
 .site-header.solid .brand-name b { color: var(--navy); }
 .site-header.solid .nav-links a { color: var(--navy); }
 
