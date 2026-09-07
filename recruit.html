@@ -24,6 +24,94 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="assets/site.css" />
 
+<!-- ===== 採用ページ専用：ポップ・新卒向け配色（サイト本体とは別イメージ） ===== -->
+<style>
+  body.recruit-pop{
+    /* 別イメージのポップ配色（ブルー×イエロー×コーラル） */
+    --pop-blue:#2f9fd6; --pop-blue-d:#1f83b8; --pop-cyan:#5cc8ea;
+    --pop-yellow:#ffd23c; --pop-yellow-d:#f2b705; --pop-pink:#ef6a86; --pop-pink-d:#e5567a;
+    /* site.css の変数を採用ページ内だけ上書き */
+    --amber:#2f9fd6; --amber-2:#5cc8ea; --orange:#9bdcf1;
+    --navy:#213043; --navy-2:#2b3d52; --ink:#213043;
+    --sub:#5a6b7b; --line:#e4eef4; --bg:#f4fafd;
+    --radius:16px;
+    --shadow:0 12px 30px -14px rgba(31,131,184,.30);
+    background:var(--bg);
+  }
+  /* 見出し・丸みをポップに */
+  body.recruit-pop .card{ border-radius:18px; }
+  body.recruit-pop .btn{ border-radius:999px; }
+  body.recruit-pop .divider-gold{ background:var(--pop-yellow-d); height:4px; width:64px; border-radius:999px; }
+  body.recruit-pop .eyebrow{ color:var(--pop-blue-d); letter-spacing:.16em; }
+  body.recruit-pop .chip-amber{ background:rgba(47,159,214,.14); color:var(--pop-blue-d); }
+  body.recruit-pop .chip-navy{ background:var(--pop-yellow); color:#5a4600; }
+
+  /* ヘッダー：明るい背景に合わせ常にライト表示（白地・濃色文字） */
+  body.recruit-pop .site-header{ background:rgba(255,255,255,.95); box-shadow:0 1px 0 var(--line); backdrop-filter:saturate(160%) blur(10px); }
+  body.recruit-pop .site-header::before{ display:none; }
+  body.recruit-pop .site-header .brand-logo-dark{ display:none; }
+  body.recruit-pop .site-header .brand-logo-light{ display:block; }
+  body.recruit-pop .site-header .nav-links a,
+  body.recruit-pop .site-header .brand-name b{ color:var(--navy); text-shadow:none; }
+  body.recruit-pop .site-header .nav-toggle{ color:var(--navy); }
+
+  /* ヒーロー：暗い写真ヒーロー → 明るいポップヒーロー */
+  body.recruit-pop .hype-hero.bg-hype{
+    background:
+      radial-gradient(820px 520px at 86% -12%, rgba(92,200,234,.28), transparent 60%),
+      radial-gradient(680px 460px at 2% 112%, rgba(255,210,60,.30), transparent 58%),
+      radial-gradient(520px 420px at 55% 120%, rgba(239,106,134,.18), transparent 60%),
+      linear-gradient(160deg,#e9f7fd 0%, #f6fbfe 60%, #fff 100%);
+    color:var(--navy);
+    overflow:hidden;
+  }
+  body.recruit-pop .hype-hero .hero-bg{ display:none; }
+  /* .hype-hero.bg-hype の複合セレクタで、後述の .bg-hype 帯ルールより優先させる */
+  body.recruit-pop .hype-hero.bg-hype .hype-title{ color:var(--navy); }
+  body.recruit-pop .hype-hero.bg-hype .hype-mark{ color:var(--pop-blue); }
+  body.recruit-pop .hype-hero.bg-hype .eyebrow{ color:var(--pop-blue-d); }
+  body.recruit-pop .hype-hero .hero-lead-pop{ color:#3a4b5c !important; }
+  /* ヒーローの装飾シェイプ */
+  body.recruit-pop .hype-hero::before{
+    content:""; position:absolute; left:-60px; bottom:40px; width:200px; height:200px;
+    border-radius:50%; background:var(--pop-yellow); opacity:.55; z-index:0;
+  }
+  body.recruit-pop .hype-hero::after{
+    content:""; position:absolute; right:9%; top:16%; width:0; height:0;
+    border-left:30px solid transparent; border-right:30px solid transparent;
+    border-bottom:52px solid var(--pop-pink); opacity:.5; transform:rotate(16deg); z-index:0;
+  }
+  body.recruit-pop .hype-hero .wrap{ position:relative; z-index:1; }
+  /* ドットグリッド装飾（セクション見出し帯に散らす） */
+  body.recruit-pop .pop-dots{
+    display:inline-block; width:74px; height:26px; margin-top:.6rem;
+    background-image:radial-gradient(var(--pop-blue) 2.2px, transparent 2.4px);
+    background-size:14px 13px; opacity:.5;
+  }
+
+  /* 数字セクション・その他 bg-hype：暗 → ポップブルー帯 */
+  body.recruit-pop .bg-hype{
+    background:
+      radial-gradient(700px 380px at 88% -20%, rgba(255,255,255,.18), transparent 60%),
+      linear-gradient(135deg, var(--pop-blue) 0%, var(--pop-blue-d) 100%);
+    color:#fff;
+  }
+  body.recruit-pop .bg-hype .eyebrow{ color:var(--pop-yellow); }
+  body.recruit-pop .bg-hype .section-title,
+  body.recruit-pop .bg-hype .hype-title{ color:#fff; }
+  body.recruit-pop .bg-hype .hype-mark{ color:var(--pop-yellow); }
+  body.recruit-pop .bg-hype .divider-gold{ background:var(--pop-yellow); }
+
+  /* メガマーキー：黒帯 → イエロー帯（濃色文字） */
+  body.recruit-pop .mega-marquee{ background:var(--pop-yellow); border-color:rgba(0,0,0,.06); }
+  body.recruit-pop .mega-marquee .track .fill{ color:var(--navy); }
+  body.recruit-pop .mega-marquee .track .blue{ color:var(--pop-pink-d); }
+  body.recruit-pop .mega-marquee .track .out{ -webkit-text-stroke:1.5px rgba(33,48,67,.45); }
+
+  /* カードの上ボーダー等アクセントをポップ3色でローテーション（福利厚生・値観カード） */
+  body.recruit-pop .section-title{ letter-spacing:.01em; }
+</style>
+
 <!-- 構造化データ：求人（施工管理） -->
 <script type="application/ld+json">
 {
@@ -40,7 +128,7 @@
 }
 </script>
 </head>
-<body>
+<body class="recruit-pop">
 
 <header class="site-header">
   <div class="wrap nav-inner">
@@ -72,7 +160,7 @@
     <h1 class="hype-title reveal d1" style="margin-top:.6rem;">
       公共工事で、<br /><span class="hype-mark">人生、ブチアゲろ。</span>
     </h1>
-    <p class="reveal d2" style="max-width:620px; margin-top:1.6rem; color:rgba(255,255,255,.88); font-size:clamp(1rem,2.6vw,1.2rem);">
+    <p class="reveal d2 hero-lead-pop" style="max-width:620px; margin-top:1.6rem; font-size:clamp(1rem,2.6vw,1.2rem);">
       まちのインフラを動かす主役は、<strong>施工管理</strong>。<br />
       未経験でも大丈夫。資格取得支援と一気通貫の環境で、
       あなたを「まちを支えるプロ」に育て上げる。<br />
@@ -396,7 +484,7 @@
 </section>
 
 <!-- ===== 社風・チーム ===== -->
-<section class="section" style="background:var(--ink); color:#fff;">
+<section class="section" style="background:linear-gradient(135deg,#ef6a86,#e5567a); color:#fff;">
   <div class="wrap">
     <div class="reveal" style="text-align:center; max-width:760px; margin-inline:auto;">
       <p class="eyebrow" style="justify-content:center; color:var(--amber-2);">私たちのチーム</p>
