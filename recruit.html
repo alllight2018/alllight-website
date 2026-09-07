@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>施工管理 大募集｜公共工事で人生ブチアゲる採用｜株式会社オールライト</title>
-<meta name="description" content="株式会社オールライトの採用情報。公共工事を動かす施工管理を大募集！未経験歓迎・資格取得支援・週休2日制。電気工事士も同時募集。神戸から全国のインフラを支えるプロへ。あなたの人生、ここでブチアゲませんか。" />
+<title>新卒採用 2028｜施工管理・電気工事士｜株式会社オールライト（神戸）</title>
+<meta name="description" content="株式会社オールライトの新卒採用（2028年卒 5名）。未経験・文系・理系ぜんぶOK！完全週休2日・年間休日122日・残業ほぼナシ。資格取得支援＆合格お祝い金あり。公共工事の施工管理・電気工事士を募集。神戸から、まちのインフラを支えるプロへ。" />
 <meta name="keywords" content="施工管理 求人,電気工事 求人,神戸 施工管理,未経験 施工管理,公共工事 採用,電気工事士 募集,兵庫 建設 転職" />
 <link rel="canonical" href="https://alllight2018.com/recruit.html" />
 <meta name="theme-color" content="#15263d" />
@@ -71,6 +71,9 @@
   body.recruit-pop .hype-hero.bg-hype .hype-mark{ color:var(--pop-blue); }
   body.recruit-pop .hype-hero.bg-hype .eyebrow{ color:var(--pop-blue-d); }
   body.recruit-pop .hype-hero .hero-lead-pop{ color:#3a4b5c !important; }
+  /* 明るいヒーロー上のゴースト/白系ボタンは青アウトラインで見えるように */
+  body.recruit-pop .hype-hero .btn-ghost{ color:var(--pop-blue-d); border:2px solid var(--pop-blue); background:transparent; }
+  body.recruit-pop .hype-hero .btn-ghost:hover{ background:var(--pop-blue); color:#fff; }
   /* ヒーローの装飾シェイプ */
   body.recruit-pop .hype-hero::before{
     content:""; position:absolute; left:-60px; bottom:40px; width:200px; height:200px;
@@ -110,6 +113,74 @@
 
   /* カードの上ボーダー等アクセントをポップ3色でローテーション（福利厚生・値観カード） */
   body.recruit-pop .section-title{ letter-spacing:.01em; }
+
+  /* ===== さらに明るく・とっつきやすく（20歳前後向け） ===== */
+  /* アイキャッチ：eyebrow を丸いポップなピル型に */
+  body.recruit-pop .eyebrow{
+    background:var(--pop-yellow); color:#6b5200; padding:.32rem .95rem; border-radius:999px;
+    letter-spacing:.1em; font-size:.72rem;
+  }
+  body.recruit-pop .eyebrow::before{ display:none; }
+  body.recruit-pop .bg-hype .eyebrow{ background:rgba(255,255,255,.92); color:var(--pop-blue-d); }
+  body.recruit-pop [style*="ef6a86"] .eyebrow{ background:rgba(255,255,255,.92); color:var(--pop-pink-d); }
+
+  /* 見出し下の「•••」ポップな装飾（divider-gold を3ドットに） */
+  body.recruit-pop .divider-gold{
+    width:66px !important; height:9px !important; border-radius:0 !important;
+    background:radial-gradient(circle 4.5px at 4.5px 50%, var(--pop-blue) 96%, transparent 100%) repeat-x left center !important;
+    background-size:22px 9px !important;
+  }
+  body.recruit-pop .bg-hype .divider-gold,
+  body.recruit-pop [style*="ef6a86"] .divider-gold{
+    background:radial-gradient(circle 4.5px at 4.5px 50%, #fff 96%, transparent 100%) repeat-x left center !important;
+    background-size:22px 9px !important;
+  }
+
+  /* 長文の小見出し（prose h3）にポップ3色の左アクセント */
+  body.recruit-pop .prose h3{ padding-left:.9rem; border-left:6px solid var(--pop-blue); border-radius:3px; }
+  body.recruit-pop .prose h3:nth-of-type(3n+2){ border-left-color:var(--pop-pink); }
+  body.recruit-pop .prose h3:nth-of-type(3n){ border-left-color:var(--pop-yellow-d); }
+
+  /* カードに軽い浮遊感とホバー（親しみやすさ） */
+  body.recruit-pop .card{ transition:transform .18s ease, box-shadow .18s ease; }
+  body.recruit-pop .card:hover{ transform:translateY(-4px); box-shadow:0 18px 36px -16px rgba(31,131,184,.38); }
+
+  /* ヒーローをさらに明るく＋シェイプ増量 */
+  body.recruit-pop .hype-hero.bg-hype{
+    background:
+      radial-gradient(760px 520px at 88% -8%, rgba(92,200,234,.34), transparent 60%),
+      radial-gradient(640px 460px at -2% 112%, rgba(255,210,60,.38), transparent 58%),
+      radial-gradient(560px 440px at 60% 118%, rgba(239,106,134,.22), transparent 60%),
+      linear-gradient(160deg,#e4f5fc 0%, #f4fbfe 55%, #ffffff 100%);
+  }
+  /* 採用情報クイックナビ（3色カード） */
+  body.recruit-pop .quicknav{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; }
+  body.recruit-pop .qn{
+    display:block; border-radius:20px; padding:1.9rem 1.6rem; color:#fff !important; text-decoration:none;
+    position:relative; overflow:hidden; min-height:118px;
+    box-shadow:0 14px 30px -16px rgba(31,131,184,.5); transition:transform .18s ease, box-shadow .18s ease;
+  }
+  body.recruit-pop .qn:hover{ transform:translateY(-5px); box-shadow:0 22px 40px -16px rgba(31,131,184,.55); }
+  body.recruit-pop .qn h3{ font-size:1.2rem; font-weight:900; margin:0; position:relative; z-index:1; }
+  body.recruit-pop .qn span{ font-size:.82rem; opacity:.92; position:relative; z-index:1; }
+  body.recruit-pop .qn::after{ content:""; position:absolute; right:-24px; bottom:-24px; width:90px; height:90px; border-radius:50%; background:rgba(255,255,255,.18); }
+  body.recruit-pop .qn::before{ content:""; position:absolute; right:26px; top:20px; width:34px; height:34px; border:3px solid rgba(255,255,255,.35); border-radius:50%; }
+  body.recruit-pop .qn.qn-blue{ background:linear-gradient(135deg,#3aa9de,#1f83b8); }
+  body.recruit-pop .qn.qn-pink{ background:linear-gradient(135deg,#f4809a,#e5567a); }
+  body.recruit-pop .qn.qn-yellow{ background:linear-gradient(135deg,#ffce3a,#f2a705); color:#5a4600 !important; }
+  body.recruit-pop .qn.qn-yellow::after,
+  body.recruit-pop .qn.qn-yellow::before{ border-color:rgba(255,255,255,.6); background:rgba(255,255,255,.28); }
+  @media (max-width:640px){ body.recruit-pop .quicknav{ grid-template-columns:1fr; } }
+
+  /* 募集要項テーブル */
+  body.recruit-pop .req-table{ width:100%; border-collapse:collapse; background:#fff; border-radius:18px; overflow:hidden; box-shadow:var(--shadow); }
+  body.recruit-pop .req-table th{ text-align:left; vertical-align:top; width:190px; background:#eaf6fc; color:var(--pop-blue-d); font-weight:800; padding:1rem 1.1rem; border-bottom:3px solid #fff; font-size:.92rem; }
+  body.recruit-pop .req-table td{ padding:1rem 1.1rem; border-bottom:1px solid var(--line); font-size:.95rem; line-height:1.85; }
+  @media (max-width:640px){
+    body.recruit-pop .req-table, body.recruit-pop .req-table tbody, body.recruit-pop .req-table tr, body.recruit-pop .req-table th, body.recruit-pop .req-table td{ display:block; width:auto; }
+    body.recruit-pop .req-table th{ border-bottom:0; border-radius:0; }
+    body.recruit-pop .req-table td{ padding-top:.3rem; }
+  }
 </style>
 
 <!-- 構造化データ：求人（施工管理） -->
@@ -156,26 +227,42 @@
 <section class="hero hype-hero bg-hype" style="min-height:96vh; display:flex; align-items:center; position:relative;">
   <div class="hero-bg" style="opacity:.35; background-image:url('/assets/photos/genba.jpg')"></div>
   <div class="wrap" style="position:relative; padding-block:6rem;">
-    <p class="eyebrow reveal">RECRUIT 2026 — 施工管理 大募集</p>
+    <p class="eyebrow reveal">RECRUIT 2028 — 新卒・第二新卒 歓迎</p>
     <h1 class="hype-title reveal d1" style="margin-top:.6rem;">
       公共工事で、<br /><span class="hype-mark">人生、ブチアゲろ。</span>
     </h1>
-    <p class="reveal d2 hero-lead-pop" style="max-width:620px; margin-top:1.6rem; font-size:clamp(1rem,2.6vw,1.2rem);">
+    <p class="reveal d2 hero-lead-pop" style="max-width:640px; margin-top:1.6rem; font-size:clamp(1rem,2.6vw,1.2rem);">
       まちのインフラを動かす主役は、<strong>施工管理</strong>。<br />
-      未経験でも大丈夫。資格取得支援と一気通貫の環境で、
-      あなたを「まちを支えるプロ」に育て上げる。<br />
+      未経験・文系・理系ぜんぶOK。資格取得支援と、先輩マンツーマンの環境で、
+      あなたを「まちを支えるプロ」に育てます。<br />
       ——電気工事士も、同時募集中。
     </p>
     <div class="reveal d3" style="display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.2rem;">
       <a href="contact.html?type=recruit" class="btn btn-amber">いますぐエントリー</a>
-      <a href="#jobs" class="btn btn-ghost">募集職種を見る</a>
+      <a href="#requirements" class="btn btn-ghost">募集要項を見る</a>
     </div>
-    <div class="reveal d4" style="display:flex; gap:1.6rem; flex-wrap:wrap; margin-top:3rem;">
+    <div class="reveal d4" style="display:flex; gap:.7rem; flex-wrap:wrap; margin-top:3rem;">
+      <span class="chip chip-amber">2028年卒 5名募集</span>
       <span class="chip chip-amber">未経験歓迎</span>
       <span class="chip chip-amber">資格取得支援</span>
-      <span class="chip chip-amber">週休2日制</span>
+      <span class="chip chip-amber">完全週休2日・年122日</span>
       <span class="chip chip-amber">残業ほぼナシ</span>
-      <span class="chip chip-amber">若手活躍中</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 採用情報クイックナビ（ポップな3色カード） ===== -->
+<section class="section" style="padding-block:2.6rem;">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center; margin-bottom:1.6rem;">
+      <p class="eyebrow" style="justify-content:center;">RECRUITMENT INFO</p>
+      <h2 class="section-title" style="margin-top:.6rem;">まずは、ここをチェック。</h2>
+      <div class="divider-gold" style="margin:1rem auto 0;"></div>
+    </div>
+    <div class="quicknav reveal">
+      <a href="#person" class="qn qn-blue"><h3>求める人物像</h3><span>どんな人が活躍してる？</span></a>
+      <a href="#flow" class="qn qn-pink"><h3>選考フロー</h3><span>エントリーから内定まで</span></a>
+      <a href="#requirements" class="qn qn-yellow"><h3>募集要項</h3><span>2028年卒・待遇の詳細</span></a>
     </div>
   </div>
 </section>
@@ -232,7 +319,7 @@
 </section>
 
 <!-- ===== 最初に、伝えておきたいこと（価値観・哲学） ===== -->
-<section class="section">
+<section class="section" id="person">
   <div class="wrap" style="max-width:860px;">
     <div class="reveal" style="text-align:center;">
       <p class="eyebrow" style="justify-content:center;">OUR VALUES</p>
@@ -568,7 +655,7 @@
 </section>
 
 <!-- ===== 選考フロー ===== -->
-<section class="section" style="background:#fff; border-block:1px solid var(--line);">
+<section class="section" id="flow" style="background:#fff; border-block:1px solid var(--line);">
   <div class="wrap">
     <div class="reveal"><p class="eyebrow">進め方</p><h2 class="section-title">選考の流れ</h2><div class="divider-gold" style="margin-top:1rem;"></div></div>
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:1rem; margin-top:2rem;">
@@ -576,6 +663,36 @@
       <div class="card reveal d1" style="padding:1.6rem;"><b class="serif" style="color:var(--amber); font-size:1.6rem;">02</b><h3 style="font-weight:700; margin:.4rem 0;">面談・見学</h3><p class="text-sub" style="font-size:.88rem;">代表・先輩と面談。現場見学で雰囲気を確認。</p></div>
       <div class="card reveal d2" style="padding:1.6rem;"><b class="serif" style="color:var(--amber); font-size:1.6rem;">03</b><h3 style="font-weight:700; margin:.4rem 0;">内定</h3><p class="text-sub" style="font-size:.88rem;">条件をすり合わせ、納得して入社を決定。</p></div>
       <div class="card reveal d3" style="padding:1.6rem;"><b class="serif" style="color:var(--amber); font-size:1.6rem;">04</b><h3 style="font-weight:700; margin:.4rem 0;">入社・育成</h3><p class="text-sub" style="font-size:.88rem;">先輩がマンツーマンでサポート。資格取得も応援。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 募集要項（2028年卒） ===== -->
+<section class="section" id="requirements" style="background:#fff; border-top:1px solid var(--line);">
+  <div class="wrap" style="max-width:920px;">
+    <div class="reveal"><p class="eyebrow">REQUIREMENTS</p><h2 class="section-title">募集要項（2028年卒）</h2><div class="divider-gold" style="margin-top:1rem;"></div>
+      <p class="lead" style="margin-top:1rem;">新卒のみなさんへ。オールライトの2028年卒 採用の概要です。まずは「話を聞いてみたい」だけでも大歓迎です。</p>
+    </div>
+    <div style="overflow-x:auto; margin-top:2rem;">
+      <table class="req-table reveal">
+        <tbody>
+          <tr><th>募集人数</th><td>2028年卒　<strong>5名</strong></td></tr>
+          <tr><th>募集職種</th><td>電気設備 施工管理（総合職）／電気工事士　※未経験からスタートできます</td></tr>
+          <tr><th>応募資格</th><td>2028年3月に大学・大学院・高専・短大・専門学校を卒業見込みの方。<br />普通自動車免許（AT可・入社までの取得でOK）。学部・学科は不問（文系・理系どちらも歓迎）。</td></tr>
+          <tr><th>初任給</th><td><strong>月給 264,000円〜</strong>（資格・能力により優遇）<br /><span class="text-sub" style="font-size:.86rem;">※金額の詳細・内訳は面談でご説明します。</span></td></tr>
+          <tr><th>諸手当</th><td>資格手当（最大 月10,000円）／役職手当／通勤手当（上限 月20,000円・規定あり）／残業手当　ほか</td></tr>
+          <tr><th>昇給・賞与</th><td>昇給 年2回／賞与 年2回（5月・12月）※会社業績・本人の成果により</td></tr>
+          <tr><th>勤務時間</th><td>8:00〜17:00（休憩含む・実働8時間）※現場により変動。<strong>残業はほぼありません。</strong></td></tr>
+          <tr><th>休日・休暇</th><td><strong>完全週休2日制／年間休日122日</strong><br />年末年始・有給・産前産後・育児・慶弔 休暇 ほか</td></tr>
+          <tr><th>勤務地</th><td>本社：兵庫県神戸市兵庫区東出町2丁目8-8<br />現場は兵庫・神戸を中心に、全国の公共案件にも対応。</td></tr>
+          <tr><th>保険・退職金</th><td>社会保険完備（雇用・労災・健康・厚生年金）／建退共（建設業退職金共済）加入</td></tr>
+          <tr><th>資格取得支援</th><td>参考書・受験・講習費は会社負担。合格お祝い金（最大10万円）＋資格勉強会あり。</td></tr>
+          <tr><th>選考の流れ</th><td>エントリー → 会社説明・面談・現場見学 → 内定<br /><span class="text-sub" style="font-size:.86rem;">人柄を重視します。「まず話を聞くだけ」もOK。</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="reveal" style="margin-top:2rem; text-align:center;">
+      <a href="contact.html?type=recruit" class="btn btn-amber">2028年卒 エントリー・説明会に申し込む</a>
     </div>
   </div>
 </section>
@@ -633,8 +750,8 @@
 <!-- ===== メガスローガン・マーキー ===== -->
 <div class="mega-marquee reverse" aria-hidden="true">
   <div class="track">
-    <span class="out">BUCHIAGE</span><span class="blue">施工管理</span><span class="fill">人生、ブチアゲろ。</span><span class="out">RECRUIT 2026</span><span class="blue">未経験歓迎</span>
-    <span class="out">BUCHIAGE</span><span class="blue">施工管理</span><span class="fill">人生、ブチアゲろ。</span><span class="out">RECRUIT 2026</span><span class="blue">未経験歓迎</span>
+    <span class="out">BUCHIAGE</span><span class="blue">施工管理</span><span class="fill">人生、ブチアゲろ。</span><span class="out">RECRUIT 2028</span><span class="blue">未経験歓迎</span>
+    <span class="out">BUCHIAGE</span><span class="blue">施工管理</span><span class="fill">人生、ブチアゲろ。</span><span class="out">RECRUIT 2028</span><span class="blue">未経験歓迎</span>
   </div>
 </div>
 
