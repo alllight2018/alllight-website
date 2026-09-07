@@ -172,6 +172,24 @@
   body.recruit-pop .qn.qn-yellow::before{ border-color:rgba(255,255,255,.6); background:rgba(255,255,255,.28); }
   @media (max-width:640px){ body.recruit-pop .quicknav{ grid-template-columns:1fr; } }
 
+  /* ポップな丸アイコン（白線画イラスト土台） */
+  body.recruit-pop .pop-ico{ display:inline-grid; place-items:center; flex:0 0 auto; border-radius:50%; background:var(--pop-blue); color:#fff; }
+  body.recruit-pop .pop-ico svg{ width:56%; height:56%; }
+  body.recruit-pop .pop-ico.sz-lg{ width:78px; height:78px; }
+  body.recruit-pop .pop-ico.sz-md{ width:60px; height:60px; }
+  body.recruit-pop .pop-ico.c-blue{ background:linear-gradient(135deg,#3aa9de,#1f83b8); }
+  body.recruit-pop .pop-ico.c-pink{ background:linear-gradient(135deg,#f4809a,#e5567a); }
+  body.recruit-pop .pop-ico.c-yellow{ background:linear-gradient(135deg,#ffce3a,#f2a705); color:#7a5b00; }
+  /* 価値観：アイコン＋テキストの横並び行 */
+  body.recruit-pop .value-row{ display:flex; gap:1.3rem; align-items:flex-start; margin-top:2.4rem; }
+  body.recruit-pop .value-row:first-child{ margin-top:0; }
+  body.recruit-pop .value-row .v-body{ flex:1 1 auto; min-width:0; }
+  body.recruit-pop .value-row h3{ margin-top:.2rem !important; border-left:0 !important; padding-left:0 !important; }
+  @media (max-width:560px){ body.recruit-pop .value-row{ gap:.9rem; } body.recruit-pop .pop-ico.sz-lg{ width:60px; height:60px; } }
+  /* クイックナビ・カード内アイコン */
+  body.recruit-pop .qn .pop-ico{ background:rgba(255,255,255,.22); margin-bottom:.7rem; }
+  body.recruit-pop .qn.qn-yellow .pop-ico{ background:rgba(255,255,255,.4); color:#7a5b00; }
+
   /* 募集要項テーブル */
   body.recruit-pop .req-table{ width:100%; border-collapse:collapse; background:#fff; border-radius:18px; overflow:hidden; box-shadow:var(--shadow); }
   body.recruit-pop .req-table th{ text-align:left; vertical-align:top; width:190px; background:#eaf6fc; color:var(--pop-blue-d); font-weight:800; padding:1rem 1.1rem; border-bottom:3px solid #fff; font-size:.92rem; }
@@ -260,9 +278,15 @@
       <div class="divider-gold" style="margin:1rem auto 0;"></div>
     </div>
     <div class="quicknav reveal">
-      <a href="#person" class="qn qn-blue"><h3>求める人物像</h3><span>どんな人が活躍してる？</span></a>
-      <a href="#flow" class="qn qn-pink"><h3>選考フロー</h3><span>エントリーから内定まで</span></a>
-      <a href="#requirements" class="qn qn-yellow"><h3>募集要項</h3><span>2028年卒・待遇の詳細</span></a>
+      <a href="#person" class="qn qn-blue">
+        <span class="pop-ico sz-md"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6.5 8-6.5S20 17 20 21"/></svg></span>
+        <h3>求める人物像</h3><span>どんな人が活躍してる？</span></a>
+      <a href="#flow" class="qn qn-pink">
+        <span class="pop-ico sz-md"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="2.4"/><circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="12" r="2.4"/><path d="M8.4 6H14M14 6l6 6-6 6H8.4"/></svg></span>
+        <h3>選考フロー</h3><span>エントリーから内定まで</span></a>
+      <a href="#requirements" class="qn qn-yellow">
+        <span class="pop-ico sz-md"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 13h5M10 17h5"/></svg></span>
+        <h3>募集要項</h3><span>2028年卒・待遇の詳細</span></a>
     </div>
   </div>
 </section>
@@ -329,17 +353,32 @@
 
     <div class="prose reveal" style="margin-top:2.8rem; font-size:1rem; line-height:2.05; color:var(--sub);">
 
-      <h3 class="serif" style="font-weight:900; font-size:1.4rem; color:var(--navy); margin-top:0;">仕事も、暮らしも。どちらも本気で。</h3>
-      <p style="margin-top:1rem;">「仕事のためにプライベートを犠牲にする」——私たちは、それを良しとしません。オールライトは<strong>完全週休二日制、残業はほぼゼロ、夕方5時半には会社に誰もいない</strong>会社です。家族との時間も、趣味の時間も、しっかり持ってほしい。</p>
-      <p style="margin-top:1.1rem;">でも、勘違いしないでください。「楽をしたい人」の会社ではありません。<strong>限られた時間の中で集中し、高い成果を出す</strong>。だらだら残るのではなく、きっちり終わらせて、きっちり帰る。仕事にはプロとして本気で向き合う。その代わり、暮らしも大切にする。両立を、本気でやりきる会社です。</p>
+      <div class="value-row">
+        <span class="pop-ico sz-lg c-blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18"/><path d="M5 7h14"/><path d="M5 7l-2.2 5.2a3 3 0 0 0 6 0z"/><path d="M19 7l-2.2 5.2a3 3 0 0 0 6 0z"/><path d="M8 21h8"/></svg></span>
+        <div class="v-body">
+          <h3 class="serif" style="font-weight:900; font-size:1.4rem; color:var(--navy);">仕事も、暮らしも。どちらも本気で。</h3>
+          <p style="margin-top:1rem;">「仕事のためにプライベートを犠牲にする」——私たちは、それを良しとしません。オールライトは<strong>完全週休二日制、残業はほぼゼロ、夕方5時半には会社に誰もいない</strong>会社です。家族との時間も、趣味の時間も、しっかり持ってほしい。</p>
+          <p style="margin-top:1.1rem;">でも、勘違いしないでください。「楽をしたい人」の会社ではありません。<strong>限られた時間の中で集中し、高い成果を出す</strong>。だらだら残るのではなく、きっちり終わらせて、きっちり帰る。仕事にはプロとして本気で向き合う。その代わり、暮らしも大切にする。両立を、本気でやりきる会社です。</p>
+        </div>
+      </div>
 
-      <h3 class="serif" style="font-weight:900; font-size:1.4rem; color:var(--navy); margin-top:2.4rem;">会社は、人でできている。</h3>
-      <p style="margin-top:1rem;">建物も、資格も、実績も、すべては「人」があってこそ生まれます。だから私たちは、<strong>人を育てることに一番こだわります</strong>。社長だけでなく、幹部も先輩も教える。未経験の仕事にも挑戦させ、必ずフォローする。一人ひとりの成長が、そのまま会社の力になる——本気でそう考えています。</p>
-      <p style="margin-top:1.1rem;">そして、<strong>「誰か一人が頑張る会社」ではなく、「みんなで力を合わせて勝つ会社」</strong>でありたい。年齢や役職を越えてフラットに話し、困ったときは助け合う。そんなチームを、本気でつくっています。</p>
+      <div class="value-row">
+        <span class="pop-ico sz-lg c-pink" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M2.5 20c0-3.3 2.9-5.2 6.5-5.2S15.5 16.7 15.5 20"/><circle cx="17.5" cy="9" r="2.4"/><path d="M16.2 15.1c3 .3 5.3 2 5.3 4.9"/></svg></span>
+        <div class="v-body">
+          <h3 class="serif" style="font-weight:900; font-size:1.4rem; color:var(--navy);">会社は、人でできている。</h3>
+          <p style="margin-top:1rem;">建物も、資格も、実績も、すべては「人」があってこそ生まれます。だから私たちは、<strong>人を育てることに一番こだわります</strong>。社長だけでなく、幹部も先輩も教える。未経験の仕事にも挑戦させ、必ずフォローする。一人ひとりの成長が、そのまま会社の力になる——本気でそう考えています。</p>
+          <p style="margin-top:1.1rem;">そして、<strong>「誰か一人が頑張る会社」ではなく、「みんなで力を合わせて勝つ会社」</strong>でありたい。年齢や役職を越えてフラットに話し、困ったときは助け合う。そんなチームを、本気でつくっています。</p>
+        </div>
+      </div>
 
-      <h3 class="serif" style="font-weight:900; font-size:1.4rem; color:var(--navy); margin-top:2.4rem;">頼まれごとは、試されごと。</h3>
-      <p style="margin-top:1rem;">これは、オールライトの経営理念に書かれている言葉です。<strong>「頼まれごとは試されごと、返事は0.2秒。」</strong>。誰かに何かを頼まれるのは、期待され、信頼されている証拠。そのチャンスに、まず「はい、やります」と即答できる素直さとスピードを、私たちは何より大切にしています。</p>
-      <p style="margin-top:1.1rem;">特別なスキルや、立派な経歴より、<strong>素直さ・成長意欲・仲間と協力できる姿勢</strong>。私たちが採用でいちばん見るのは、そこです。</p>
+      <div class="value-row">
+        <span class="pop-ico sz-lg c-yellow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+        <div class="v-body">
+          <h3 class="serif" style="font-weight:900; font-size:1.4rem; color:var(--navy);">頼まれごとは、試されごと。</h3>
+          <p style="margin-top:1rem;">これは、オールライトの経営理念に書かれている言葉です。<strong>「頼まれごとは試されごと、返事は0.2秒。」</strong>。誰かに何かを頼まれるのは、期待され、信頼されている証拠。そのチャンスに、まず「はい、やります」と即答できる素直さとスピードを、私たちは何より大切にしています。</p>
+          <p style="margin-top:1.1rem;">特別なスキルや、立派な経歴より、<strong>素直さ・成長意欲・仲間と協力できる姿勢</strong>。私たちが採用でいちばん見るのは、そこです。</p>
+        </div>
+      </div>
 
     </div>
 
@@ -381,9 +420,9 @@
       </p>
     </div>
     <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1.2rem; margin-top:2.6rem;">
-      <div class="card reveal" style="padding:1.8rem;"><h3 class="serif" style="font-weight:700; color:var(--navy);">図面が、まちになる。</h3><p class="text-sub" style="margin-top:.6rem; font-size:.92rem;">庁舎・学校・公共施設。自分が動かした現場が、地図に残り、人々の暮らしを支える。</p></div>
-      <div class="card reveal d1" style="padding:1.8rem;"><h3 class="serif" style="font-weight:700; color:var(--navy);">手に職＋マネジメント。</h3><p class="text-sub" style="margin-top:.6rem; font-size:.92rem;">電気の知識に加え、工程・原価・人の管理力が身につく。市場価値が上がり続けるキャリア。</p></div>
-      <div class="card reveal d2" style="padding:1.8rem;"><h3 class="serif" style="font-weight:700; color:var(--navy);">頑張りが、点数になる。</h3><p class="text-sub" style="margin-top:.6rem; font-size:.92rem;">公共工事は工事成績で評価される世界。あなたの仕事が数字で認められ、会社の実績になる。</p></div>
+      <div class="card reveal" style="padding:1.8rem;"><span class="pop-ico sz-md c-blue" style="margin-bottom:.9rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V8l5-4 5 4v13"/><path d="M9 21v-5h4v5"/><path d="M18 21v-8l3 2v6"/></svg></span><h3 class="serif" style="font-weight:700; color:var(--navy);">図面が、まちになる。</h3><p class="text-sub" style="margin-top:.6rem; font-size:.92rem;">庁舎・学校・公共施設。自分が動かした現場が、地図に残り、人々の暮らしを支える。</p></div>
+      <div class="card reveal d1" style="padding:1.8rem;"><span class="pop-ico sz-md c-pink" style="margin-bottom:.9rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4l-6 6 2 2 6-6a4 4 0 0 0 5.4-5.4l-2.3 2.3-2-2z"/></svg></span><h3 class="serif" style="font-weight:700; color:var(--navy);">手に職＋マネジメント。</h3><p class="text-sub" style="margin-top:.6rem; font-size:.92rem;">電気の知識に加え、工程・原価・人の管理力が身につく。市場価値が上がり続けるキャリア。</p></div>
+      <div class="card reveal d2" style="padding:1.8rem;"><span class="pop-ico sz-md c-yellow" style="margin-bottom:.9rem;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8L4.6 9.1l5.8-.8z"/></svg></span><h3 class="serif" style="font-weight:700; color:var(--navy);">頑張りが、点数になる。</h3><p class="text-sub" style="margin-top:.6rem; font-size:.92rem;">公共工事は工事成績で評価される世界。あなたの仕事が数字で認められ、会社の実績になる。</p></div>
     </div>
   </div>
 </section>
