@@ -199,6 +199,17 @@
     body.recruit-pop .req-table th{ border-bottom:0; border-radius:0; }
     body.recruit-pop .req-table td{ padding-top:.3rem; }
   }
+
+  /* 資格手当テーブル：PCは3列、スマホは1列カードで“1画面”表示（横スクロールなし） */
+  body.recruit-pop .qual-table tbody tr{ border-top:1px solid var(--line); }
+  @media (max-width:640px){
+    body.recruit-pop .qual-table, body.recruit-pop .qual-table tbody, body.recruit-pop .qual-table tr, body.recruit-pop .qual-table th, body.recruit-pop .qual-table td{ display:block; width:auto; }
+    body.recruit-pop .qual-table thead{ display:none; }
+    body.recruit-pop .qual-table tbody tr{ padding:.85rem 1rem; }
+    body.recruit-pop .qual-table tbody th{ padding:0 0 .5rem !important; color:var(--navy); font-size:1.02rem; }
+    body.recruit-pop .qual-table td{ padding:.2rem 0 !important; display:flex; justify-content:space-between; align-items:baseline; gap:1rem; }
+    body.recruit-pop .qual-table td::before{ content:attr(data-label); color:var(--sub); font-size:.82rem; font-weight:700; }
+  }
 </style>
 
 <!-- 構造化データ：求人（施工管理） -->
@@ -486,8 +497,8 @@
 
       <h3 class="serif" style="font-weight:900; font-size:1.4rem; color:var(--navy); margin-top:2.4rem;">② 資格は、会社が“本気で”応援する。</h3>
       <p style="margin-top:1rem;">オールライトは、資格取得を「個人の努力」で終わらせません。<strong>参考書代・受験費用・講習費用は会社が負担</strong>。資格勉強会も計画的に実施します。さらに、合格したら<strong>お祝い金</strong>、取得後は<strong>毎月の資格手当</strong>まで。頑張って資格を取るほど、収入も上がる仕組みです。</p>
-      <div style="overflow-x:auto; margin-top:1.3rem;">
-        <table style="width:100%; min-width:460px; border-collapse:collapse; font-size:.95rem; background:#fff; border-radius:10px; overflow:hidden; box-shadow:var(--shadow);">
+      <div style="margin-top:1.3rem;">
+        <table class="qual-table" style="width:100%; border-collapse:collapse; font-size:.95rem; background:#fff; border-radius:12px; overflow:hidden; box-shadow:var(--shadow);">
           <thead>
             <tr style="background:var(--navy); color:#fff;">
               <th style="text-align:left; padding:.75rem .9rem;">資格</th>
@@ -496,12 +507,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr style="border-top:1px solid var(--line);"><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">第一種電気工事士</th><td style="padding:.7rem .9rem;">100,000円</td><td style="padding:.7rem .9rem;">月 10,000円</td></tr>
-            <tr style="border-top:1px solid var(--line);"><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">第二種電気工事士</th><td style="padding:.7rem .9rem;">50,000円</td><td style="padding:.7rem .9rem;">月 5,000円</td></tr>
-            <tr style="border-top:1px solid var(--line);"><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">1級電気工事施工管理技士</th><td style="padding:.7rem .9rem;">100,000円</td><td style="padding:.7rem .9rem;">月 10,000円</td></tr>
-            <tr style="border-top:1px solid var(--line);"><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">2級電気工事施工管理技士</th><td style="padding:.7rem .9rem;">50,000円</td><td style="padding:.7rem .9rem;">月 5,000円</td></tr>
-            <tr style="border-top:1px solid var(--line);"><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">消防設備士（甲種4類以上）</th><td style="padding:.7rem .9rem;">50,000円</td><td style="padding:.7rem .9rem;">月 5,000円</td></tr>
-            <tr style="border-top:1px solid var(--line);"><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">建設業経理士2級</th><td style="padding:.7rem .9rem;">50,000円</td><td style="padding:.7rem .9rem;">月 5,000円</td></tr>
+            <tr><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">第一種電気工事士</th><td style="padding:.7rem .9rem;" data-label="合格お祝い金">100,000円</td><td style="padding:.7rem .9rem;" data-label="毎月の資格手当">月 10,000円</td></tr>
+            <tr><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">第二種電気工事士</th><td style="padding:.7rem .9rem;" data-label="合格お祝い金">50,000円</td><td style="padding:.7rem .9rem;" data-label="毎月の資格手当">月 5,000円</td></tr>
+            <tr><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">1級電気工事施工管理技士</th><td style="padding:.7rem .9rem;" data-label="合格お祝い金">100,000円</td><td style="padding:.7rem .9rem;" data-label="毎月の資格手当">月 10,000円</td></tr>
+            <tr><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">2級電気工事施工管理技士</th><td style="padding:.7rem .9rem;" data-label="合格お祝い金">50,000円</td><td style="padding:.7rem .9rem;" data-label="毎月の資格手当">月 5,000円</td></tr>
+            <tr><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">消防設備士（甲種4類以上）</th><td style="padding:.7rem .9rem;" data-label="合格お祝い金">50,000円</td><td style="padding:.7rem .9rem;" data-label="毎月の資格手当">月 5,000円</td></tr>
+            <tr><th style="text-align:left; padding:.7rem .9rem; color:var(--navy);">建設業経理士2級</th><td style="padding:.7rem .9rem;" data-label="合格お祝い金">50,000円</td><td style="padding:.7rem .9rem;" data-label="毎月の資格手当">月 5,000円</td></tr>
           </tbody>
         </table>
       </div>
