@@ -104,20 +104,31 @@
     });
   });
 
-  /* ---- 追従お問い合わせボタン（全ページ共通・contactページ以外）---- */
+  /* ---- 追従ボタン（全ページ共通・採用＋お問い合わせを分けて常時表示）---- */
   (function () {
+    if (document.querySelector(".fab-stack")) return;
     var path = location.pathname.replace(/\/index\.html$/, "/");
     var onContact = /contact(\.html)?$/.test(path) || /\/contact\/?$/.test(path);
-    if (onContact) return;
-    if (document.querySelector(".floating-cta")) return;
-    var a = document.createElement("a");
-    a.href = "/contact.html";
-    a.className = "floating-cta";
-    a.setAttribute("aria-label", "お問い合わせ");
-    a.innerHTML =
-      '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16v12H5.2L4 17.2V4z"/></svg>' +
-      '<span class="fc-label">お問い合わせ</span>';
-    document.body.appendChild(a);
+    var onRecruit = /recruit(\.html)?$/.test(path) || /\/recruit\/?$/.test(path);
+    var icoRecruit =
+      '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>';
+    var icoMail =
+      '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5 12 13l8.5-6.5"/></svg>';
+    function pill(href, label, cls, ico) {
+      var a = document.createElement("a");
+      a.href = href; a.className = "fab " + cls; a.setAttribute("aria-label", label);
+      a.innerHTML = ico + '<span class="fab-label">' + label + "</span>";
+      return a;
+    }
+    var stack = document.createElement("div");
+    stack.className = "fab-stack";
+    if (onRecruit) {
+      stack.appendChild(pill("/contact.html?type=recruit", "エントリー", "fab-amber", icoRecruit));
+    } else {
+      stack.appendChild(pill("/recruit.html", "採用情報", "fab-amber", icoRecruit));
+      if (!onContact) stack.appendChild(pill("/contact.html", "お問い合わせ", "fab-navy", icoMail));
+    }
+    document.body.appendChild(stack);
   })();
 
   /* ---- 現在年をフッターへ ---- */
