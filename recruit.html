@@ -210,6 +210,21 @@
     body.recruit-pop .qual-table td{ padding:.2rem 0 !important; display:flex; justify-content:space-between; align-items:baseline; gap:1rem; }
     body.recruit-pop .qual-table td::before{ content:attr(data-label); color:var(--sub); font-size:.82rem; font-weight:700; }
   }
+
+  /* 挑戦企業キャッチコピー */
+  body.recruit-pop .catch-copy{ font-family:"Zen Kaku Gothic New","Noto Sans JP",sans-serif; font-weight:900; line-height:1.7; letter-spacing:.01em; font-size:clamp(1.35rem,4.2vw,2.05rem); color:var(--navy); }
+  /* 企業のここがポイント */
+  body.recruit-pop .pt-box{ background:#fff; border-radius:16px; box-shadow:var(--shadow); overflow:hidden; border:1px solid var(--line); }
+  body.recruit-pop .pt-head{ background:linear-gradient(135deg,#3aa9de,#1f83b8); color:#fff; font-weight:900; font-size:1.05rem; padding:.95rem 1.25rem; display:flex; align-items:center; gap:.5rem; }
+  body.recruit-pop .pt-row{ display:grid; grid-template-columns:160px 1fr; gap:.4rem 1.3rem; padding:1.05rem 1.25rem; border-top:1px solid var(--line); margin:0; }
+  body.recruit-pop .pt-row dt{ font-weight:800; color:var(--pop-blue-d); }
+  body.recruit-pop .pt-row dd{ margin:0; color:var(--sub); line-height:1.85; }
+  @media (max-width:560px){ body.recruit-pop .pt-row{ grid-template-columns:1fr; gap:.15rem; } }
+  /* 採用担当者からの伝言板 */
+  body.recruit-pop .board{ background:#eef6fb; border:1px solid var(--line); border-radius:16px; padding:1.4rem; }
+  body.recruit-pop .board-head{ display:flex; align-items:center; gap:.85rem; }
+  body.recruit-pop .board-head img{ width:58px; height:58px; border-radius:50%; object-fit:cover; box-shadow:0 4px 12px -6px rgba(0,0,0,.35); }
+  body.recruit-pop .board-body{ background:#fff; border-radius:12px; padding:1.3rem 1.4rem; margin-top:1rem; line-height:2; color:#37485a; font-size:.96rem; }
 </style>
 
 <!-- 構造化データ：求人（施工管理） -->
@@ -298,6 +313,45 @@
       <a href="#requirements" class="qn qn-yellow">
         <span class="pop-ico sz-md"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 13h5M10 17h5"/></svg></span>
         <h3>募集要項</h3><span>2028年卒・待遇の詳細</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 挑戦企業・伝言板・ここがポイント ===== -->
+<section class="section" style="padding-block:3rem;">
+  <div class="wrap" style="max-width:900px;">
+    <div class="reveal" style="text-align:center;">
+      <h2 class="catch-copy">
+        現状維持は、つまらない。<br />
+        オールライトは、<span style="color:var(--pop-blue);">高みを目指す挑戦企業</span>です。<br />
+        本気で成長したい「<span style="color:var(--pop-pink-d);">熱量</span>」があるあなた——<br />
+        その力を、ここで<span style="color:var(--pop-pink-d);">爆発させろ。</span>
+      </h2>
+    </div>
+
+    <!-- 企業のここがポイント -->
+    <div class="pt-box reveal" style="margin-top:2.4rem;">
+      <div class="pt-head"><span aria-hidden="true">💡</span> オールライトの、ここがポイント</div>
+      <dl style="margin:0;">
+        <div class="pt-row"><dt>成長する場所</dt><dd><strong>100億円企業</strong>を目指す成長企業。会社が伸びるぶん、ポジションはこれから増えます。チャンスは平等。掴めるかどうかは、自分次第です。</dd></div>
+        <div class="pt-row"><dt>手に職＋資格</dt><dd>就業時間内の勉強会と資格取得支援で、電気工事士・施工管理技士へ。<strong>一生ものの技術と資格</strong>が、あなたの武器になります。</dd></div>
+        <div class="pt-row"><dt>キャリア</dt><dd>誰かと一緒に協力して取り組める環境があります。未経験からでも、<strong>自分のなりたいキャリア</strong>を見つけられます。</dd></div>
+        <div class="pt-row"><dt>働き方</dt><dd>完全週休2日・年間休日122日・残業ほぼナシ。<strong>仕事も暮らしも、どちらも本気で。</strong></dd></div>
+      </dl>
+    </div>
+
+    <!-- 採用担当者からの伝言板 -->
+    <div class="board reveal" style="margin-top:1.6rem;">
+      <div class="board-head">
+        <img src="/assets/photos/team.jpg" alt="株式会社オールライト 採用担当・社員" loading="lazy" />
+        <div><b style="font-size:1.02rem;">採用担当からの伝言板</b><br /><span class="text-sub" style="font-size:.84rem;">2028年度卒 新卒採用スタート（2026年9月）</span></div>
+      </div>
+      <div class="board-body">
+        <p><strong>2028年度卒の新卒採用を開始しました。</strong></p>
+        <p style="margin-top:.9rem;">オールライトに集う人たちが、「この会社に入ってよかった」「この仕事についてよかった」と、心から言える会社にしていきます。</p>
+        <p style="margin-top:.9rem;">たった一度の人生。せっかく生きるなら、「生まれてきてよかった」と言える人生でありたい。その大半の時間を過ごす“仕事”を、悔いのない、充実したものにする。だから私たちは、<strong>まちに光を灯す仕事</strong>で、小さくてもキラッと光る会社にしていきます。</p>
+        <p style="margin-top:.9rem;">あなたと会えるのを、楽しみにしています。</p>
+      </div>
     </div>
   </div>
 </section>
