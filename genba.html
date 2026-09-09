@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>現場ずかん｜工具・材料リスト＆個人メモ｜オールライト</title>
+<meta name="robots" content="noindex,nofollow" />
+<meta name="theme-color" content="#15263d" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+  :root{
+    --navy:#15263d; --blue:#2f9fd6; --blue-d:#1f83b8; --bg:#f2f6f9; --line:#dbe6ee;
+    --sub:#5a6b7b; --ink:#1c2a38; --amber:#f2b705; --pink:#ef6a86;
+    --tabh:64px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+    overscroll-behavior-y:contain;}
+  body{padding-bottom:calc(var(--tabh) + env(safe-area-inset-bottom));}
+  img{max-width:100%;display:block;}
+  button{font:inherit;cursor:pointer;}
+
+  /* ヘッダー */
+  .app-head{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;
+    padding:calc(env(safe-area-inset-top) + .7rem) 1rem .7rem;display:flex;align-items:center;gap:.6rem;}
+  .app-head .logo{font-weight:900;font-size:1.05rem;letter-spacing:.02em;}
+  .app-head .sub{font-size:.72rem;opacity:.75;}
+  .app-head .spacer{flex:1;}
+  .icon-btn{background:rgba(255,255,255,.14);border:0;color:#fff;border-radius:10px;
+    width:38px;height:38px;display:grid;place-items:center;font-size:1.1rem;}
+
+  main{max-width:760px;margin:0 auto;padding:.9rem;}
+
+  /* 検索・フィルタ */
+  .searchbar{position:relative;margin-bottom:.7rem;}
+  .searchbar input{width:100%;padding:.9rem 2.6rem .9rem 2.8rem;border:2px solid var(--line);
+    border-radius:14px;font-size:1.05rem;background:#fff;}
+  .searchbar input:focus{outline:none;border-color:var(--blue);}
+  .searchbar .mag{position:absolute;left:.9rem;top:50%;transform:translateY(-50%);font-size:1.1rem;color:var(--sub);}
+  .searchbar .clr{position:absolute;right:.6rem;top:50%;transform:translateY(-50%);border:0;background:#eef3f7;
+    border-radius:50%;width:30px;height:30px;color:var(--sub);font-size:1.1rem;line-height:1;}
+  .chips{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.4rem;}
+  .chip{border:1.5px solid var(--line);background:#fff;color:var(--ink);border-radius:999px;
+    padding:.5rem 1rem;font-weight:700;font-size:.9rem;}
+  .chip.on{background:var(--blue);border-color:var(--blue);color:#fff;}
+  .count{font-size:.82rem;color:var(--sub);margin:.3rem .1rem .7rem;}
+
+  /* アイテム一覧 */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:.7rem;}
+  .item{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;
+    text-align:left;padding:0;display:flex;flex-direction:column;}
+  .item .thumb{aspect-ratio:4/3;background:#e9eff4 center/cover no-repeat;display:grid;place-items:center;
+    color:#9fb2c1;font-size:1.8rem;position:relative;}
+  .item .thumb .noimg{font-size:.72rem;color:#9fb2c1;font-weight:700;}
+  .item .body{padding:.6rem .7rem .7rem;}
+  .item .nm{font-weight:800;font-size:.98rem;line-height:1.35;}
+  .item .yo{font-size:.72rem;color:#94a6b4;margin-top:.1rem;}
+  .item .us{font-size:.8rem;color:var(--sub);margin-top:.35rem;line-height:1.5;}
+  .badge{display:inline-block;font-size:.66rem;font-weight:800;border-radius:6px;padding:.12rem .4rem;margin-bottom:.35rem;}
+  .badge.tool{background:rgba(47,159,214,.14);color:var(--blue-d);}
+  .badge.mat{background:rgba(242,183,5,.18);color:#9a7500;}
+  .empty{text-align:center;color:var(--sub);padding:3rem 1rem;}
+
+  /* FAB */
+  .fab{position:fixed;right:1rem;bottom:calc(var(--tabh) + env(safe-area-inset-bottom) + .8rem);z-index:25;
+    background:var(--blue);color:#fff;border:0;border-radius:999px;padding:.9rem 1.3rem;font-weight:800;
+    box-shadow:0 10px 24px -8px rgba(31,131,184,.7);display:flex;align-items:center;gap:.4rem;}
+
+  /* タブバー（アイコンを右寄せ） */
+  .tabbar{position:fixed;left:0;right:0;bottom:0;z-index:30;height:calc(var(--tabh) + env(safe-area-inset-bottom));
+    padding-bottom:env(safe-area-inset-bottom);background:#fff;border-top:1px solid var(--line);
+    display:flex;justify-content:flex-end;align-items:stretch;gap:.2rem;padding-right:.4rem;
+    box-shadow:0 -4px 14px -10px rgba(0,0,0,.25);}
+  .tabbar button{background:none;border:0;color:var(--sub);display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:.15rem;min-width:76px;font-size:.72rem;font-weight:700;padding:.3rem .6rem;}
+  .tabbar button .ic{font-size:1.35rem;line-height:1;}
+  .tabbar button.on{color:var(--blue-d);}
+  .tabbar button.on .ic{transform:translateY(-1px);}
+
+  /* メモ */
+  .memo-add{display:flex;gap:.5rem;margin-bottom:.9rem;}
+  .memo-add input{flex:1;padding:.85rem 1rem;border:2px solid var(--line);border-radius:12px;font-size:1rem;background:#fff;}
+  .memo-add button{background:var(--blue);color:#fff;border:0;border-radius:12px;padding:0 1.1rem;font-weight:800;}
+  .memo{background:#fff;border:1px solid var(--line);border-radius:14px;padding:1rem;margin-bottom:.7rem;}
+  .memo .mt{font-weight:800;}
+  .memo .mb{white-space:pre-wrap;margin-top:.4rem;color:var(--ink);line-height:1.7;}
+  .memo .mdate{font-size:.72rem;color:#94a6b4;margin-top:.5rem;}
+  .memo .mact{display:flex;gap:.6rem;margin-top:.6rem;}
+  .memo .mact button{border:1px solid var(--line);background:#f7fafc;border-radius:8px;padding:.35rem .7rem;font-size:.8rem;color:var(--sub);}
+
+  /* モーダル */
+  .modal{position:fixed;inset:0;z-index:50;background:rgba(15,25,40,.55);display:none;align-items:flex-end;justify-content:center;}
+  .modal.show{display:flex;}
+  .sheet{background:#fff;width:100%;max-width:620px;max-height:92vh;overflow:auto;border-radius:18px 18px 0 0;
+    padding:1.1rem 1.1rem calc(1.4rem + env(safe-area-inset-bottom));}
+  .sheet h2{margin:.2rem 0 1rem;font-size:1.15rem;}
+  .field{margin-bottom:.9rem;}
+  .field label{display:block;font-size:.82rem;font-weight:800;color:var(--sub);margin-bottom:.35rem;}
+  .field input,.field select,.field textarea{width:100%;padding:.8rem .9rem;border:2px solid var(--line);
+    border-radius:11px;font-size:1rem;background:#fff;font-family:inherit;}
+  .field textarea{min-height:80px;resize:vertical;}
+  .photo-box{border:2px dashed var(--line);border-radius:14px;padding:.9rem;text-align:center;color:var(--sub);}
+  .photo-box img{border-radius:10px;margin:0 auto .6rem;max-height:220px;}
+  .photo-actions{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;}
+  .btn{border:0;border-radius:11px;padding:.8rem 1.1rem;font-weight:800;font-size:.95rem;}
+  .btn-primary{background:var(--blue);color:#fff;}
+  .btn-ghost{background:#eef3f7;color:var(--ink);}
+  .btn-danger{background:#fff;color:#c0392b;border:1px solid #f0c9c4;}
+  .sheet-actions{display:flex;gap:.6rem;margin-top:.6rem;}
+  .sheet-actions .btn{flex:1;}
+  .detail-photo{width:100%;aspect-ratio:4/3;background:#e9eff4 center/cover no-repeat;border-radius:14px;
+    display:grid;place-items:center;color:#9fb2c1;margin-bottom:.9rem;}
+  .dl-row{display:flex;gap:.8rem;padding:.6rem 0;border-top:1px solid var(--line);}
+  .dl-row dt{width:74px;flex:0 0 auto;font-weight:800;color:var(--sub);font-size:.85rem;}
+  .dl-row dd{margin:0;line-height:1.6;}
+  .menu-list button{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);
+    padding:1rem .4rem;font-size:1rem;color:var(--ink);}
+  .hidden{display:none !important;}
+  .note{font-size:.78rem;color:var(--sub);background:#eef6fb;border:1px solid var(--line);border-radius:10px;padding:.7rem .8rem;margin-top:.8rem;line-height:1.6;}
+</style>
+</head>
+<body>
+
+<header class="app-head">
+  <div>
+    <div class="logo">現場ずかん</div>
+    <div class="sub">オールライト 工具・材料＆メモ</div>
+  </div>
+  <div class="spacer"></div>
+  <button class="icon-btn" id="btn-menu" aria-label="メニュー">⋯</button>
+</header>
+
+<main>
+  <!-- 工具・材料 -->
+  <section id="view-items">
+    <div class="searchbar">
+      <span class="mag">🔍</span>
+      <input id="q" type="search" inputmode="search" placeholder="工具・材料を検索（例：ヒルティ／VVF）" autocomplete="off" />
+      <button class="clr hidden" id="q-clear" aria-label="消す">×</button>
+    </div>
+    <div class="chips" id="chips">
+      <button class="chip on" data-f="all">すべて</button>
+      <button class="chip" data-f="tool">🧰 工具</button>
+      <button class="chip" data-f="material">📦 材料</button>
+    </div>
+    <div class="count" id="count"></div>
+    <div class="grid" id="grid"></div>
+    <div class="empty hidden" id="empty">見つかりませんでした。<br />「＋追加」で新しく登録できます。</div>
+  </section>
+
+  <!-- 個人メモ -->
+  <section id="view-memo" hidden>
+    <div class="memo-add">
+      <input id="memo-input" type="text" placeholder="メモを入力してエンター（例：3階の分電盤の鍵は事務所）" />
+      <button id="memo-add-btn">追加</button>
+    </div>
+    <div id="memo-list"></div>
+    <div class="empty hidden" id="memo-empty">まだメモがありません。<br />上の欄から自分用のメモを保存できます。</div>
+    <p class="note">個人メモは<strong>この端末（ブラウザ）だけ</strong>に保存されます。他の人には見えません。</p>
+  </section>
+</main>
+
+<button class="fab" id="fab-add">＋ 追加</button>
+
+<nav class="tabbar" id="tabbar">
+  <button data-tab="items" class="on"><span class="ic">🧰</span>工具・材料</button>
+  <button data-tab="memo"><span class="ic">📝</span>個人メモ</button>
+</nav>
+
+<!-- アイテム詳細/編集シート -->
+<div class="modal" id="modal-item">
+  <div class="sheet" id="item-sheet"></div>
+</div>
+
+<!-- メニューシート -->
+<div class="modal" id="modal-menu">
+  <div class="sheet">
+    <h2>メニュー</h2>
+    <div class="menu-list">
+      <button id="m-export">📤 リストとメモを書き出す（バックアップ／共有用JSON）</button>
+      <button id="m-import">📥 JSONを読み込む（他の人のリストを反映）</button>
+      <button id="m-reset">♻️ 初期の100＋100リストに戻す（自分の追加は消えます）</button>
+      <a href="/index.html" style="display:block;padding:1rem .4rem;text-decoration:none;color:var(--ink);">🏠 会社サイトへ戻る</a>
+    </div>
+    <p class="note">工具・材料リストは全社員で育てるものです。追加・写真を反映したら、書き出したJSONをLINE等で共有すれば、みんなの端末に取り込めます。<br />（将来的に、ログインなしで自動共有できる仕組みも追加できます。）</p>
+    <div class="sheet-actions"><button class="btn btn-ghost" data-close>閉じる</button></div>
+    <input type="file" id="import-file" accept="application/json" class="hidden" />
+  </div>
+</div>
+
+<script src="/assets/genba-items.js"></script>
+<script>
+(function(){
+  "use strict";
+  var LS = {
+    over: "genba_over_v1",     // id -> partial override {n,y,g,u}
+    custom: "genba_custom_v1", // [{id,n,y,g,u,cat}]
+    hidden: "genba_hidden_v1", // [id]
+    memos: "genba_memos_v1"    // [{id,t,d,ts}]
+  };
+  function load(k,def){ try{ var v=localStorage.getItem(k); return v?JSON.parse(v):def; }catch(e){ return def; } }
+  function save(k,v){ try{ localStorage.setItem(k,JSON.stringify(v)); }catch(e){ alert("保存に失敗しました（端末の空き容量をご確認ください）"); } }
+
+  /* ---------- IndexedDB（写真） ---------- */
+  var dbP = new Promise(function(res){
+    var r = indexedDB.open("genba_photos", 1);
+    r.onupgradeneeded = function(){ r.result.createObjectStore("photos"); };
+    r.onsuccess = function(){ res(r.result); };
+    r.onerror = function(){ res(null); };
+  });
+  function photoGet(id){ return dbP.then(function(db){ if(!db) return null; return new Promise(function(res){
+    var t=db.transaction("photos","readonly").objectStore("photos").get(id);
+    t.onsuccess=function(){res(t.result||null);}; t.onerror=function(){res(null);}; }); }); }
+  function photoSet(id,data){ return dbP.then(function(db){ if(!db) return; return new Promise(function(res){
+    var t=db.transaction("photos","readwrite").objectStore("photos").put(data,id);
+    t.onsuccess=function(){res();}; t.onerror=function(){res();}; }); }); }
+  function photoDel(id){ return dbP.then(function(db){ if(!db) return; db.transaction("photos","readwrite").objectStore("photos").delete(id); }); }
+  function photoAll(){ return dbP.then(function(db){ if(!db) return {}; return new Promise(function(res){
+    var out={}, cur=db.transaction("photos","readonly").objectStore("photos").openCursor();
+    cur.onsuccess=function(e){ var c=e.target.result; if(c){ out[c.key]=c.value; c.continue(); } else res(out); };
+    cur.onerror=function(){res(out);}; }); }); }
+
+  /* ---------- データ構築 ---------- */
+  function buildItems(){
+    var over = load(LS.over,{}), hidden = load(LS.hidden,[]), custom = load(LS.custom,[]);
+    var list = [];
+    (window.GENBA_SEED.tools||[]).forEach(function(it,i){ list.push(mk("t"+i,it,"tool",over,hidden)); });
+    (window.GENBA_SEED.materials||[]).forEach(function(it,i){ list.push(mk("m"+i,it,"material",over,hidden)); });
+    custom.forEach(function(it){ if(hidden.indexOf(it.id)<0) list.push({id:it.id,n:it.n,y:it.y||"",g:it.g||"",u:it.u||"",cat:it.cat||"tool",custom:true}); });
+    return list.filter(Boolean);
+  }
+  function mk(id,it,cat,over,hidden){
+    if(hidden.indexOf(id)>=0) return null;
+    var o = over[id]||{};
+    return { id:id, n:o.n!=null?o.n:it.n, y:o.y!=null?o.y:(it.y||""), g:o.g!=null?o.g:(it.g||""), u:o.u!=null?o.u:(it.u||""), cat:cat, custom:false };
+  }
+
+  var ALL = buildItems();
+  var PHOTOS = {};
+  var state = { tab:"items", filter:"all", q:"" };
+
+  /* ---------- 一覧描画 ---------- */
+  var grid=document.getElementById("grid"), countEl=document.getElementById("count"), emptyEl=document.getElementById("empty");
+  function norm(s){ return (s||"").toLowerCase(); }
+  function render(){
+    var q=norm(state.q), f=state.filter;
+    var rows = ALL.filter(function(it){
+      if(f!=="all" && it.cat!==f) return false;
+      if(!q) return true;
+      return norm(it.n).indexOf(q)>=0 || norm(it.y).indexOf(q)>=0 || norm(it.u).indexOf(q)>=0 || norm(it.g).indexOf(q)>=0;
+    });
+    countEl.textContent = rows.length + " 件" + (q?("（「"+state.q+"」で検索）"):"");
+    grid.innerHTML="";
+    if(!rows.length){ emptyEl.classList.remove("hidden"); return; }
+    emptyEl.classList.add("hidden");
+    var frag=document.createDocumentFragment();
+    rows.forEach(function(it){
+      var el=document.createElement("button"); el.className="item"; el.type="button";
+      var ph=PHOTOS[it.id];
+      el.innerHTML =
+        '<div class="thumb"'+(ph?(' style="background-image:url('+JSON.stringify(ph)+')"'):'')+'>'+(ph?'':'<span class="noimg">写真なし</span>')+'</div>'+
+        '<div class="body">'+
+          '<span class="badge '+(it.cat==="tool"?"tool":"mat")+'">'+(it.cat==="tool"?"工具":"材料")+'</span>'+
+          '<div class="nm">'+esc(it.n)+'</div>'+
+          (it.y?'<div class="yo">'+esc(it.y)+'</div>':'')+
+          (it.u?'<div class="us">'+esc(it.u)+'</div>':'')+
+        '</div>';
+      el.addEventListener("click",function(){ openDetail(it.id); });
+      frag.appendChild(el);
+    });
+    grid.appendChild(frag);
+  }
+  function esc(s){ return (s||"").replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];}); }
+
+  /* ---------- 検索・フィルタ ---------- */
+  var qEl=document.getElementById("q"), qClr=document.getElementById("q-clear");
+  qEl.addEventListener("input",function(){ state.q=qEl.value; qClr.classList.toggle("hidden",!qEl.value); render(); });
+  qClr.addEventListener("click",function(){ qEl.value=""; state.q=""; qClr.classList.add("hidden"); render(); qEl.focus(); });
+  document.getElementById("chips").addEventListener("click",function(e){
+    var b=e.target.closest(".chip"); if(!b) return;
+    state.filter=b.getAttribute("data-f");
+    [].forEach.call(this.children,function(c){ c.classList.toggle("on",c===b); });
+    render();
+  });
+
+  /* ---------- タブ ---------- */
+  var vItems=document.getElementById("view-items"), vMemo=document.getElementById("view-memo"), fab=document.getElementById("fab-add");
+  document.getElementById("tabbar").addEventListener("click",function(e){
+    var b=e.target.closest("button[data-tab]"); if(!b) return;
+    state.tab=b.getAttribute("data-tab");
+    [].forEach.call(this.children,function(c){ c.classList.toggle("on",c===b); });
+    var items = state.tab==="items";
+    vItems.hidden=!items; vMemo.hidden=items; fab.style.display=items?"flex":"none";
+    if(!items) renderMemos();
+    window.scrollTo(0,0);
+  });
+
+  /* ---------- 詳細/編集シート ---------- */
+  var modalItem=document.getElementById("modal-item"), itemSheet=document.getElementById("item-sheet");
+  function closeModals(){ modalItem.classList.remove("show"); document.getElementById("modal-menu").classList.remove("show"); }
+  modalItem.addEventListener("click",function(e){ if(e.target===modalItem) closeModals(); });
+  document.addEventListener("click",function(e){ if(e.target.hasAttribute&&e.target.hasAttribute("data-close")) closeModals(); });
+
+  function findItem(id){ for(var i=0;i<ALL.length;i++){ if(ALL[i].id===id) return ALL[i]; } return null; }
+
+  function openDetail(id){
+    var it=findItem(id); if(!it) return;
+    var ph=PHOTOS[id];
+    itemSheet.innerHTML =
+      '<div class="detail-photo"'+(ph?(' style="background-image:url('+JSON.stringify(ph)+')"'):'')+'>'+(ph?'':'写真なし')+'</div>'+
+      '<h2 style="margin-bottom:.2rem;">'+esc(it.n)+'</h2>'+
+      (it.y?'<div style="color:#94a6b4;font-size:.85rem;margin-bottom:.6rem;">'+esc(it.y)+'</div>':'')+
+      '<dl style="margin:.6rem 0 0;">'+
+        '<div class="dl-row"><dt>種別</dt><dd>'+(it.cat==="tool"?"工具":"材料")+'</dd></div>'+
+        (it.g?'<div class="dl-row"><dt>分類</dt><dd>'+esc(it.g)+'</dd></div>':'')+
+        (it.u?'<div class="dl-row"><dt>用途</dt><dd>'+esc(it.u)+'</dd></div>':'')+
+      '</dl>'+
+      '<div class="sheet-actions" style="margin-top:1.1rem;">'+
+        '<button class="btn btn-primary" id="d-photo">📷 写真を登録／変更</button>'+
+        '<button class="btn btn-ghost" id="d-edit">✏️ 内容を編集</button>'+
+      '</div>'+
+      '<div class="sheet-actions"><button class="btn btn-ghost" data-close>閉じる</button></div>'+
+      '<input type="file" id="d-photo-file" accept="image/*" capture="environment" class="hidden" />';
+    modalItem.classList.add("show");
+    var pf=document.getElementById("d-photo-file");
+    document.getElementById("d-photo").addEventListener("click",function(){ pf.click(); });
+    pf.addEventListener("change",function(){ if(pf.files&&pf.files[0]) handlePhoto(id,pf.files[0]); });
+    document.getElementById("d-edit").addEventListener("click",function(){ openEdit(id); });
+  }
+
+  function openEdit(id){
+    var it = id?findItem(id):{n:"",y:"",g:"",u:"",cat:"tool",custom:true};
+    var isNew = !id;
+    itemSheet.innerHTML =
+      '<h2>'+(isNew?"工具・材料を追加":"内容を編集")+'</h2>'+
+      '<div class="field"><label>名称 <span style="color:#c0392b">*</span></label><input id="f-n" value="'+esc(it.n)+'" placeholder="例：ハンマードリル（ヒルティ）"/></div>'+
+      '<div class="field"><label>よみ・別名（検索用）</label><input id="f-y" value="'+esc(it.y)+'" placeholder="例：ひるてぃ はんまーどりる"/></div>'+
+      '<div class="field"><label>種別</label><select id="f-cat"><option value="tool"'+(it.cat==="tool"?" selected":"")+'>工具</option><option value="material"'+(it.cat==="material"?" selected":"")+'>材料</option></select></div>'+
+      '<div class="field"><label>分類（グループ）</label><input id="f-g" value="'+esc(it.g)+'" placeholder="例：電動工具／電線・ケーブル"/></div>'+
+      '<div class="field"><label>用途・ひとことメモ</label><textarea id="f-u" placeholder="例：コンクリの穴あけ・はつりに使う">'+esc(it.u)+'</textarea></div>'+
+      '<div class="sheet-actions"><button class="btn btn-primary" id="f-save">保存する</button></div>'+
+      (id&&it.custom?'<div class="sheet-actions"><button class="btn btn-danger" id="f-del">この項目を削除</button></div>':'')+
+      (id&&!it.custom?'<div class="sheet-actions"><button class="btn btn-danger" id="f-hide">一覧から隠す</button></div>':'')+
+      '<div class="sheet-actions"><button class="btn btn-ghost" data-close>キャンセル</button></div>';
+    modalItem.classList.add("show");
+    document.getElementById("f-save").addEventListener("click",function(){
+      var n=document.getElementById("f-n").value.trim(); if(!n){ alert("名称を入力してください"); return; }
+      var data={ n:n, y:document.getElementById("f-y").value.trim(), g:document.getElementById("f-g").value.trim(),
+        u:document.getElementById("f-u").value.trim(), cat:document.getElementById("f-cat").value };
+      if(isNew){
+        var custom=load(LS.custom,[]); var nid="u"+Date.now();
+        custom.push({id:nid,n:data.n,y:data.y,g:data.g,u:data.u,cat:data.cat}); save(LS.custom,custom);
+      } else if(it.custom){
+        var c2=load(LS.custom,[]); c2=c2.map(function(x){ return x.id===id?{id:id,n:data.n,y:data.y,g:data.g,u:data.u,cat:data.cat}:x; }); save(LS.custom,c2);
+      } else {
+        var over=load(LS.over,{}); over[id]={n:data.n,y:data.y,g:data.g,u:data.u}; save(LS.over,over);
+      }
+      ALL=buildItems(); render(); closeModals();
+    });
+    var del=document.getElementById("f-del"); if(del) del.addEventListener("click",function(){
+      if(!confirm("この項目を削除しますか？")) return;
+      var c=load(LS.custom,[]).filter(function(x){return x.id!==id;}); save(LS.custom,c); photoDel(id); delete PHOTOS[id];
+      ALL=buildItems(); render(); closeModals();
+    });
+    var hide=document.getElementById("f-hide"); if(hide) hide.addEventListener("click",function(){
+      if(!confirm("この初期項目を一覧から隠しますか？（メニューの『初期に戻す』で復活できます）")) return;
+      var h=load(LS.hidden,[]); if(h.indexOf(id)<0) h.push(id); save(LS.hidden,h);
+      ALL=buildItems(); render(); closeModals();
+    });
+  }
+
+  /* ---------- 写真処理（リサイズしてIndexedDBへ） ---------- */
+  function handlePhoto(id,file){
+    var reader=new FileReader();
+    reader.onload=function(){
+      var img=new Image();
+      img.onload=function(){
+        var max=900, w=img.width, h=img.height;
+        if(w>h && w>max){ h=Math.round(h*max/w); w=max; } else if(h>=w && h>max){ w=Math.round(w*max/h); h=max; }
+        var c=document.createElement("canvas"); c.width=w; c.height=h;
+        c.getContext("2d").drawImage(img,0,0,w,h);
+        var data=c.toDataURL("image/jpeg",0.82);
+        photoSet(id,data).then(function(){ PHOTOS[id]=data; render(); openDetail(id); });
+      };
+      img.onerror=function(){ alert("画像を読み込めませんでした"); };
+      img.src=reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* ---------- FAB / 追加 ---------- */
+  fab.addEventListener("click",function(){ openEdit(null); });
+
+  /* ---------- 個人メモ ---------- */
+  var memoInput=document.getElementById("memo-input"), memoList=document.getElementById("memo-list"), memoEmpty=document.getElementById("memo-empty");
+  function renderMemos(){
+    var arr=load(LS.memos,[]); memoList.innerHTML="";
+    if(!arr.length){ memoEmpty.classList.remove("hidden"); return; }
+    memoEmpty.classList.add("hidden");
+    arr.slice().reverse().forEach(function(m){
+      var el=document.createElement("div"); el.className="memo";
+      el.innerHTML='<div class="mb">'+esc(m.t)+'</div><div class="mdate">'+new Date(m.ts).toLocaleString("ja-JP")+'</div>'+
+        '<div class="mact"><button data-edit="'+m.id+'">編集</button><button data-del="'+m.id+'">削除</button></div>';
+      memoList.appendChild(el);
+    });
+  }
+  function addMemo(){
+    var t=memoInput.value.trim(); if(!t) return;
+    var arr=load(LS.memos,[]); arr.push({id:"n"+Date.now(),t:t,ts:Date.now()}); save(LS.memos,arr);
+    memoInput.value=""; renderMemos();
+  }
+  document.getElementById("memo-add-btn").addEventListener("click",addMemo);
+  memoInput.addEventListener("keydown",function(e){ if(e.key==="Enter") addMemo(); });
+  memoList.addEventListener("click",function(e){
+    var d=e.target.getAttribute("data-del"), ed=e.target.getAttribute("data-edit");
+    var arr=load(LS.memos,[]);
+    if(d){ if(confirm("このメモを削除しますか？")){ save(LS.memos,arr.filter(function(x){return x.id!==d;})); renderMemos(); } }
+    else if(ed){ var m=arr.filter(function(x){return x.id===ed;})[0]; if(m){ var v=prompt("メモを編集",m.t); if(v!=null){ m.t=v.trim(); m.ts=Date.now(); save(LS.memos,arr); renderMemos(); } } }
+  });
+
+  /* ---------- メニュー：書き出し／読み込み／リセット ---------- */
+  var modalMenu=document.getElementById("modal-menu");
+  document.getElementById("btn-menu").addEventListener("click",function(){ modalMenu.classList.add("show"); });
+  modalMenu.addEventListener("click",function(e){ if(e.target===modalMenu) closeModals(); });
+  document.getElementById("m-export").addEventListener("click",function(){
+    photoAll().then(function(photos){
+      var payload={ v:1, over:load(LS.over,{}), custom:load(LS.custom,[]), hidden:load(LS.hidden,[]), memos:load(LS.memos,[]), photos:photos };
+      var blob=new Blob([JSON.stringify(payload)],{type:"application/json"});
+      var a=document.createElement("a"); a.href=URL.createObjectURL(blob);
+      a.download="genba-backup-"+new Date().toISOString().slice(0,10)+".json"; a.click();
+      setTimeout(function(){URL.revokeObjectURL(a.href);},1000);
+    });
+  });
+  var importFile=document.getElementById("import-file");
+  document.getElementById("m-import").addEventListener("click",function(){ importFile.click(); });
+  importFile.addEventListener("change",function(){
+    var f=importFile.files&&importFile.files[0]; if(!f) return;
+    var r=new FileReader();
+    r.onload=function(){
+      try{
+        var d=JSON.parse(r.result);
+        if(!confirm("読み込むと、現在の追加・編集・メモに上書き統合されます。よろしいですか？")) return;
+        if(d.over) save(LS.over, Object.assign(load(LS.over,{}), d.over));
+        if(d.custom){ var c=load(LS.custom,[]); var ids={}; c.forEach(function(x){ids[x.id]=1;}); d.custom.forEach(function(x){ if(!ids[x.id]) c.push(x); }); save(LS.custom,c); }
+        if(d.hidden){ var h=load(LS.hidden,[]); d.hidden.forEach(function(x){ if(h.indexOf(x)<0) h.push(x); }); save(LS.hidden,h); }
+        if(d.memos){ var m=load(LS.memos,[]); var mids={}; m.forEach(function(x){mids[x.id]=1;}); d.memos.forEach(function(x){ if(!mids[x.id]) m.push(x); }); save(LS.memos,m); }
+        var ps=d.photos||{}; var keys=Object.keys(ps); var done=0;
+        if(!keys.length){ afterImport(); } else keys.forEach(function(k){ photoSet(k,ps[k]).then(function(){ PHOTOS[k]=ps[k]; if(++done===keys.length) afterImport(); }); });
+        function afterImport(){ ALL=buildItems(); render(); renderMemos(); closeModals(); alert("読み込みました。"); }
+      }catch(e){ alert("JSONの読み込みに失敗しました。"); }
+      importFile.value="";
+    };
+    r.readAsText(f);
+  });
+  document.getElementById("m-reset").addEventListener("click",function(){
+    if(!confirm("初期の100＋100リストに戻します。あなたが追加・編集・非表示にした項目は消えます（写真・メモは残ります）。よろしいですか？")) return;
+    localStorage.removeItem(LS.over); localStorage.removeItem(LS.custom); localStorage.removeItem(LS.hidden);
+    ALL=buildItems(); render(); closeModals();
+  });
+
+  /* ---------- 初期化 ---------- */
+  render(); /* 写真の読み込みを待たずに即表示 */
+  photoAll().then(function(p){ PHOTOS=p||{}; render(); });
+})();
+</script>
+</body>
+</html>
