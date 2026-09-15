@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>私は、“AIエンジニア”と言ってもいいんじゃないか。工事会社が作った社内アプリの話｜代表の朝メモ｜オールライト</title>
+<meta name="description" content="株式会社オールライト代表・名里雄太の朝メモ。勤怠・残業申請・日報・有給・環境整備・道具検索まで、AIを使って自分で作った社内アプリの中身を解説。工事会社が作ったアプリを、いつか世の中へ。" />
+<meta name="keywords" content="オールライト,代表,ブログ,社内アプリ,AI,DX,勤怠管理,日報,環境整備,kintone,神戸,電気工事" />
+<link rel="canonical" href="https://alllight2018.com/blog/asa-memo-ai-engineer.html" />
+<meta name="theme-color" content="#15263d" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="株式会社オールライト" />
+<meta property="og:title" content="私は、“AIエンジニア”と言ってもいいんじゃないか。" />
+<meta property="og:description" content="勤怠・残業・日報・有給・環境整備・道具検索まで。AIを使って自分で作った社内アプリの話。工事会社が作った、が魅力。" />
+<meta property="og:url" content="https://alllight2018.com/blog/asa-memo-ai-engineer.html" />
+<meta property="og:image" content="/assets/photos/blog-harborland-asa.jpg" />
+<meta property="og:locale" content="ja_JP" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Serif+JP:wght@600;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../assets/site.css" />
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org","@type":"Article",
+  "headline":"私は、“AIエンジニア”と言ってもいいんじゃないか。工事会社が作った社内アプリの話",
+  "description":"代表・名里雄太の朝メモ。AIを使って自分で作った社内アプリの中身と、それを世の中へ届けたいという想い。",
+  "image":"/assets/photos/blog-harborland-asa.jpg",
+  "datePublished":"2026-09-15","dateModified":"2026-09-15",
+  "author":{"@type":"Person","name":"名里 雄太","jobTitle":"代表取締役"},
+  "publisher":{"@type":"Organization","name":"株式会社オールライト","logo":{"@type":"ImageObject","url":"https://alllight2018.com/assets/logo.svg"}},
+  "mainEntityOfPage":"https://alllight2018.com/blog/asa-memo-ai-engineer.html"
+}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+  {"@type":"ListItem","position":1,"name":"トップ","item":"https://alllight2018.com/index.html"},
+  {"@type":"ListItem","position":2,"name":"現場ブログ","item":"https://alllight2018.com/blog/index.html"},
+  {"@type":"ListItem","position":3,"name":"私は、AIエンジニアと言ってもいいんじゃないか","item":"https://alllight2018.com/blog/asa-memo-ai-engineer.html"}
+]}
+</script>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap nav-inner">
+    <a class="brand" href="../index.html" aria-label="株式会社オールライト トップへ">
+      <img class="brand-logo brand-logo-dark" src="/assets/logo-white.svg" alt="株式会社オールライト" width="150" height="23" /><img class="brand-logo brand-logo-light" src="/assets/logo.svg" alt="株式会社オールライト" width="150" height="23" />
+    </a>
+    <nav class="nav-links" aria-label="グローバルナビゲーション">
+      <a href="../index.html">トップ</a><a href="../about.html">会社案内</a><a href="../works.html">公共工事実績</a>
+      <a href="../recruit.html">採用情報</a><a href="index.html">現場ブログ</a>
+      <a href="https://www.youtube.com/@all-light" target="_blank" rel="noopener" class="nav-youtube">YouTube</a><a href="../contact.html" class="btn btn-amber" style="padding:.6rem 1.3rem">お問い合わせ</a>
+    </nav>
+    <button class="nav-toggle" aria-label="メニューを開く" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</header>
+<div class="menu-backdrop"></div>
+<nav id="mmenu" class="mobile-menu" aria-label="モバイルメニュー">
+  <button class="menu-close" aria-label="メニューを閉じる">&times;</button>
+  <a href="../index.html">トップ</a><a href="../about.html">会社案内</a><a href="../works.html">公共工事実績</a>
+  <a href="../recruit.html">採用情報</a><a href="index.html">現場ブログ</a>
+  <a href="https://www.youtube.com/@all-light" target="_blank" rel="noopener" class="nav-youtube">YouTube</a><a href="../contact.html" class="btn btn-amber">お問い合わせ</a>
+</nav>
+
+<section class="hero" style="min-height:42vh; display:flex; align-items:flex-end;">
+  <div class="hero-bg" style="background-image:url('/assets/photos/blog-harborland-asa.jpg'); background-position:center 40%;"></div>
+  <div class="hero-overlay"></div>
+  <div class="wrap" style="position:relative; padding-block:2.4rem;">
+    <p class="eyebrow" style="color:var(--amber-2);">代表の朝メモ</p>
+    <h1 class="serif" style="font-weight:900; font-size:clamp(1.6rem,4.6vw,2.4rem); color:#fff; margin-top:.4rem;">私は、“AIエンジニア”と<br />言ってもいいんじゃないか。</h1>
+    <p style="color:rgba(255,255,255,.82); margin-top:.5rem; font-size:.9rem;">2026年9月15日 ／ 代表取締役 名里 雄太</p>
+  </div>
+</section>
+
+<article class="section">
+  <div class="wrap" style="max-width:760px;">
+    <p style="display:inline-block; font-size:.78rem; font-weight:700; color:var(--amber); background:rgba(36,169,224,.1); border:1px solid rgba(36,169,224,.3); border-radius:999px; padding:.35rem .9rem; margin-bottom:1.4rem;">🎙 代表の音声メモ × AI編集でお届けしています</p>
+
+    <div class="prose">
+      <p>おはようございます。今日は朝の散歩から。涼しくなってきましたね。神戸のハーバーランド、ベンチに座って、ポートタワーを眺めながらこれを吹き込んでいます。気分がいいので、今日はちょっと深く考えていることを書いてみます。</p>
+
+      <p>最近ずっと頭にあるのが、「今のうちの会社のやり方って、これでいいんやろか？」ということ。結論から言うと、<strong>今のやり方は、今のやり方でいい</strong>。工事部があって、管理部があって、みんなそれぞれの持ち場でやってくれている。そこは変えなくていい。</p>
+
+      <p>そのうえで、もうひとつ思っていることがあります。<strong>私がこれだけAIを使えているのは、自分で勉強して、小さいことを一個ずつ「やってみて」を積み重ねてきたから</strong>だということ。そして、これは会社の中だけで終わらせるのは、もったいないんじゃないか、と。</p>
+
+      <h2>私が作った社内アプリの話</h2>
+      <p>ちょっと自慢みたいになるけど、うちの社内アプリを解説させてください。<strong>スマホで使えるアプリ</strong>にしました。もちろんパソコンでも見られます。中身はこんな感じです。</p>
+
+      <h3>① 勤怠管理</h3>
+      <p>昔は、紙のタイムカードでした。みんなが昔から使ってるやつ。でも、これが押し忘れが多くてね。注意しても、してくれへんかったり。「押し忘れやったら、この反省分を書きなさい」みたいなルールを作ったりして、いろいろやってました。でも若い社員も忘れるし、そのたびに「忘れてるでー」って言うのも、私も言うのが嫌でね。</p>
+      <p>それを解消してくれたのが、<strong>KING OF TIME</strong>っていう勤怠アプリ。出勤・退勤をしたら一覧で表示も出るし、いいなと思ってた。「3回退勤忘れたら反省文を書きましょう」っていうルールだけ残して運用してました。<strong>で、それと同じものを、アプリで自分で作りました。</strong>出勤・退勤を打つ。それだけの、でも全く同じようなものを。</p>
+
+      <h3>② 残業申請</h3>
+      <p>その中に<strong>残業申請</strong>を入れました。残業するときは上司に「残業します」と出して、上司が承認したら残業できる。この決済が<strong>アプリ内で完結する</strong>ようにしたんです。</p>
+
+      <h3>③ 日報</h3>
+      <p>日報は昔、手書きでした。会社に帰ってきたら5分くらいかけて書いて、「明日気をつけること」を書いて、週末には社長の——私の机に提出。「今週の気づき」が書いてあって、私もそれに返信を書いて、っていうのをやってました。<strong>それを、アプリ内で音声入力できるようにした。</strong>だから今は、誰が何をやっているのかが、みんなで見られる状態になっています。</p>
+
+      <h3>④ メンバー情報</h3>
+      <p>社員の電話番号やメアド。それと、<strong>適性診断</strong>。MBTIとか、動物占いとか、マルコポーロとか。ああいう適性を数字で持っておくと、説明するときにわかりやすい。<strong>チームとして一丸で目標達成するのに向いた編成</strong>を考えるのにも使えるし、対人関係にも使える。そういうものにしました。</p>
+
+      <h3>⑤ 個人メモ</h3>
+      <p>仕事してて気づいたことを、<strong>各自がどんどん残していける</strong>メモ機能。人として、自分の気づきを自分で貯めていける。</p>
+
+      <h3>⑥ 広場（タイムライン）</h3>
+      <p>ランチ会とか社内イベントで「こんなことやったよ」を投稿できる<strong>広場</strong>。その投稿に<strong>いいねができて、コメントもできる</strong>。ほんとにSNSっぽくしています。</p>
+
+      <h3>⑦ 有給申請</h3>
+      <p><strong>有給申請</strong>もアプリで。<strong>有給の残りも見られる</strong>ようにしています。</p>
+
+      <h3>⑧ 環境整備（掃除）のハンコ</h3>
+      <p>オールライトには、<strong>環境整備</strong>——決められた場所を、決められた時間に掃除する時間があります。それを会社が「買い取る」ような形にしていて、ハンコが溜まっていくのが目で見えるようにしてました。「朝礼、出ました」っていうボタンもあって、それをどれだけやったかが<strong>評価にもつながる</strong>ようにしています。</p>
+      <p>今まではね、<strong>ハンコ帳</strong>っていう、はがきみたいな紙に、総務部長の野崎さんにボンボンとハンコを押してもらう流れでした。事務員さんは環境整備のあとすぐ押せるんだけど、<strong>工事部や現場の人たちは、現場で環境整備をやったあと、会社に帰ってきて、退勤のときに野崎さんの机まで持っていく。</strong>それを忘れちゃうこともあるし、そのハンコ帳自体をなくしちゃう社員もいた。「せっかく貯めてたのに…」って。そういうのも、アプリに取り込めました。</p>
+
+      <blockquote>これまで会社のルールとしてコツコツ作ってきたものを、けっこうアプリに取り込めている感じです。紙でやってた“めんどくさい”を、ひとつずつ消していく。</blockquote>
+
+      <h2>いま作っているのは「道具の検索」</h2>
+      <p>新しく、社員から「こういうのやってほしい」と言われて取り組んでいるのが、<strong>道具や材料の名前・呼び名を一覧にして、写真が出てくる機能</strong>です。「この道具は何ですか」が見られる。逆に検索もできる。</p>
+      <p>たとえば先輩に「インパクト、とってきて」と言われたとき。新入社員は「インパクトって何やったっけ？」となる。<strong>そこで検索したら、“オールライトのインパクト”の写真が出てくる。</strong>さらに「インパクトの①②③、12ボルト・14ボルト、どれですか？」まで表示されて、自分で選んで取りに行ける。</p>
+      <p>これのいいところは、<strong>指示する先輩社員が、わざわざ道具置き場まで一緒についていって説明しなくてよくなる</strong>こと。工事部長が新入社員に「ヒルティとってきて」と言っても、何も聞かずに取りに行ける。そういう会社にしたいんです。</p>
+
+      <h2>これ、kintoneでも作れると思う。でも私はAIで作った</h2>
+      <p>正直、こういうのは<strong>kintone（キントーン）</strong>みたいなツールでも作れるものだと思います。私はkintoneを使ったことはないけど。でも私は、<strong>AIを使ってアプリを作れた。</strong></p>
+      <p>休みの日は、息抜きで画像生成をしたり、動画を作ったりもしています。この前は、居酒屋で<strong>音ゲー</strong>を作りました。リズム天国がスイッチで出るっていうのを見て——うちの家族、リズム天国が好きなんですよ。「じゃあちょっとアプリで作ってみるわ」って、簡単に4種類くらいのゲームができた。いや、“簡単に”というか、<strong>もう私の中では簡単になってる</strong>んですよね。</p>
+      <p>これって、だんだん<strong>指示する上手さが上がってきてる</strong>んだと思います。国語力、みたいなものかな。「誰が・どのように・目的は何で・ゴールは何か」——ここをちゃんと説明しないと、AIは動いてくれない。逆に言うと、そこさえ言葉にできれば、形になる。</p>
+
+      <h2>だから、思うんです</h2>
+      <p>私も、<strong>“AIエンジニア”と言ってもいいんじゃないか</strong>、と思えてきました。資格なんて別にないですけどね。でも、作れてるんだから、それでいいやん、と。</p>
+      <p>そして、<strong>これを世の中に販売していくのも、これからのオールライトを支える柱になっていくんじゃないか</strong>。工事会社が、現場の“めんどくさい”を知り尽くしたうえで作ったアプリ。<strong>「工事会社が作った」というところが、いちばんの魅力</strong>かなと思っています。</p>
+      <p>まだ構想段階の話も混じってますが、今日はこんなことを、朝のベンチで考えていました。今日も一日、安全第一でいきましょう。</p>
+    </div>
+
+    <div style="margin-top:2.4rem; padding:1.6rem; background:linear-gradient(120deg,var(--navy),var(--navy-2)); color:#fff; border-radius:14px;">
+      <h2 class="serif" style="font-weight:700; font-size:1.2rem;">“現場を知る会社”のDX・電気設備工事は、オールライトへ</h2>
+      <p style="color:rgba(255,255,255,.8); margin:.5rem 0 1rem; font-size:.92rem;">公共工事のご相談、協力会社の新規開拓、採用のご相談を承ります。一緒に働く仲間も募集中です。</p>
+      <a href="../contact.html" class="btn btn-amber">お問い合わせはこちら</a>
+      <a href="../recruit.html" class="btn btn-ghost" style="color:#fff; border:2px solid rgba(255,255,255,.5); margin-left:.6rem;">採用情報を見る</a>
+    </div>
+
+    <div style="margin-top:2rem;">
+      <h2 class="serif" style="font-weight:700; font-size:1.15rem; margin-bottom:1rem;">関連ページ</h2>
+      <ul style="list-style:none; display:grid; gap:.6rem;">
+        <li><a class="link-arrow" href="yugata-memo-zenin-app.html">全社員で育てる、社内アプリの話</a></li>
+        <li><a class="link-arrow" href="asa-memo-ai-copipe.html">AIは「わがまま言ったもん勝ち」。</a></li>
+        <li><a class="link-arrow" href="../recruit.html">オールライトの採用情報を見る</a></li>
+      </ul>
+    </div>
+  </div>
+</article>
+
+<footer class="site-footer">
+  <div class="wrap" style="padding-block:3rem; text-align:center; font-size:.82rem;">
+    <div class="brand" style="color:#fff; justify-content:center; margin-bottom:1rem;"><img class="brand-logo brand-logo-dark" src="/assets/logo-white.svg" alt="株式会社オールライト" width="150" height="23" /><img class="brand-logo brand-logo-light" src="/assets/logo.svg" alt="株式会社オールライト" width="150" height="23" /></div>
+    <p>&copy; <span data-year>2026</span> ALLLIGHT CO., LTD. All rights reserved.</p>
+  </div>
+</footer>
+<script src="../assets/site.js"></script>
+</body>
+</html>
