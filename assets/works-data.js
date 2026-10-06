@@ -44,6 +44,9 @@ window.ALLLIGHT_MAP_DATA = [
   // ▼ 埼玉県（新規受注）
   { pref:"埼玉県", name:"川口・大宮 公共職業訓練所 照明器具改修工事", client:"官公庁（公共職業訓練施設）", type:"工事", status:"受注（新規）", photo:"/assets/photos/noimage-shomei.svg", desc:"埼玉県の公共職業訓練施設（川口・大宮）の照明器具をLED改修。関東エリアの公共案件を新規受注しました。" },
 
+  // ▼ 千葉県（防衛省）
+  { pref:"千葉県", name:"木更津駐屯地 吾妻宿舎 階段照明LED化工事", client:"陸上自衛隊（防衛省）", type:"工事", status:"施工実績", photo:"/assets/photos/noimage-shomei.svg", desc:"陸上自衛隊 木更津駐屯地（千葉県）の宿舎・階段照明をLED化。関東の防衛省施設でも施工。全国の防衛省案件に対応します。" },
+
   // ▼ 神奈川県
   { pref:"神奈川県", name:"木月住宅ほか 共用部照明器具改修工事", client:"関東財務局", type:"工事", status:"受注・施工中", photo:"/assets/photos/noimage-shomei.svg" },
   { pref:"神奈川県", name:"武山駐屯地 倉庫撤去役務", client:"陸上自衛隊（防衛省）", type:"役務", status:"受注・施工中", photo:"/assets/photos/noimage-general.svg", desc:"陸上自衛隊 武山駐屯地（神奈川県）の倉庫撤去役務。防衛省施設にも対応しています。" },
@@ -69,5 +72,5 @@ window.ALLLIGHT_STATS = {
   keishin: 859,          // 経営事項審査 総合評定値（P点）
   bids: 332,             // 年間入札本数（2025年）
   wins: 26,              // 年間落札件数（2025年）
-  prefectures: 11        // 施工実績エリア（都道府県数）
+  prefectures: 12        // 施工実績エリア（都道府県数）
 };
