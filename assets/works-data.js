@@ -57,6 +57,9 @@ window.ALLLIGHT_MAP_DATA = [
   // ▼ 三重県
   { pref:"三重県", name:"上野税務署 照明改修工事", client:"名古屋国税局", type:"工事", status:"受注・施工中", photo:"/assets/photos/noimage-shomei.svg" },
 
+  // ▼ 愛知県（名古屋）※詳細確認中
+  { pref:"愛知県", name:"名古屋市内 電気設備工事", client:"官公庁", type:"工事", status:"施工実績", photo:"/assets/photos/noimage-general.svg", desc:"愛知県・名古屋市内でも電気設備工事を施工。中部エリアの公共案件にも対応します。" },
+
   // ▼ 徳島県（新規受注）
   { pref:"徳島県", name:"国立大学 電気設備工事（徳島大学）", client:"国立大学法人 徳島大学", type:"工事", status:"受注（新規）", photo:"/assets/photos/noimage-general.svg", desc:"落札・受注。四国エリアの国立大学案件。全国の国立大学・省庁案件に対応します。" },
 
@@ -72,5 +75,5 @@ window.ALLLIGHT_STATS = {
   keishin: 859,          // 経営事項審査 総合評定値（P点）
   bids: 332,             // 年間入札本数（2025年）
   wins: 26,              // 年間落札件数（2025年）
-  prefectures: 12        // 施工実績エリア（都道府県数）
+  prefectures: 13        // 施工実績エリア（都道府県数）
 };
