@@ -1,8 +1,9 @@
 /* ============================================================
-   全国実績マップ（都道府県の星マーク → クリックで案件詳細＆写真）
+   全国実績マップ（都道府県タイルを日本の形に配置し、
+   施工実績のある県を色塗り → クリックで案件詳細＆写真）
    - ページ側で window.ALLLIGHT_MAP_DATA に案件配列を渡す
-   - 47都道府県を薄い点で配置して日本の形（星座）を作り、
-     実績のある県を金色の星で強調・クリック可能にする
+   - 47都道府県をおおよその地理配置でタイル表示。
+     実績のある県を金色タイルで強調・クリック可能にする。
    ============================================================ */
 (function () {
   // 都道府県の相対座標（x:西→東, y:北→南／おおよその地理配置）
@@ -21,22 +22,29 @@
     "宮崎県": [36, 65], "鹿児島県": [32, 66], "沖縄県": [16, 84]
   };
 
+  // 日本全体がはみ出さず収まるよう、座標の範囲を %[PAD, 100-PAD] に正規化
+  var xs = [], ys = [];
+  Object.keys(PREF).forEach(function (n) { xs.push(PREF[n][0]); ys.push(PREF[n][1]); });
+  var MINX = Math.min.apply(null, xs), MAXX = Math.max.apply(null, xs);
+  var MINY = Math.min.apply(null, ys), MAXY = Math.max.apply(null, ys);
+  var PAD = 6;
+  function proj(c) {
+    return [
+      PAD + (c[0] - MINX) / (MAXX - MINX) * (100 - 2 * PAD),
+      PAD + (c[1] - MINY) / (MAXY - MINY) * (100 - 2 * PAD)
+    ];
+  }
+
   function el(tag, cls, html) {
     var e = document.createElement(tag);
     if (cls) e.className = cls;
     if (html != null) e.innerHTML = html;
     return e;
   }
-
+  function shortName(name) { return name.replace(/[都道府県]$/, ""); }
   function catBadge(t) {
     var cls = t === "役務" ? "jm-badge jm-badge-eki" : "jm-badge jm-badge-koji";
     return '<span class="' + cls + '">' + (t || "工事") + "</span>";
-  }
-
-  // 実績エリア（本州中心）を大きく見せるためのズーム投影
-  var ZOOM = 1.52, CX = 54, CY = 48;
-  function proj(c) {
-    return [CX + (c[0] - CX) * ZOOM, CY + (c[1] - CY) * ZOOM];
   }
 
   function render(root, data) {
@@ -47,36 +55,38 @@
       (byPref[p.pref] = byPref[p.pref] || []).push(p);
     });
 
-    var map = el("div", "jm-map");
-    // 全県の薄い点（日本の形）
+    var map = el("div", "jm-map jm-map-tiles");
+
+    // 全47都道府県のタイル（実績なしは薄く、日本の形をつくる）
     Object.keys(PREF).forEach(function (name) {
-      var c = PREF[name];
-      var dot = el("span", "jm-dot");
-      var dc = proj(c);
-      dot.style.left = dc[0] + "%";
-      dot.style.top = dc[1] + "%";
-      if (byPref[name]) dot.classList.add("jm-dot-on");
-      map.appendChild(dot);
+      var p = proj(PREF[name]);
+      var on = !!byPref[name];
+      var node;
+      if (on) {
+        node = el("button", "jm-tile jm-tile-on");
+        node.type = "button";
+        node.dataset.pref = name;
+        node.setAttribute("aria-label", name + "の施工実績を見る（" + byPref[name].length + "件）");
+        node.innerHTML = '<span class="jm-tile-name">' + shortName(name) + "</span>" +
+          (byPref[name].length > 1 ? '<span class="jm-tile-count">' + byPref[name].length + "</span>" : "");
+        node.addEventListener("click", function () { select(name); });
+      } else {
+        node = el("span", "jm-tile jm-tile-off");
+        node.setAttribute("aria-hidden", "true");
+      }
+      node.style.left = p[0] + "%";
+      node.style.top = p[1] + "%";
+      map.appendChild(node);
     });
+
+    var legend = el("div", "jm-legend",
+      '<span class="jm-legend-item"><i class="jm-legend-on"></i>施工実績あり（タップで詳細）</span>' +
+      '<span class="jm-legend-item"><i class="jm-legend-off"></i>その他の都道府県</span>');
+
     // 実績のある県（件数の多い順）
     var worked = Object.keys(byPref).sort(function (a, b) { return byPref[b].length - byPref[a].length; });
 
-    // 実績県の星
-    worked.forEach(function (name) {
-      var c = PREF[name];
-      var star = el("button", "jm-star");
-      star.type = "button";
-      star.dataset.pref = name;
-      var sc = proj(c);
-      star.style.left = sc[0] + "%";
-      star.style.top = sc[1] + "%";
-      star.setAttribute("aria-label", name + "の実績を見る");
-      star.innerHTML = '<span class="jm-star-mark">★</span><span class="jm-star-label">' + name.replace(/[都道府県]$/, "") + "</span>";
-      star.addEventListener("click", function () { select(name); });
-      map.appendChild(star);
-    });
-
-    // 都道府県ボタン（星が重なってもタップで確実に選べる分かりやすいUI）
+    // 都道府県ボタン（タイルが小さくても確実に選べる一覧）
     var prefs = el("div", "jm-prefs");
     worked.forEach(function (name) {
       var btn = el("button", "jm-pref");
@@ -88,10 +98,10 @@
     });
 
     var panel = el("div", "jm-panel");
-    panel.innerHTML = '<div class="jm-panel-empty">上のボタン、または地図の <span class="jm-star-mark">★</span> をタップすると、その地域の施工実績が表示されます。</div>';
+    panel.innerHTML = '<div class="jm-panel-empty">上のボタン、または地図の<b style="color:var(--amber);">色のついた都道府県</b>をタップすると、その地域の施工実績が表示されます。</div>';
 
     function select(name) {
-      map.querySelectorAll(".jm-star").forEach(function (s) { s.classList.toggle("is-active", s.dataset.pref === name); });
+      map.querySelectorAll(".jm-tile-on").forEach(function (s) { s.classList.toggle("is-active", s.dataset.pref === name); });
       prefs.querySelectorAll(".jm-pref").forEach(function (b) { b.classList.toggle("is-active", b.dataset.pref === name); });
       showDetail(name, byPref[name]);
     }
@@ -122,7 +132,10 @@
     root.innerHTML = "";
     root.appendChild(prefs);
     var grid = el("div", "jm-grid");
-    grid.appendChild(map);
+    var left = el("div", "jm-mapcol");
+    left.appendChild(map);
+    left.appendChild(legend);
+    grid.appendChild(left);
     grid.appendChild(panel);
     root.appendChild(grid);
 

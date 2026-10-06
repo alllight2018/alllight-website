@@ -41,6 +41,9 @@ window.ALLLIGHT_MAP_DATA = [
   // ▼ 長野県（陸上自衛隊）
   { pref:"長野県", name:"松本駐屯地 電源改修工事", client:"陸上自衛隊（防衛省）", type:"工事", status:"施工実績", amount:"約86万円", photo:"/assets/photos/work-matsumoto-nigo.jpg", desc:"信州・松本の陸上自衛隊松本駐屯地。分電盤の材料検査から施工まで。全国の防衛省案件に対応。" },
 
+  // ▼ 埼玉県（新規受注）
+  { pref:"埼玉県", name:"川口・大宮 公共職業訓練所 照明器具改修工事", client:"官公庁（公共職業訓練施設）", type:"工事", status:"受注（新規）", photo:"/assets/photos/noimage-shomei.svg", desc:"埼玉県の公共職業訓練施設（川口・大宮）の照明器具をLED改修。関東エリアの公共案件を新規受注しました。" },
+
   // ▼ 神奈川県
   { pref:"神奈川県", name:"木月住宅ほか 共用部照明器具改修工事", client:"関東財務局", type:"工事", status:"受注・施工中", photo:"/assets/photos/noimage-shomei.svg" },
   { pref:"神奈川県", name:"武山駐屯地 倉庫撤去役務", client:"陸上自衛隊（防衛省）", type:"役務", status:"受注・施工中", photo:"/assets/photos/noimage-general.svg", desc:"陸上自衛隊 武山駐屯地（神奈川県）の倉庫撤去役務。防衛省施設にも対応しています。" },
@@ -55,7 +58,10 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"徳島県", name:"国立大学 電気設備工事（徳島大学）", client:"国立大学法人 徳島大学", type:"工事", status:"受注（新規）", photo:"/assets/photos/noimage-general.svg", desc:"落札・受注。四国エリアの国立大学案件。全国の国立大学・省庁案件に対応します。" },
 
   // ▼ 山口県（中国地方）
-  { pref:"山口県", name:"移動式泡消火設備 保守点検業務", client:"防衛省（自衛隊）", type:"役務", status:"施工実績", photo:"/assets/photos/work-yamaguchi-shobo.jpg", desc:"中国地方・山口県の自衛隊施設で移動式泡消火設備を保守点検。防災設備の維持管理まで全国対応。" }
+  { pref:"山口県", name:"移動式泡消火設備 保守点検業務", client:"防衛省（自衛隊）", type:"役務", status:"施工実績", photo:"/assets/photos/work-yamaguchi-shobo.jpg", desc:"中国地方・山口県の自衛隊施設で移動式泡消火設備を保守点検。防災設備の維持管理まで全国対応。" },
+
+  // ▼ 長崎県（九州・新規受注）
+  { pref:"長崎県", name:"防衛省施設 電気設備工事", client:"防衛省（九州防衛局）", type:"工事", status:"受注（新規）", photo:"/assets/photos/noimage-general.svg", desc:"九州・長崎県の防衛省（九州防衛局）案件を新規受注。北海道から九州まで、全国の防衛省施設に対応します。" }
 ];
 
 /* 全国実績サマリー（2025年 年間実績・経審など） */
@@ -63,5 +69,5 @@ window.ALLLIGHT_STATS = {
   keishin: 859,          // 経営事項審査 総合評定値（P点）
   bids: 332,             // 年間入札本数（2025年）
   wins: 26,              // 年間落札件数（2025年）
-  prefectures: 9         // 施工実績エリア（都道府県数）
+  prefectures: 11        // 施工実績エリア（都道府県数）
 };
