@@ -57,8 +57,8 @@ window.ALLLIGHT_MAP_DATA = [
   // ▼ 三重県
   { pref:"三重県", name:"上野税務署 照明改修工事", client:"名古屋国税局", type:"工事", status:"受注・施工中", photo:"/assets/photos/noimage-shomei.svg" },
 
-  // ▼ 愛知県（名古屋）※詳細確認中
-  { pref:"愛知県", name:"名古屋市内 電気設備工事", client:"官公庁", type:"工事", status:"施工実績", photo:"/assets/photos/noimage-general.svg", desc:"愛知県・名古屋市内でも電気設備工事を施工。中部エリアの公共案件にも対応します。" },
+  // ▼ 愛知県（防衛省）
+  { pref:"愛知県", name:"春日井駐屯地 駐屯地内 電源改修工事", client:"陸上自衛隊（防衛省）", type:"工事", status:"施工実績", photo:"/assets/photos/noimage-general.svg", desc:"愛知県・陸上自衛隊 春日井駐屯地の駐屯地内 電源改修工事。中部エリアの防衛省施設にも対応します。" },
 
   // ▼ 徳島県（新規受注）
   { pref:"徳島県", name:"国立大学 電気設備工事（徳島大学）", client:"国立大学法人 徳島大学", type:"工事", status:"受注（新規）", photo:"/assets/photos/noimage-general.svg", desc:"落札・受注。四国エリアの国立大学案件。全国の国立大学・省庁案件に対応します。" },
