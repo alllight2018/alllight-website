@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>採用サイト（新デザイン案）｜株式会社オールライト</title>
+<meta name="description" content="株式会社オールライトの中途・経験者採用サイト。電気工事の経験を活かして施工管理へ。公共工事の電気設備工事で、まちをつくり、まちを守る。完全週休2日・年間休日122日・資格取得支援。未経験も歓迎。神戸から全国へ。" />
+<meta name="robots" content="noindex,follow" />
+<meta name="theme-color" content="#10141b" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@500;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Archivo:ital,wght@1,800;1,900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/site.css" />
+<style>
+  .rc{
+    --ink:#141b24; --sub:#53616f; --line:#dfe6ee; --paper:#ffffff; --paper-2:#eef3f8;
+    --dark:#10141b; --dark-2:#161d27; --azure:#1f9fd6; --azure-2:#56c3ef; --amber:#e8a013;
+    --disp:"Archivo","Arial Narrow",sans-serif; /* 斜体の特大英字 */
+    --head:"Zen Kaku Gothic New","Noto Sans JP",sans-serif;
+    --body:"Noto Sans JP",system-ui,sans-serif;
+    font-family:var(--body); color:var(--ink); background:var(--paper);
+  }
+  .rc *{box-sizing:border-box;}
+  .rc img{max-width:100%; display:block;}
+  .rc .wrap{max-width:1080px; margin:0 auto; padding-inline:clamp(1.1rem,4vw,2.4rem);}
+  .rc section{position:relative; overflow:hidden;}
+  .rc .pad{padding-block:clamp(3.2rem,8vw,6rem);}
+  .rc .dark{background:var(--dark); color:#fff;}
+  .rc .dark .sub{color:rgba(255,255,255,.72);}
+  .rc .sub{color:var(--sub);}
+
+  /* ===== 固定ヘッダー（ENTRY丸ボタン常時表示） ===== */
+  .rc-header{position:fixed; top:0; left:0; right:0; z-index:60; display:flex; align-items:center; justify-content:space-between;
+    padding:.7rem clamp(1rem,4vw,2rem); padding-top:calc(.7rem + env(safe-area-inset-top,0px));
+    background:rgba(255,255,255,.82); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
+  .rc-header .brand{display:flex; flex-direction:column; line-height:1; text-decoration:none;}
+  .rc-header .brand b{font-family:var(--head); font-weight:900; font-size:1.05rem; letter-spacing:.06em; color:var(--ink);}
+  .rc-header .brand span{font-size:.6rem; letter-spacing:.2em; color:var(--sub); margin-top:.25rem;}
+  .rc-nav{display:flex; align-items:center; gap:.7rem;}
+  .rc-entry{display:inline-flex; align-items:center; gap:.5rem; background:var(--azure); color:#fff; font-weight:900;
+    letter-spacing:.14em; font-size:.92rem; padding:.72rem 1.5rem; border-radius:999px; text-decoration:none;
+    box-shadow:0 8px 20px -8px rgba(31,159,214,.8); transition:transform .14s ease, background .14s ease;}
+  .rc-entry:hover{transform:translateY(-2px); background:#1b8ec0;}
+  .rc-burger{width:46px; height:46px; border-radius:50%; background:var(--dark); border:0; cursor:pointer; display:grid; place-items:center; gap:4px; padding:0;}
+  .rc-burger span{display:block; width:18px; height:2px; background:#fff; border-radius:2px;}
+  @media (max-width:560px){ .rc-header .brand span{display:none;} .rc-entry{padding:.62rem 1.1rem; font-size:.82rem;} }
+
+  /* ===== 斜めの特大英字見出し ===== */
+  .rc-head{position:relative; margin-bottom:clamp(1.6rem,4vw,2.6rem); padding-top:1.4rem;}
+  .rc-head::before{content:""; position:absolute; left:-10%; right:-10%; top:0; height:1px;
+    background:currentColor; opacity:.18; transform:rotate(-3deg);}
+  .rc-head .lbl{display:block; font-family:var(--head); font-weight:800; font-size:.8rem; letter-spacing:.2em; color:var(--azure); text-align:right;}
+  .rc-head .big{font-family:var(--disp); font-style:italic; font-weight:900; font-size:clamp(2.1rem,10vw,5rem);
+    line-height:.92; letter-spacing:.01em; transform:rotate(-3deg); transform-origin:right; text-align:right; text-wrap:balance;}
+  .rc .dark .rc-head .lbl{color:var(--azure-2);}
+  .rc-head.left .lbl, .rc-head.left .big{text-align:left; transform-origin:left;}
+  .rc-head.left::before{transform:rotate(3deg);}
+
+  /* ===== ヒーロー ===== */
+  .rc-hero{min-height:88vh; display:flex; align-items:flex-end; color:#fff; background:#0b0f15;}
+  .rc-hero .bg{position:absolute; inset:0; background:url('/assets/photos/team-genba.jpg') center/cover no-repeat;}
+  .rc-hero .bg::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(10,14,20,.55),rgba(10,14,20,.78));}
+  .rc-hero .ghost{position:absolute; left:0; right:0; top:14%; font-family:var(--disp); font-style:italic; font-weight:900;
+    font-size:clamp(4rem,22vw,15rem); line-height:.8; color:transparent; -webkit-text-stroke:1.5px rgba(255,255,255,.22); text-stroke:1.5px rgba(255,255,255,.22);
+    white-space:nowrap; text-align:center; pointer-events:none; letter-spacing:-.02em;}
+  .rc-hero .inner{position:relative; z-index:2; padding-bottom:clamp(2.6rem,7vw,5rem); padding-top:7rem;}
+  .rc-hero .eyebrow{font-family:var(--head); font-weight:800; letter-spacing:.2em; font-size:.82rem; color:var(--azure-2);}
+  .rc-hero h1{font-family:var(--head); font-weight:900; font-size:clamp(2.1rem,7vw,4.2rem); line-height:1.25; margin:.7rem 0 0; text-wrap:balance;}
+  .rc-hero h1 em{font-style:normal; color:var(--azure-2);}
+  .rc-hero .lead{margin-top:1.1rem; max-width:34em; color:rgba(255,255,255,.86); font-size:clamp(.95rem,2.4vw,1.1rem); line-height:1.9;}
+  .rc-hero .cta{display:flex; gap:.8rem; flex-wrap:wrap; margin-top:1.8rem;}
+  .rc-btn{display:inline-flex; align-items:center; gap:.5rem; font-weight:900; letter-spacing:.08em; text-decoration:none; border-radius:999px; padding:.95rem 1.8rem; transition:transform .14s ease;}
+  .rc-btn:hover{transform:translateY(-2px);}
+  .rc-btn-azure{background:var(--azure); color:#fff; box-shadow:0 10px 26px -10px rgba(31,159,214,.9);}
+  .rc-btn-ghost{border:2px solid rgba(255,255,255,.55); color:#fff;}
+  .rc-btn-dark{background:var(--ink); color:#fff;}
+  .rc-scroll{position:absolute; left:50%; bottom:1rem; transform:translateX(-50%); z-index:2; color:rgba(255,255,255,.7); font-size:.68rem; letter-spacing:.2em; text-align:center;}
+  .rc-scroll i{display:block; width:1px; height:34px; background:rgba(255,255,255,.6); margin:.4rem auto 0; animation:rcdrop 1.8s ease-in-out infinite;}
+  @keyframes rcdrop{0%,100%{transform:scaleY(.4);opacity:.4;transform-origin:top;}50%{transform:scaleY(1);opacity:1;transform-origin:top;}}
+
+  /* ===== MESSAGE ===== */
+  .rc-msg{display:grid; grid-template-columns:1.1fr .9fr; gap:clamp(1.4rem,4vw,3rem); align-items:center;}
+  .rc-msg .photo{border-radius:16px; overflow:hidden; aspect-ratio:4/5; background:var(--paper-2);}
+  .rc-msg .photo img{width:100%; height:100%; object-fit:cover;}
+  .rc-msg h3{font-family:var(--head); font-weight:900; font-size:clamp(1.3rem,3.6vw,2rem); line-height:1.5; margin:0 0 1rem;}
+  .rc-msg p{line-height:2; margin:.6rem 0; font-size:.98rem;}
+  .rc-msg .sign{margin-top:1.1rem; font-size:.9rem; color:var(--sub);}
+  .rc-msg .sign b{font-size:1.1rem; color:var(--ink);}
+  @media (max-width:760px){ .rc-msg{grid-template-columns:1fr;} .rc-msg .photo{max-width:320px;} }
+
+  /* ===== MISSION 3本柱 ===== */
+  .rc-pillars{display:grid; grid-template-columns:repeat(3,1fr); gap:1.1rem; margin-top:.5rem;}
+  .rc-pillar{background:var(--paper); border:1px solid var(--line); border-top:4px solid var(--azure); border-radius:14px; padding:1.5rem 1.4rem;}
+  .rc-pillar .no{font-family:var(--disp); font-style:italic; font-weight:900; color:var(--azure); font-size:1.3rem;}
+  .rc-pillar h4{font-family:var(--head); font-weight:900; font-size:1.2rem; margin:.3rem 0 .5rem;}
+  .rc-pillar p{font-size:.92rem; line-height:1.85; color:var(--sub); margin:0;}
+  @media (max-width:720px){ .rc-pillars{grid-template-columns:1fr;} }
+
+  /* ===== WORK 職種 ===== */
+  .rc-jobs{display:grid; grid-template-columns:repeat(3,1fr); gap:1.2rem;}
+  .rc-job{border:1px solid var(--line); border-radius:16px; overflow:hidden; background:var(--paper);}
+  .rc-job .ph{height:180px; background-size:cover; background-position:center;}
+  .rc-job .bd{padding:1.3rem 1.3rem 1.5rem;}
+  .rc-job h4{font-family:var(--head); font-weight:900; font-size:1.15rem; margin:0 0 .5rem;}
+  .rc-job p{font-size:.9rem; line-height:1.8; color:var(--sub); margin:0;}
+  @media (max-width:720px){ .rc-jobs{grid-template-columns:1fr;} }
+
+  /* ===== PEOPLE カルーセル ===== */
+  .rc-people-head{display:flex; align-items:flex-end; justify-content:space-between; gap:1rem; flex-wrap:wrap;}
+  .rc-people-copy{font-family:var(--head); font-weight:900; font-size:clamp(1.2rem,3.4vw,1.8rem); line-height:1.5; margin:.6rem 0 0;}
+  .rc-carousel{display:flex; gap:1.1rem; overflow-x:auto; scroll-snap-type:x mandatory; padding:1.4rem .2rem 1rem; margin-top:1rem; -webkit-overflow-scrolling:touch;}
+  .rc-carousel::-webkit-scrollbar{height:6px;} .rc-carousel::-webkit-scrollbar-thumb{background:rgba(255,255,255,.25); border-radius:3px;}
+  .rc-pcard{flex:0 0 clamp(230px,72vw,300px); scroll-snap-align:start; background:var(--dark-2); border:1px solid rgba(255,255,255,.1); border-radius:16px; overflow:hidden;}
+  .rc-pcard .ph{aspect-ratio:4/5; background:linear-gradient(160deg,#1d2733,#11161e); display:grid; place-items:center; color:rgba(255,255,255,.35);}
+  .rc-pcard .ph svg{width:46px;height:46px;}
+  .rc-pcard .bd{padding:1rem 1.1rem 1.2rem;}
+  .rc-pcard .who{font-family:var(--disp); font-style:italic; font-weight:900; font-size:1.3rem; color:#fff;}
+  .rc-pcard .who small{font-style:normal; font-family:var(--body); font-weight:700; font-size:.72rem; color:var(--azure-2); margin-left:.4rem;}
+  .rc-pcard .q{margin:.5rem 0 0; font-size:.9rem; color:rgba(255,255,255,.8); line-height:1.7;}
+  .rc-pcard.invite{display:grid; place-items:center; text-align:center; border-style:dashed;}
+  .rc-pcard.invite .bd{padding:2rem 1.2rem;}
+  .rc-pcard.invite b{color:var(--azure-2);}
+
+  /* ===== CAREER ステップ＋資格 ===== */
+  .rc-steps{display:grid; gap:.6rem; counter-reset:lv;}
+  .rc-step{display:grid; grid-template-columns:auto 1fr; gap:1rem; align-items:center; background:var(--paper-2); border-radius:12px; padding:.9rem 1.1rem;}
+  .rc-step .lv{font-family:var(--disp); font-style:italic; font-weight:900; color:#fff; background:var(--azure); border-radius:8px; min-width:3.4rem; text-align:center; padding:.3rem .5rem; font-size:1rem;}
+  .rc-step p{margin:0; font-size:.94rem;}
+  .rc-step p b{font-family:var(--head);}
+  .rc-road{display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.4rem; align-items:center;}
+  .rc-road .q{background:#fff; border:1px solid var(--line); border-radius:999px; padding:.5rem 1rem; font-weight:700; font-size:.88rem;}
+  .rc-road .arr{color:var(--azure); font-weight:900;}
+
+  /* ===== DATA ===== */
+  .rc-data{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1rem;}
+  .rc-stat{background:var(--dark-2); border:1px solid rgba(255,255,255,.1); border-radius:14px; padding:1.4rem 1.2rem; text-align:center;}
+  .rc-stat b{display:block; font-family:var(--disp); font-style:italic; font-weight:900; color:var(--azure-2); font-size:clamp(1.8rem,6vw,2.8rem); line-height:1;}
+  .rc-stat span{display:block; margin-top:.5rem; font-size:.84rem; color:rgba(255,255,255,.78); font-weight:700;}
+
+  /* ===== BENEFITS ===== */
+  .rc-ben{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1rem;}
+  .rc-bencard{background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:1.3rem 1.3rem;}
+  .rc-bencard h4{font-family:var(--head); font-weight:900; font-size:1.02rem; margin:0 0 .6rem; color:var(--azure);}
+  .rc-bencard ul{margin:0; padding-left:1.1rem;}
+  .rc-bencard li{font-size:.9rem; line-height:1.9; color:var(--sub);}
+
+  /* ===== CULTURE 写真 ===== */
+  .rc-gallery{display:grid; grid-template-columns:repeat(4,1fr); gap:.7rem;}
+  .rc-gallery div{aspect-ratio:1; background-size:cover; background-position:center; border-radius:10px;}
+  .rc-gallery div:nth-child(1){grid-column:span 2; grid-row:span 2; aspect-ratio:auto;}
+  @media (max-width:640px){ .rc-gallery{grid-template-columns:repeat(2,1fr);} .rc-gallery div:nth-child(1){grid-column:span 2;} }
+
+  /* ===== INFORMATION 募集要項 ===== */
+  .rc-reqwrap{display:grid; grid-template-columns:1fr 1fr; gap:1.2rem;}
+  @media (max-width:760px){ .rc-reqwrap{grid-template-columns:1fr;} }
+  .rc-req{background:var(--paper); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
+  .rc-req .tt{background:var(--dark); color:#fff; font-family:var(--head); font-weight:900; padding:.9rem 1.2rem; display:flex; align-items:center; gap:.6rem;}
+  .rc-req .tt span{font-family:var(--disp); font-style:italic; color:var(--azure-2);}
+  .rc-req table{width:100%; border-collapse:collapse; font-size:.86rem;}
+  .rc-req th,.rc-req td{text-align:left; vertical-align:top; padding:.6rem .9rem; border-bottom:1px solid var(--line);}
+  .rc-req th{width:34%; color:var(--sub); white-space:nowrap; font-weight:700;}
+
+  /* ===== ENTRY 特大 ===== */
+  .rc-entrybig{background:var(--dark); color:#fff; text-align:center; position:relative;}
+  .rc-entrybig .big{font-family:var(--disp); font-style:italic; font-weight:900; font-size:clamp(4rem,22vw,13rem); line-height:.9; letter-spacing:-.01em; margin:0; color:#fff;}
+  .rc-entrybig p{max-width:34em; margin:1rem auto 1.8rem; color:rgba(255,255,255,.8); line-height:1.9;}
+  .rc-entrybig .cta{display:flex; gap:.8rem; justify-content:center; flex-wrap:wrap;}
+
+  .rc-foot{background:#0b0f15; color:rgba(255,255,255,.7); text-align:center; padding:2.4rem 1rem; font-size:.82rem;}
+  .rc-foot a{color:rgba(255,255,255,.85);}
+  .rc-note{background:#fff6e5; border:1px dashed var(--amber); color:#7a5700; border-radius:12px; padding:.9rem 1.1rem; font-size:.84rem; margin-bottom:1.4rem;}
+</style>
+</head>
+<body class="rc">
+
+<!-- ===== 固定ヘッダー ===== -->
+<header class="rc-header">
+  <a class="brand" href="index.html"><b>ALLLIGHT</b><span>株式会社オールライト 採用サイト</span></a>
+  <nav class="rc-nav">
+    <a class="rc-entry" href="contact.html?type=recruit">ENTRY</a>
+    <button class="rc-burger nav-toggle" aria-label="メニュー" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+</header>
+
+<div class="menu-backdrop"></div>
+<nav id="mmenu" class="mobile-menu" aria-label="モバイルメニュー">
+  <button class="menu-close" aria-label="メニューを閉じる">&times;</button>
+  <a href="index.html">トップ</a><a href="about.html">会社案内</a><a href="works.html">公共工事実績</a>
+  <a href="service/index.html">施工内容</a><a href="area/index.html">対応エリア</a><a href="blog/index.html">現場ブログ</a>
+  <a href="contact.html?type=recruit" class="btn btn-amber">エントリー</a>
+</nav>
+
+<!-- ===== ヒーロー ===== -->
+<section class="rc-hero">
+  <div class="bg"></div>
+  <div class="ghost">ALLLIGHT</div>
+  <div class="wrap inner">
+    <p class="eyebrow">CAREER RECRUIT ／ 経験者・未経験 歓迎</p>
+    <h1>電気工事の、<em>その先へ。</em><br />施工管理という次のステージ。</h1>
+    <p class="lead">神戸から全国へ。公共施設・官公庁の電気設備工事で、あなたの経験が“まちの当たり前”を支える。<strong style="color:#fff;">電気工事の経験を活かして、現場を動かす施工管理へ。</strong>未経験の方も歓迎します。</p>
+    <div class="cta">
+      <a class="rc-btn rc-btn-azure" href="contact.html?type=recruit">エントリーする →</a>
+      <a class="rc-btn rc-btn-ghost" href="#info">募集要項を見る</a>
+    </div>
+  </div>
+  <div class="rc-scroll">SCROLL<i></i></div>
+</section>
+
+<!-- ===== MESSAGE ===== -->
+<section class="pad">
+  <div class="wrap">
+    <div class="rc-head left"><span class="lbl">代表メッセージ</span><div class="big">MESSAGE</div></div>
+    <div class="rc-msg reveal">
+      <div>
+        <h3>「現状維持は、つまらない。」<br />変わり続ける会社で、人生をブチアゲろ。</h3>
+        <p>私たちは、神戸を拠点に公共工事の電気設備工事を全国で手がけています。経営事項審査P859点、工事成績評定点 最高86点——数字で信頼を示せる会社です。</p>
+        <p>でも、本当に大事なのは「人」。評価は時間ではなく成果で。資格と技術で“1000人に1人”を育てる。がんばりたい人も、暮らしを大事にしたい人も、まっすぐ働ける会社を、一緒につくりましょう。</p>
+        <p class="sign">株式会社オールライト 代表取締役<br /><b>名里 雄太</b></p>
+        <a class="rc-btn rc-btn-dark" href="about.html" style="margin-top:1.2rem;">会社を知る →</a>
+      </div>
+      <div class="photo"><img src="/assets/photos/daihyo.jpg" alt="代表取締役 名里 雄太" loading="lazy" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MISSION ===== -->
+<section class="pad" style="background:var(--paper-2);">
+  <div class="wrap">
+    <div class="rc-head"><span class="lbl">私たちの使命</span><div class="big">MISSION</div></div>
+    <p class="sub reveal" style="max-width:40em; margin:0 0 .5rem; font-size:1.02rem; line-height:1.9;">まちの公共建築を、<b style="color:var(--ink);">つくり、守り、人を育てる。</b>神戸から、日本の“当たり前”を支え続けます。</p>
+    <div class="rc-pillars reveal">
+      <div class="rc-pillar"><div class="no">01</div><h4>つくる</h4><p>庁舎・学校・病院・防災設備。公共インフラの電気設備を、積算から施工管理・完成書類まで自社一貫でつくる。</p></div>
+      <div class="rc-pillar"><div class="no">02</div><h4>守る</h4><p>つくって終わりじゃない。点検・維持・更新・防災まで、ずっと守る。まちの安全を足元で支える仕事。</p></div>
+      <div class="rc-pillar"><div class="no">03</div><h4>育てる</h4><p>資格取得支援・就業時間内の勉強会で、未経験から一人前へ。“成果で評価”される環境で、人を育て抜く。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WANTED 求める人物像 ===== -->
+<section class="pad">
+  <div class="wrap">
+    <div class="rc-head"><span class="lbl">求める人物像</span><div class="big">WANTED</div></div>
+    <p class="sub reveal" style="max-width:40em; margin:0 0 1.6rem; font-size:1.02rem; line-height:1.9;">とくに<b style="color:var(--ink);">電気工事の経験を活かして、施工管理に挑戦したい方</b>を歓迎します。こんな方、ぜひお話ししましょう。</p>
+    <div class="reveal" style="display:grid; gap:1rem;">
+      <div style="display:grid; grid-template-columns:auto 1fr; gap:1.2rem; align-items:center; background:var(--dark); color:#fff; border-radius:16px; padding:1.4rem 1.5rem;">
+        <div style="font-family:var(--disp); font-style:italic; font-weight:900; font-size:2.6rem; color:var(--azure-2); line-height:1;">01</div>
+        <div><h4 style="font-family:var(--head); font-weight:900; font-size:1.15rem; margin:0 0 .3rem;">公共工事の経験者</h4><p style="margin:0; color:rgba(255,255,255,.82); font-size:.92rem; line-height:1.8;">官公庁・公共施設の電気設備工事や施工管理の経験がある方。即戦力として、全国の公共案件で力を発揮してください。</p></div>
+      </div>
+      <div style="display:grid; grid-template-columns:auto 1fr; gap:1.2rem; align-items:center; background:var(--paper); border:1px solid var(--line); border-top:4px solid var(--azure); border-radius:16px; padding:1.4rem 1.5rem;">
+        <div style="font-family:var(--disp); font-style:italic; font-weight:900; font-size:2.6rem; color:var(--azure); line-height:1;">02</div>
+        <div><h4 style="font-family:var(--head); font-weight:900; font-size:1.15rem; margin:0 0 .3rem;">電気工事士で、施工管理に挑戦したい方</h4><p style="margin:0; color:var(--sub); font-size:.92rem; line-height:1.8;">電気工事の現場経験を活かして、“動かす側”へキャリアアップ。資格取得も全面支援します。いちばん伸びしろのあるポジションです。</p></div>
+      </div>
+      <div style="display:grid; grid-template-columns:auto 1fr; gap:1.2rem; align-items:center; background:var(--paper); border:1px solid var(--line); border-radius:16px; padding:1.4rem 1.5rem;">
+        <div style="font-family:var(--disp); font-style:italic; font-weight:900; font-size:2.6rem; color:var(--sub); line-height:1;">03</div>
+        <div><h4 style="font-family:var(--head); font-weight:900; font-size:1.15rem; margin:0 0 .3rem;">未経験から、手に職をつけたい方</h4><p style="margin:0; color:var(--sub); font-size:.92rem; line-height:1.8;">知識ゼロからでもOK。Lv.1から一歩ずつ、資格と技術で“1000人に1人”へ。まずは話を聞くだけでも歓迎です。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORK ===== -->
+<section class="pad" style="background:var(--paper-2);">
+  <div class="wrap">
+    <div class="rc-head left"><span class="lbl">仕事を知る</span><div class="big">WORK</div></div>
+    <div class="rc-jobs reveal">
+      <article class="rc-job"><div class="ph" style="background-image:url('/assets/photos/blog-denchu-sekokan.jpg')"></div><div class="bd"><h4>電気設備 施工管理</h4><p>工程・安全・品質・原価を管理し、現場を動かす司令塔。発注者対応から完成書類まで。“段取り力”で、まちを動かす。</p></div></article>
+      <article class="rc-job"><div class="ph" style="background-image:url('/assets/photos/work-cable-komatsu.jpg')"></div><div class="bd"><h4>電気工事士</h4><p>受変電・高圧ケーブル・LED改修・防災設備。手に職をつけ、技術で信頼を積み上げるプロフェッショナル。</p></div></article>
+      <article class="rc-job"><div class="ph" style="background-image:url('/assets/photos/office-hq.jpg')"></div><div class="bd"><h4>積算・入札（管理部門）</h4><p>年間332本の入札を支える頭脳。数字とデータで受注をつくり、現場を後方から支えるバックオフィス。</p></div></article>
+    </div>
+    <p style="margin-top:1.6rem;"><a class="rc-btn rc-btn-dark" href="works.html">全国13都道府県の実績を見る →</a></p>
+  </div>
+</section>
+
+<!-- ===== PEOPLE ===== -->
+<section class="pad dark">
+  <div class="wrap">
+    <div class="rc-people-head">
+      <div class="rc-head" style="margin-bottom:0;"><span class="lbl">社員インタビュー</span><div class="big">PEOPLE</div></div>
+      <p class="rc-people-copy">それぞれの現場で、<br />それぞれが目指すもの。</p>
+    </div>
+    <div class="rc-note" style="margin-top:1.2rem;">※ この欄は<strong>準備中（デザイン確認用のダミー）</strong>です。社員インタビュー（顔写真＋コメント）をいただき次第、本番の内容に差し替えます。</div>
+    <div class="rc-carousel reveal">
+      <article class="rc-pcard"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><div class="bd"><div class="who">S.T<small>施工管理</small></div><p class="q">「未経験からでも、段取りを覚えれば現場は面白い。」（準備中）</p></div></article>
+      <article class="rc-pcard"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><div class="bd"><div class="who">K.M<small>電気工事士</small></div><p class="q">「資格が増えるたび、任される仕事が変わっていく。」（準備中）</p></div></article>
+      <article class="rc-pcard"><div class="ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div><div class="bd"><div class="who">Y.N<small>管理部門</small></div><p class="q">「数字で現場を支える。入札が獲れた時は最高です。」（準備中）</p></div></article>
+      <article class="rc-pcard invite"><div class="bd"><b style="font-size:1.1rem;">次は、<br />あなたの声が<br />ここに。</b><p class="q" style="margin-top:.8rem;">まずは話を聞くだけでもOK。</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CAREER ===== -->
+<section class="pad">
+  <div class="wrap">
+    <div class="rc-head left"><span class="lbl">成長とキャリア</span><div class="big">CAREER</div></div>
+    <p class="sub reveal" style="max-width:40em; margin:0 0 1.4rem; line-height:1.9;">「できること」が一段ずつ増えていく。未経験スタートでも、<b style="color:var(--ink);">Lv.1からLv.6（人に教える側）へ</b>。資格はすべて会社が全面支援します。</p>
+    <div class="rc-steps reveal">
+      <div class="rc-step"><span class="lv">Lv.1</span><p>誰かについて、一緒に仕事をする</p></div>
+      <div class="rc-step"><span class="lv">Lv.2</span><p>教えられながら、半日ほど一人で作業できる</p></div>
+      <div class="rc-step"><span class="lv">Lv.3</span><p>朝に言われたことが、一人でできる</p></div>
+      <div class="rc-step"><span class="lv">Lv.4</span><p>それが数日続けられる（たまに確認が入るレベル）</p></div>
+      <div class="rc-step"><span class="lv">Lv.5</span><p>ほぼ一人で、現場をこなせる</p></div>
+      <div class="rc-step"><span class="lv">Lv.6</span><p><b>人に指示し、教育できる（＝部長クラス）</b></p></div>
+    </div>
+    <h3 style="font-family:var(--head); font-weight:900; margin:2rem 0 .6rem; font-size:1.1rem;">資格取得ロードマップ（費用会社負担・勤務時間内の勉強会）</h3>
+    <div class="rc-road reveal">
+      <span class="q">第二種電気工事士</span><span class="arr">→</span>
+      <span class="q">第一種電気工事士</span><span class="arr">→</span>
+      <span class="q">2級電気工事施工管理技士</span><span class="arr">→</span>
+      <span class="q">1級電気工事施工管理技士</span>
+      <span class="q" style="background:var(--azure); color:#fff; border-color:var(--azure);">合格お祝い金 最大10万円</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DATA ===== -->
+<section class="pad dark">
+  <div class="wrap">
+    <div class="rc-head"><span class="lbl">数字で見るオールライト</span><div class="big">DATA</div></div>
+    <div class="rc-data reveal">
+      <div class="rc-stat"><b>122<small style="font-size:.5em;">日</small></b><span>年間休日（完全週休2日）</span></div>
+      <div class="rc-stat"><b>24<small style="font-size:.5em;">万円</small></b><span>新卒初任給（基本給）</span></div>
+      <div class="rc-stat"><b>0<small style="font-size:.5em;">h</small></b><span>残業ほぼナシ</span></div>
+      <div class="rc-stat"><b>859<small style="font-size:.5em;">点</small></b><span>経営事項審査 P点（電気）</span></div>
+      <div class="rc-stat"><b>13<small style="font-size:.5em;">県</small></b><span>施工実績エリア</span></div>
+      <div class="rc-stat"><b>2018<small style="font-size:.5em;">年</small></b><span>設立（成長中の若い会社）</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BENEFITS ===== -->
+<section class="pad">
+  <div class="wrap">
+    <div class="rc-head left"><span class="lbl">待遇・福利厚生</span><div class="big">BENEFITS</div></div>
+    <div class="rc-ben reveal">
+      <div class="rc-bencard"><h4>休日・休暇</h4><ul><li>完全週休2日制／年間休日122日</li><li>年末年始・有給・慶弔</li><li>産前産後・育児休暇</li></ul></div>
+      <div class="rc-bencard"><h4>保険・退職金</h4><ul><li>社会保険完備</li><li>建退共（建設業退職金共済）</li><li>賞与 年2回・昇給 年2回</li></ul></div>
+      <div class="rc-bencard"><h4>成長支援</h4><ul><li>資格取得支援（費用会社負担）</li><li>合格お祝い金 最大10万円</li><li>就業時間内の勉強会</li></ul></div>
+      <div class="rc-bencard"><h4>手当ほか</h4><ul><li>資格手当・役職手当</li><li>通勤手当・残業手当</li><li>ユースエール認定企業</li></ul></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CULTURE ===== -->
+<section class="pad dark">
+  <div class="wrap">
+    <div class="rc-head"><span class="lbl">社風・環境</span><div class="big">CULTURE</div></div>
+    <p class="sub reveal" style="max-width:40em; margin:0 0 1.4rem; line-height:1.9;">環境整備（整理整頓）、社内アプリでのDX、ランチ会やイベント。<b style="color:#fff;">“決められたことを、決められたように”</b>できるチームづくりを大切にしています。</p>
+    <div class="rc-gallery reveal">
+      <div style="background-image:url('/assets/photos/team-genba.jpg')"></div>
+      <div style="background-image:url('/assets/photos/office-sign.jpg')"></div>
+      <div style="background-image:url('/assets/photos/genba.jpg')"></div>
+      <div style="background-image:url('/assets/photos/kobe-yakei.jpg')"></div>
+      <div style="background-image:url('/assets/photos/office-hq.jpg')"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== INFORMATION 募集要項 ===== -->
+<section class="pad" id="info">
+  <div class="wrap">
+    <div class="rc-head left"><span class="lbl">募集要項</span><div class="big">INFORMATION</div></div>
+    <div class="rc-reqwrap reveal">
+      <div class="rc-req" style="border:2px solid var(--azure);">
+        <div class="tt" style="background:var(--azure);"><span style="color:#fff;">MAIN</span>中途・経験者採用（メイン募集）</div>
+        <table>
+          <tr><th>対象</th><td><strong>①公共工事の経験者 ②電気工事士で施工管理に挑戦したい方 ③未経験者</strong>（この順で歓迎）</td></tr>
+          <tr><th>職種</th><td>電気設備 施工管理／電気工事士／積算・入札</td></tr>
+          <tr><th>雇用形態</th><td>正社員（試用期間1ヶ月・待遇変わらず）</td></tr>
+          <tr><th>給与</th><td>月給 264,000円〜500,000円（経験・資格により応相談）</td></tr>
+          <tr><th>応募資格</th><td>普通自動車免許（AT可）必須／未経験歓迎／有資格者優遇</td></tr>
+          <tr><th>休日</th><td>完全週休2日制／年間休日122日</td></tr>
+          <tr><th>待遇</th><td>社会保険完備／建退共／資格取得支援・お祝い金 最大10万円</td></tr>
+        </table>
+      </div>
+      <div class="rc-req">
+        <div class="tt"><span>NEW GRAD</span>新卒採用 2028</div>
+        <table>
+          <tr><th>募集人数</th><td>2028年卒 若干名</td></tr>
+          <tr><th>職種</th><td>電気設備 施工管理／電気工事士（未経験スタート可）</td></tr>
+          <tr><th>応募資格</th><td>2028年3月 卒業見込み／普通自動車免許（AT可・入社までの取得でOK）／学部学科不問</td></tr>
+          <tr><th>初任給</th><td>基本給 240,000円（＋諸手当。月給目安 264,000円〜）</td></tr>
+          <tr><th>休日</th><td>完全週休2日制／年間休日122日</td></tr>
+          <tr><th>選考</th><td>エントリー → 会社説明・面談・現場見学 → 内定</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ENTRY 特大 ===== -->
+<section class="rc-entrybig pad">
+  <div class="wrap">
+    <p class="big reveal">ENTRY</p>
+    <p class="reveal">準備は、できましたか？ まずは「話を聞くだけ」でも大歓迎です。あなたのエントリーを、オールライト一同お待ちしています。</p>
+    <div class="cta reveal">
+      <a class="rc-btn rc-btn-azure" href="contact.html?type=recruit">エントリーする →</a>
+      <a class="rc-btn rc-btn-ghost" href="contact.html">まずは話を聞いてみる</a>
+    </div>
+  </div>
+</section>
+
+<footer class="rc-foot">
+  <p>株式会社オールライト ／ ALLLIGHT CO., LTD.<br />〒652-0823 兵庫県神戸市兵庫区東出町2丁目8-8 ／ TEL 078-686-7328</p>
+  <p style="margin-top:.8rem;"><a href="index.html">トップ</a>　/　<a href="about.html">会社案内</a>　/　<a href="works.html">公共工事実績</a>　/　<a href="contact.html">お問い合わせ</a></p>
+  <p style="margin-top:.8rem; opacity:.6;">&copy; <span data-year>2026</span> ALLLIGHT CO., LTD.</p>
+</footer>
+
+<script src="assets/site.js"></script>
+</body>
+</html>
