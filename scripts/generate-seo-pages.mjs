@@ -17,6 +17,7 @@
  */
 import { readFile, writeFile, mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
+import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -102,8 +103,54 @@ const head = ({ title, desc, canonical, ogimg }) => `<!DOCTYPE html>
 
 const labelOf = (area) => area.isPrefecture ? area.name + "全域" : (area.parent ? area.parent + area.name : area.name);
 
+
+/* ===== 施工実績（assets/works-data.js）を地域ページへ ===== */
+// works-data.js は実績マップ用のブラウザ向けデータ。各案件の areas:[slug] で地域ページと紐づける。
+async function loadWorks() {
+  try {
+    const code = await readFile(join(ROOT, "assets", "works-data.js"), "utf8");
+    const ctx = { window: {} };
+    vm.runInNewContext(code, ctx);
+    return Array.isArray(ctx.window.ALLLIGHT_MAP_DATA) ? ctx.window.ALLLIGHT_MAP_DATA : [];
+  } catch (e) { console.warn("⚠️ works-data.js を読めませんでした:", e.message); return []; }
+}
+
+function worksForArea(area, works) {
+  const hit = works.filter((w) => area.isPrefecture
+    ? w.pref === area.name
+    : Array.isArray(w.areas) && w.areas.includes(area.slug));
+  // 写真あり・完工・評定点ありを優先して表示
+  const rank = (w) => (w.photo && !/noimage/.test(w.photo) ? 0 : 2) + (w.status === "施工実績" ? 0 : 1) - (w.score ? 1 : 0);
+  return hit.map((w, i) => ({ w, i })).sort((a, b) => rank(a.w) - rank(b.w) || a.i - b.i).map((x) => x.w);
+}
+
+function renderAreaWorks(label, list, p) {
+  if (!list.length) return "";
+  const MAX = 6;
+  const shown = list.slice(0, MAX);
+  const card = (w) => {
+    const img = w.photo && !/noimage/.test(w.photo)
+      ? `<img src="${esc(w.photo)}" alt="${esc(w.name)}" loading="lazy" style="width:100%; aspect-ratio:16/10; object-fit:cover; border-radius:10px; margin-bottom:.8rem;" />` : "";
+    const meta = [w.client ? `発注者：${esc(w.client)}` : "", w.score ? `工事成績評定点 <b>${esc(w.score)}</b>` : ""].filter(Boolean).join("／");
+    return `<div class="card" style="padding:1.2rem;">${img}
+        <span class="chip ${w.status === "施工実績" ? "chip-navy" : "chip-amber"}" style="font-size:.75rem;">${esc(w.status || "施工実績")}</span>
+        <h3 style="font-weight:700; margin:.5rem 0 .3rem; font-size:1rem; line-height:1.5;">${esc(w.name)}</h3>
+        ${meta ? `<p class="text-sub" style="font-size:.85rem;">${meta}</p>` : ""}
+        ${w.desc ? `<p style="font-size:.88rem; margin-top:.5rem;">${esc(w.desc)}</p>` : ""}
+      </div>`;
+  };
+  return `
+    <h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">${esc(label)}での施工実績</h2>
+    <p class="text-sub reveal" style="margin-bottom:1rem; font-size:.92rem;">${esc(label)}で当社が施工・受注した公共工事${list.length}件のうち、主なものをご紹介します。</p>
+    <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:1rem;">
+      ${shown.map(card).join("\n      ")}
+    </div>
+    <p class="reveal" style="margin-top:1rem;"><a href="${p}works.html" style="font-weight:700;">すべての施工実績を見る →</a></p>
+`;
+}
+
 /* ===== 地域ページ本体 ===== */
-function renderAreaPage(area, allAreas, services = []) {
+function renderAreaPage(area, allAreas, services = [], works = []) {
   const p = "../";
   const url = `${SITE_ORIGIN}/area/${area.slug}.html`;
   const label = labelOf(area);
@@ -133,6 +180,7 @@ function renderAreaPage(area, allAreas, services = []) {
   ]};
 
   const neighbors = allAreas.filter((a) => a.slug !== area.slug);
+  const areaWorks = worksForArea(area, works);
 
   // ヒーロー写真を地域ごとにローテーション（毎回genba.jpgでなく変化をつける）
   const heroPhotos = [
@@ -186,6 +234,7 @@ ${area.detail && area.detail.length ? `
       ${area.detail.map((para) => `<p style="margin-bottom:1rem;">${esc(para)}</p>`).join("\n      ")}
     </div>
 ` : ""}
+${renderAreaWorks(label, areaWorks, p)}
     <h2 class="serif reveal" style="font-weight:700; font-size:1.4rem; margin:2.4rem 0 1rem;">${esc(label)}で対応できる主な施設・工事</h2>
     <div class="reveal" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:.8rem;">
       ${area.facilities.map((f) => `<div class="card" style="padding:1rem 1.2rem;"><b>▹ ${esc(f)}</b></div>`).join("\n      ")}
@@ -511,9 +560,10 @@ async function main() {
   let services = [];
   try { services = JSON.parse(await readFile(join(ROOT, "data", "services.json"), "utf8")).services || []; } catch {}
 
+  const works = await loadWorks();
   await mkdir(join(ROOT, "area"), { recursive: true });
   for (const area of areas) {
-    await writeFile(join(ROOT, "area", `${area.slug}.html`), renderAreaPage(area, areas, services), "utf8");
+    await writeFile(join(ROOT, "area", `${area.slug}.html`), renderAreaPage(area, areas, services, works), "utf8");
   }
   await writeFile(join(ROOT, "area", "index.html"), renderAreaHub(areas), "utf8");
   console.log(`✅ 地域SEOページ ${areas.length} 件＋エリアハブを生成しました。`);
