@@ -20,6 +20,7 @@
  */
 import { readFile, writeFile, readdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
+import { execFileSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -92,13 +93,13 @@ ${JSON.stringify({
 <body>
 <header class="site-header">
   <div class="wrap nav-inner">
-    <a class="brand" href="../index.html" aria-label="株式会社オールライト トップへ">
+    <a class="brand" href="../" aria-label="株式会社オールライト トップへ">
       <img class="brand-logo brand-logo-dark" src="/assets/logo-white.svg" alt="株式会社オールライト" width="150" height="23" /><img class="brand-logo brand-logo-light" src="/assets/logo.svg" alt="株式会社オールライト" width="150" height="23" />
       
     </a>
     <nav class="nav-links" aria-label="グローバルナビゲーション">
-      <a href="../index.html">トップ</a><a href="../about.html">会社案内</a><a href="../works.html">公共工事実績</a>
-      <a href="../recruit.html">採用情報</a><a href="index.html">現場ブログ</a>
+      <a href="../">トップ</a><a href="../about.html">会社案内</a><a href="../works.html">公共工事実績</a>
+      <a href="../recruit.html">採用情報</a><a href="./">現場ブログ</a>
       <a href="../contact.html" class="btn btn-amber" style="padding:.6rem 1.3rem">お問い合わせ</a>
     </nav>
     <button class="nav-toggle" aria-label="メニューを開く" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -107,15 +108,15 @@ ${JSON.stringify({
 <div class="menu-backdrop"></div>
 <nav id="mmenu" class="mobile-menu" aria-label="モバイルメニュー">
   <button class="menu-close" aria-label="メニューを閉じる">&times;</button>
-  <a href="../index.html">トップ</a><a href="../about.html">会社案内</a><a href="../works.html">公共工事実績</a>
-  <a href="../recruit.html">採用情報</a><a href="index.html">現場ブログ</a>
+  <a href="../">トップ</a><a href="../about.html">会社案内</a><a href="../works.html">公共工事実績</a>
+  <a href="../recruit.html">採用情報</a><a href="./">現場ブログ</a>
   <a href="../contact.html" class="btn btn-amber">お問い合わせ</a>
 </nav>
 
 <article class="section" style="padding-top:6rem;">
   <div class="wrap" style="max-width:780px;">
     <nav aria-label="パンくず" style="font-size:.82rem; color:var(--sub); margin-bottom:1.2rem;">
-      <a href="../index.html">トップ</a> ／ <a href="index.html">現場ブログ</a> ／ <span>${esc(post.title)}</span>
+      <a href="../">トップ</a> ／ <a href="./">現場ブログ</a> ／ <span>${esc(post.title)}</span>
     </nav>
     <span class="chip chip-amber">${esc(post.category || "現場レポート")}</span>
     <h1 class="serif" style="font-weight:900; font-size:clamp(1.6rem,4.5vw,2.4rem); line-height:1.5; margin:.8rem 0;">${esc(post.title)}</h1>
@@ -167,6 +168,42 @@ function renderCards(posts) {
 }
 
 /* ---------- sitemap 生成 ---------- */
+// index.html はディレクトリURL（末尾スラッシュ）で出す（canonical と一致させる）
+const toUrlPath = (p) => p === "index.html" ? "" : p.replace(/(^|\/)index\.html$/, "$1");
+
+// lastmod は「そのファイルが実際に最後に変更された日」（git の最終コミット日）。
+// 全ページ同じ日付だと Google が lastmod を信用しなくなるため、ビルド日は使わない。
+// 未コミットの変更がある／git 履歴が取れない場合のみ当日を使う。
+// ※ 履歴の浅いクローン（Netlify の shallow clone 等）では日付が全部同じになるため、
+//    その場合はコミット済み sitemap.xml の値（GitHub Actions が全履歴で生成したもの）を引き継ぐ。
+let _shallow = null;
+let _prevLastmod = null;
+function isShallow() {
+  if (_shallow === null) {
+    try { _shallow = execFileSync("git", ["rev-parse", "--is-shallow-repository"], { cwd: ROOT, encoding: "utf8" }).trim() === "true"; }
+    catch { _shallow = true; }
+  }
+  return _shallow;
+}
+function prevLastmod(loc) {
+  if (_prevLastmod === null) {
+    _prevLastmod = new Map();
+    try {
+      const xml = execFileSync("git", ["show", "HEAD:sitemap.xml"], { cwd: ROOT, encoding: "utf8" });
+      for (const m of xml.matchAll(/<loc>([^<]+)<\/loc><lastmod>([^<]+)<\/lastmod>/g)) _prevLastmod.set(m[1], m[2]);
+    } catch { /* noop */ }
+  }
+  return _prevLastmod.get(loc);
+}
+function lastModified(relPath, fallback) {
+  if (isShallow()) return prevLastmod(`${SITE_ORIGIN}/${toUrlPath(relPath)}`) || fallback;
+  try {
+    const dirty = execFileSync("git", ["status", "--porcelain", "--", relPath], { cwd: ROOT, encoding: "utf8" }).trim();
+    if (dirty) return fallback;
+    const d = execFileSync("git", ["log", "-1", "--format=%cs", "--", relPath], { cwd: ROOT, encoding: "utf8" }).trim();
+    return d || fallback;
+  } catch { return fallback; }
+}
 async function loadJsonSlugs(file, key, prefix) {
   try {
     const raw = JSON.parse(await readFile(join(ROOT, "data", file), "utf8"));
@@ -197,7 +234,7 @@ async function renderSitemap(posts) {
   const today = new Date().toISOString().slice(0, 10);
   const seen = new Set();
   const urls = [];
-  for (const p of staticPages) { if (seen.has(p)) continue; seen.add(p); urls.push({ loc: `${SITE_ORIGIN}/${p}`, lastmod: today }); }
+  for (const p of staticPages) { if (seen.has(p)) continue; seen.add(p); urls.push({ loc: `${SITE_ORIGIN}/${toUrlPath(p)}`, lastmod: lastModified(p, today) }); }
   for (const post of posts) {
     const rp = `blog/report-${post.slug}.html`;
     if (seen.has(rp)) continue; seen.add(rp);

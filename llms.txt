@@ -47,11 +47,11 @@
 - 採用: 施工管理を大募集（電気工事士も同時募集）。月給264,000〜500,000円、賞与・昇給 各年2回、週休2日制・年間休日122日、資格取得支援、未経験歓迎。ユースエール認定企業。
 
 ## リンク
-- トップ: https://alllight2018.com/index.html
+- トップ: https://alllight2018.com/
 - 会社案内・経営事項審査: https://alllight2018.com/about.html
 - 公共工事実績・全国実績マップ・工事点数: https://alllight2018.com/works.html
-- 施工内容: https://alllight2018.com/service/index.html
-- 対応エリア: https://alllight2018.com/area/index.html
+- 施工内容: https://alllight2018.com/service/
+- 対応エリア: https://alllight2018.com/area/
 - 採用情報（施工管理）: https://alllight2018.com/recruit.html
 - お問い合わせ: https://alllight2018.com/contact.html
 

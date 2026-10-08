@@ -30,15 +30,15 @@ const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").r
 const header = (p, current) => `
 <header class="site-header">
   <div class="wrap nav-inner">
-    <a class="brand" href="${p}index.html" aria-label="株式会社オールライト トップへ">
+    <a class="brand" href="${p || "./"}" aria-label="株式会社オールライト トップへ">
       <img class="brand-logo brand-logo-dark" src="/assets/logo-white.svg" alt="株式会社オールライト" width="150" height="23" /><img class="brand-logo brand-logo-light" src="/assets/logo.svg" alt="株式会社オールライト" width="150" height="23" />
       
     </a>
     <nav class="nav-links" aria-label="グローバルナビゲーション">
-      <a href="${p}index.html">トップ</a><a href="${p}about.html">会社案内</a>
-      <a href="${p}works.html">公共工事実績</a><a href="${p}service/index.html"${current === "service" ? ' aria-current="page"' : ""}>施工内容</a>
-      <a href="${p}area/index.html"${current === "area" ? ' aria-current="page"' : ""}>対応エリア</a>
-      <a href="${p}recruit.html">採用情報</a><a href="${p}blog/index.html">現場ブログ</a>
+      <a href="${p || "./"}">トップ</a><a href="${p}about.html">会社案内</a>
+      <a href="${p}works.html">公共工事実績</a><a href="${p}service/"${current === "service" ? ' aria-current="page"' : ""}>施工内容</a>
+      <a href="${p}area/"${current === "area" ? ' aria-current="page"' : ""}>対応エリア</a>
+      <a href="${p}recruit.html">採用情報</a><a href="${p}blog/">現場ブログ</a>
       <a href="https://www.youtube.com/@all-light" target="_blank" rel="noopener" class="nav-youtube">YouTube</a><a href="${p}contact.html" class="btn btn-amber" style="padding:.6rem 1.3rem">お問い合わせ</a>
     </nav>
     <button class="nav-toggle" aria-label="メニューを開く" aria-controls="mmenu" aria-expanded="false"><span></span><span></span><span></span></button>
@@ -47,8 +47,8 @@ const header = (p, current) => `
 <div class="menu-backdrop"></div>
 <nav id="mmenu" class="mobile-menu" aria-label="モバイルメニュー">
   <button class="menu-close" aria-label="メニューを閉じる">&times;</button>
-  <a href="${p}index.html">トップ</a><a href="${p}about.html">会社案内</a><a href="${p}works.html">公共工事実績</a>
-  <a href="${p}service/index.html">施工内容</a><a href="${p}area/index.html">対応エリア</a><a href="${p}recruit.html">採用情報</a><a href="${p}blog/index.html">現場ブログ</a>
+  <a href="${p || "./"}">トップ</a><a href="${p}about.html">会社案内</a><a href="${p}works.html">公共工事実績</a>
+  <a href="${p}service/">施工内容</a><a href="${p}area/">対応エリア</a><a href="${p}recruit.html">採用情報</a><a href="${p}blog/">現場ブログ</a>
   <a href="https://www.youtube.com/@all-light" target="_blank" rel="noopener" class="nav-youtube">YouTube</a><a href="${p}contact.html" class="btn btn-amber">お問い合わせ</a>
 </nav>`;
 
@@ -61,9 +61,9 @@ const footer = (p) => `
         <div class="footer-social-links" style="display:flex; flex-wrap:wrap; gap:.9rem; margin-top:1rem;"><a href="https://www.instagram.com/alllight2018/" target="_blank" rel="noopener" style="font-size:.86rem; color:#fff; text-decoration:underline;">Instagram</a><a href="https://x.com/ZvllM0ITfo41151" target="_blank" rel="noopener" style="font-size:.86rem; color:#fff; text-decoration:underline;">X（旧Twitter）</a><a href="https://www.youtube.com/@all-light" target="_blank" rel="noopener" style="font-size:.86rem; color:#fff; text-decoration:underline;">YouTube</a></div></div>
       <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">サイトマップ</h4>
         <ul style="list-style:none; display:grid; gap:.5rem; font-size:.9rem;">
-          <li><a href="${p}index.html">トップ</a></li><li><a href="${p}about.html">会社案内</a></li><li><a href="${p}works.html">公共工事実績</a></li>
-          <li><a href="${p}service/index.html">施工内容</a></li><li><a href="${p}area/index.html">対応エリア</a></li><li><a href="${p}koukyou-kouji-guide.html">公共工事のキホン</a></li><li><a href="${p}recruit.html">採用情報</a></li><li><a href="${p}hacchusha.html">発注担当者の方へ</a></li>
-          <li><a href="${p}blog/index.html">現場ブログ</a></li><li><a href="${p}contact.html">お問い合わせ</a></li></ul></div>
+          <li><a href="${p || "./"}">トップ</a></li><li><a href="${p}about.html">会社案内</a></li><li><a href="${p}works.html">公共工事実績</a></li>
+          <li><a href="${p}service/">施工内容</a></li><li><a href="${p}area/">対応エリア</a></li><li><a href="${p}koukyou-kouji-guide.html">公共工事のキホン</a></li><li><a href="${p}recruit.html">採用情報</a></li><li><a href="${p}hacchusha.html">発注担当者の方へ</a></li>
+          <li><a href="${p}blog/">現場ブログ</a></li><li><a href="${p}contact.html">お問い合わせ</a></li></ul></div>
       <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">会社情報</h4>
         <p style="font-size:.9rem;">〒652-0823<br />兵庫県神戸市兵庫区東出町2丁目8-8<br />TEL：078-686-7328（代表）<br />info@alllight2018.com</p></div>
       <div><h4 style="color:#fff; font-weight:700; margin-bottom:.8rem;">許可・登録</h4>
@@ -127,12 +127,12 @@ function renderAreaPage(area, allAreas, services = []) {
     knowsAbout: ["公共工事", "電気設備工事", "受変電設備", "LED照明改修", "施工管理"]
   };
   const breadcrumb = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
-    { "@type": "ListItem", position: 1, name: "トップ", item: `${SITE_ORIGIN}/index.html` },
-    { "@type": "ListItem", position: 2, name: "対応エリア", item: `${SITE_ORIGIN}/area/index.html` },
+    { "@type": "ListItem", position: 1, name: "トップ", item: `${SITE_ORIGIN}/` },
+    { "@type": "ListItem", position: 2, name: "対応エリア", item: `${SITE_ORIGIN}/area/` },
     { "@type": "ListItem", position: 3, name: label, item: url }
   ]};
 
-  const neighbors = allAreas.filter((a) => a.slug !== area.slug).slice(0, 8);
+  const neighbors = allAreas.filter((a) => a.slug !== area.slug);
 
   // ヒーロー写真を地域ごとにローテーション（毎回genba.jpgでなく変化をつける）
   const heroPhotos = [
@@ -235,7 +235,7 @@ ${footer(p)}
 /* ===== エリアハブ ===== */
 function renderAreaHub(areas) {
   const p = "../";
-  const url = `${SITE_ORIGIN}/area/index.html`;
+  const url = `${SITE_ORIGIN}/area/`;
   const title = "対応エリア｜兵庫県・大阪府を中心に全国対応｜株式会社オールライト";
   const desc = "株式会社オールライトの対応エリア。兵庫県（神戸市ほか）・大阪府を中心に、東京・石川・長野・神奈川・三重・徳島など全国の官公庁・公共施設の電気設備工事に施工実績があります。";
 
@@ -348,8 +348,8 @@ function renderServicePage(svc, allServices, areas) {
     areaServed: { "@type": "State", name: "兵庫県" }, description: svc.intro
   };
   const breadcrumb = { "@context": "https://schema.org", "@type": "BreadcrumbList", itemListElement: [
-    { "@type": "ListItem", position: 1, name: "トップ", item: `${SITE_ORIGIN}/index.html` },
-    { "@type": "ListItem", position: 2, name: "施工内容", item: `${SITE_ORIGIN}/service/index.html` },
+    { "@type": "ListItem", position: 1, name: "トップ", item: `${SITE_ORIGIN}/` },
+    { "@type": "ListItem", position: 2, name: "施工内容", item: `${SITE_ORIGIN}/service/` },
     { "@type": "ListItem", position: 3, name: svc.name, item: url }
   ]};
 
@@ -434,7 +434,7 @@ ${footer(p)}
 
 function renderServiceHub(services) {
   const p = "../";
-  const url = `${SITE_ORIGIN}/service/index.html`;
+  const url = `${SITE_ORIGIN}/service/`;
   const title = "施工内容（電気設備工事の工種）｜株式会社オールライト｜神戸・兵庫";
   const desc = "株式会社オールライトの施工内容一覧。電気設備工事・受変電（キュービクル）・LED照明改修・内線幹線・防災防犯弱電・空調設備まで、公共工事に対応する工種をご紹介します。";
   return `${head({ title, desc, canonical: url, ogimg: "/assets/photos/genba.jpg" })}
