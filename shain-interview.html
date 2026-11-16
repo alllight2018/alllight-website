@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>社員インタビュー回答フォーム｜株式会社オールライト</title>
+<meta name="robots" content="noindex,nofollow" />
+<meta name="theme-color" content="#15263d" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@700&display=swap" />
+<style>
+:root{
+  --bg:#eef2f6; --surface:#ffffff; --ink:#14263d; --muted:#5b6b7e;
+  --line:#dde5ee; --accent:#1f8fcf; --accent-ink:#0b4f78; --amber:#f2a93b;
+  --field:#f6f9fc; --radius:14px;
+  --serif:"Noto Serif JP",serif; --sans:"Noto Sans JP",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --bg:#0e1824; --surface:#15232f; --ink:#eaf1f8; --muted:#9db0c2;
+  --line:#26384a; --accent:#49b2ea; --accent-ink:#bfe3f7; --amber:#f2b55a;
+  --field:#101d29; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e1824; --surface:#15232f; --ink:#eaf1f8; --muted:#9db0c2;
+  --line:#26384a; --accent:#49b2ea; --accent-ink:#bfe3f7; --amber:#f2b55a;
+  --field:#101d29; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg); color:var(--ink); font-family:var(--sans); line-height:1.7; -webkit-text-size-adjust:100%;}
+.wrap{ max-width:680px; margin-inline:auto;
+  padding-left:max(16px,env(safe-area-inset-left,0px));
+  padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-block:1.6rem 3rem;}
+.badge{ display:inline-block; font-size:.72rem; font-weight:700; letter-spacing:.04em;
+  color:var(--accent-ink); background:color-mix(in srgb,var(--accent) 16%,transparent);
+  border:1px solid color-mix(in srgb,var(--accent) 35%,transparent);
+  border-radius:999px; padding:.28rem .8rem;}
+h1{ font-family:var(--serif); font-weight:700; font-size:1.5rem; line-height:1.35; margin:.7rem 0 .5rem; text-wrap:balance;}
+.lead{ color:var(--muted); font-size:.92rem; margin:0;}
+.note{ background:var(--surface); border:1px solid var(--line); border-left:4px solid var(--amber);
+  border-radius:12px; padding:.9rem 1rem; margin-top:1.1rem; font-size:.86rem; color:var(--muted);}
+.note b{ color:var(--ink);}
+form{ display:grid; gap:1rem; margin-top:1.6rem;}
+.card{ background:var(--surface); border:1px solid var(--line); border-radius:var(--radius); padding:1.1rem 1.1rem 1.15rem;}
+.row{ display:grid; gap:.9rem;}
+@media(min-width:520px){ .row.cols{ grid-template-columns:1fr 1fr;} }
+label{ display:block; font-weight:700; font-size:.92rem; margin-bottom:.45rem;}
+.qn{ color:var(--accent); font-family:var(--serif); margin-right:.35rem;}
+.hint{ font-weight:400; color:var(--muted); font-size:.8rem;}
+input[type=text], textarea{ width:100%; font-family:inherit; font-size:1rem; color:var(--ink);
+  background:var(--field); border:1px solid var(--line); border-radius:10px; padding:.7rem .8rem; line-height:1.6; resize:vertical;}
+textarea{ min-height:84px;}
+input[type=text]:focus, textarea:focus{ outline:2px solid var(--accent); outline-offset:1px; border-color:transparent;}
+.req{ color:#e0564d; font-size:.78rem; margin-left:.25rem;}
+.actions{ margin-top:.4rem; display:grid; gap:.7rem;}
+button{ font-family:inherit; font-weight:700; font-size:1rem; cursor:pointer; border:0; border-radius:12px; padding:.95rem 1rem;}
+.btn-main{ background:var(--accent); color:#fff;}
+.btn-main:active{ filter:brightness(.95);}
+.btn-ghost{ background:transparent; color:var(--accent-ink); border:1px solid var(--line);}
+.result{ margin-top:1rem;}
+.result textarea{ min-height:200px; background:var(--field);}
+.ok{ color:#16885f; font-weight:700; font-size:.9rem;}
+.ok.warn{ color:var(--amber);}
+footer{ margin-top:2rem; color:var(--muted); font-size:.8rem; text-align:center;}
+:focus-visible{ outline:2px solid var(--accent); outline-offset:2px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="badge">株式会社オールライト｜採用ページ用</span>
+    <h1>社員インタビュー、<br>あなたの言葉を聞かせてください。</h1>
+    <p class="lead">採用ページの「はたらく仲間」に載せる、社員インタビューの回答フォームです。かしこまらず、思ったままでOK。<b style="color:var(--ink)">各質問、1〜2行でも大丈夫</b>です。</p>
+    <div class="note">
+      ・ お名前は、サイトには<b>イニシャル</b>で掲載します（例：Y さん）。<br>
+      ・ 写真は、先日撮ったものを使います。<br>
+      ・ 入力が終わったら、いちばん下の<b>「回答をまとめてコピー」</b>を押して、<b>LINEのグループに貼り付けて送って</b>ください。
+    </div>
+  </header>
+
+  <form id="f" autocomplete="off">
+    <div class="card">
+      <div class="row cols">
+        <div>
+          <label for="name">お名前 <span class="req">必須</span><br><span class="hint">サイトにはイニシャルで掲載します</span></label>
+          <input type="text" id="name" placeholder="例：矢野 / 辻本 など" />
+        </div>
+        <div>
+          <label for="dept">部署・役職 <span class="req">必須</span></label>
+          <input type="text" id="dept" placeholder="例：工事部 / 施工管理部長 など" />
+        </div>
+      </div>
+      <div style="margin-top:.9rem;">
+        <label for="years">入社して何年目ですか？ <span class="hint">（任意）</span></label>
+        <input type="text" id="years" placeholder="例：3年目 / 2026年入社 など" />
+      </div>
+    </div>
+
+    <div class="card"><label for="q1"><span class="qn">Q1</span>入社のきっかけ・決め手は？<br><span class="hint">なぜオールライトを選びましたか</span></label><textarea id="q1"></textarea></div>
+    <div class="card"><label for="q2"><span class="qn">Q2</span>いまの仕事内容を教えてください<br><span class="hint">担当していること・1日の流れ など</span></label><textarea id="q2"></textarea></div>
+    <div class="card"><label for="q3"><span class="qn">Q3</span>仕事での「やりがい」や、嬉しかった瞬間は？</label><textarea id="q3"></textarea></div>
+    <div class="card"><label for="q4"><span class="qn">Q4</span>大変だったことと、どう乗り越えましたか？</label><textarea id="q4"></textarea></div>
+    <div class="card"><label for="q5"><span class="qn">Q5</span>オールライトの「ここが好き」「社風」は？<br><span class="hint">人・雰囲気・働き方・制度 など</span></label><textarea id="q5"></textarea></div>
+    <div class="card"><label for="q6"><span class="qn">Q6</span>これからの目標は？<br><span class="hint">挑戦したいこと・取りたい資格 など</span></label><textarea id="q6"></textarea></div>
+    <div class="card"><label for="q7"><span class="qn">Q7</span>応募を考えている人へ、ひとことメッセージ</label><textarea id="q7"></textarea></div>
+
+    <div class="actions">
+      <button type="button" class="btn-main" id="make">回答をまとめてコピー</button>
+      <button type="button" class="btn-ghost" id="clear">入力をクリア</button>
+    </div>
+
+    <div class="result" id="result" hidden>
+      <p id="status" class="ok"></p>
+      <label for="out" style="font-size:.85rem;">まとめた回答（この文章をLINEのグループに貼り付けて送ってください）</label>
+      <textarea id="out" readonly></textarea>
+    </div>
+  </form>
+
+  <footer>入力内容はこの端末にのみ一時保存されます。送信は「コピー → LINEに貼り付け」でお願いします。<br>株式会社オールライト</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var ids=["name","dept","years","q1","q2","q3","q4","q5","q6","q7"];
+  var KEY="alllight_interview_v1";
+  function el(id){return document.getElementById(id);}
+  try{ var saved=JSON.parse(localStorage.getItem(KEY)||"{}");
+    ids.forEach(function(k){ if(saved[k]!=null) el(k).value=saved[k]; });
+  }catch(e){}
+  function save(){ try{ var o={}; ids.forEach(function(k){o[k]=el(k).value;}); localStorage.setItem(KEY,JSON.stringify(o)); }catch(e){} }
+  ids.forEach(function(k){ el(k).addEventListener("input",save); });
+
+  var Q={ q1:"Q1 入社のきっかけ・決め手", q2:"Q2 いまの仕事内容", q3:"Q3 やりがい・嬉しかった瞬間",
+    q4:"Q4 大変だったこと／乗り越え方", q5:"Q5 ここが好き・社風", q6:"Q6 これからの目標",
+    q7:"Q7 応募を考えている人へ" };
+
+  function build(){
+    var L=[];
+    L.push("【オールライト 社員インタビュー 回答】");
+    L.push("お名前（イニシャル掲載）：" + (el("name").value.trim()||"（未記入）"));
+    L.push("部署・役職：" + (el("dept").value.trim()||"（未記入）"));
+    var y=el("years").value.trim(); if(y) L.push("入社：" + y);
+    L.push("");
+    Object.keys(Q).forEach(function(k){
+      L.push("■ "+Q[k]);
+      L.push((el(k).value.trim()||"（未記入）"));
+      L.push("");
+    });
+    return L.join("\n").trim()+"\n";
+  }
+  function setStatus(msg,cls){ var s=el("status"); s.textContent=msg; s.className="ok"+(cls?" "+cls:""); }
+  function selectFallback(out){
+    try{ out.focus(); out.select(); out.setSelectionRange(0,out.value.length); }catch(e){}
+    setStatus("下の文章を長押し（または選択）してコピーし、LINEに貼り付けて送ってください。","warn");
+  }
+  el("make").addEventListener("click",function(){
+    var text=build();
+    var out=el("out"); out.value=text;
+    el("result").hidden=false;
+    el("result").scrollIntoView({behavior:"smooth",block:"start"});
+    var warnName=(!el("name").value.trim()||!el("dept").value.trim());
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){
+        setStatus((warnName?"※お名前・部署が未記入です。":"")+"コピーしました！ LINEのグループに貼り付けて送ってください。", warnName?"warn":"");
+      }).catch(function(){ selectFallback(out); });
+    } else { selectFallback(out); }
+  });
+  el("clear").addEventListener("click",function(){
+    ids.forEach(function(k){ el(k).value=""; }); save();
+    el("result").hidden=true; el("out").value=""; el("name").focus();
+  });
+})();
+</script>
+</body>
+</html>
