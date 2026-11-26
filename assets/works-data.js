@@ -26,7 +26,7 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"兵庫県", areas:["kobe"], name:"北学校給食共同調理場 受変電設備更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-kita-kyushoku-blur.jpg", desc:"学校給食センターの受変電設備（高圧機器）を更新。公共施設の心臓部を止めずに施工。" },
   { pref:"兵庫県", areas:["kobe","kobe-hyogoku"], name:"湊川駐車場 泡消火設備工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-minatogawa-awa-blur.jpg", desc:"地下駐車場の泡消火設備（一斉開放弁・配管取替）を施工。防災設備の更新に強み。" },
   { pref:"兵庫県", areas:["kobe","kobe-nagataku"], name:"長田駅 電気室 蓄電池更新工事", client:"神戸市交通局", type:"工事", status:"施工実績", photo:"/assets/photos/nagata-battery-blur.jpg", desc:"地下鉄・長田駅 電気室の蓄電池設備を更新。公共交通インフラの電気設備にも対応。" },
-  { pref:"兵庫県", areas:["kobe"], name:"西部高齢者介護支援センター 電気設備工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-seibu-kaigo-blur.jpg", desc:"福祉施設の受変電・電気設備を施工。送電を止めずに更新。公共福祉施設にも対応します。" },
+  { pref:"兵庫県", areas:["kobe"], name:"西部高齢者介護支援センター 電気設備工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/seibu-kaigo-panel.jpg", desc:"福祉施設の受変電・電気設備を施工。送電を止めずに更新。公共福祉施設にも対応します。" },
   { pref:"兵庫県", areas:["ashiya"], name:"廃棄物用パイプライン施設 ブロワ起動盤更新工事", client:"芦屋市", type:"工事", status:"施工実績", photo:"/assets/photos/work-ashiya-blower-blur.jpg", desc:"ごみ収集パイプライン施設のブロワ起動盤（大型動力盤）を更新。プラント動力設備の実績。" },
   { pref:"兵庫県", areas:["kobe","kobe-tarumiku"], name:"舞子駅前 分電盤改修工事", client:"神戸市建設局", type:"工事", status:"施工実績", photo:"/assets/photos/work-maiko-bunden-blur.jpg", desc:"駅前の分電盤を改修。道路・公共インフラの電気設備を安全に更新。" },
   { pref:"兵庫県", areas:["kobe","kobe-chuoku"], name:"中央幹線 ライトアップ工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-chuokansen-lightup-blur.jpg", desc:"三宮・中央幹線の街路樹ライトアップ照明を施工。まちを彩る景観照明も手がけます。" },
