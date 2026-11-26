@@ -11,7 +11,7 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"兵庫県", areas:["ashiya"], name:"市立岩園小学校 受変電設備更新工事", client:"芦屋市", type:"工事", status:"施工実績", amount:"約970万円", score:"86点", photo:"/assets/photos/work-iwazono-cubicle-blur.jpg", desc:"小学校の受変電設備（キュービクル）を更新。屋上での試験調整まで自社で実施。工事成績評定点86点（ベスト1）。" },
   { pref:"兵庫県", areas:["ashiya"], name:"本庁舎北館・南館 自動火災報知設備更新工事", client:"芦屋市", type:"工事", status:"受注・施工中", photo:"/assets/photos/noimage-bosai.svg" },
   { pref:"兵庫県", areas:["kobe","kobe-chuoku"], name:"ポートアイランド地区他 ヤード照明LED化工事", client:"神戸市", type:"工事", status:"受注・施工中", photo:"/assets/photos/port-island-tower-after-blur.jpg" },
-  { pref:"兵庫県", areas:["amagasaki"], name:"大阪拘置所尼崎拘置支所 庁舎棟 照明設備LED化改修工事", client:"法務省 大阪拘置所", type:"工事", status:"受注・施工中", photo:"/assets/photos/led-materials-blur.jpg" },
+  { pref:"兵庫県", areas:["amagasaki"], name:"法務省関係施設 庁舎棟 照明設備LED化改修工事", client:"法務省関係施設", type:"工事", status:"受注・施工中", photo:"/assets/photos/led-materials-blur.jpg" },
   { pref:"兵庫県", areas:["kobe","kobe-chuoku"], name:"神戸駅南駐車場 泡消火設備整備業務", client:"神戸市", type:"役務", status:"受注・施工中", photo:"/assets/photos/kobe-station-south-awa-valve.jpg" },
   { pref:"兵庫県", areas:["kobe","kobe-higashinadaku"], name:"東クリーンセンター 煙突（高さ100m）航空障害灯 更新工事", client:"神戸市", type:"工事", status:"施工実績", photo:"/assets/photos/work-koushougai.jpg", desc:"高さ100mの煙突頂部で航空障害灯を更新。高所・特殊環境での電気工事にも対応します。" },
   { pref:"兵庫県", areas:["hyogo"], name:"非常用発電設備 更新工事", client:"兵庫県住宅供給公社", type:"工事", status:"施工実績", score:"78点", photo:"/assets/photos/noimage-bosai.svg", desc:"停電時に人命と設備を守る非常用発電設備の更新。防災設備にも強み。" },
