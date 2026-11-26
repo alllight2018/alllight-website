@@ -234,8 +234,13 @@
       </div>
     </div>
 
+<style>
+  .iso-grid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:1rem;}
+  @media (max-width:640px){ .iso-grid{grid-template-columns:repeat(2,minmax(0,1fr));} }
+  .iso-grid .iso-badge{min-width:0;}
+</style>
     <!-- 認証バッジ帯（ISOを目立たせる） -->
-    <div class="reveal" style="margin-top:1.4rem; display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:1rem;">
+    <div class="reveal iso-grid" style="margin-top:1.4rem;">
       <div class="iso-badge">
         <span class="iso-badge__mark">ISO<br>9001</span>
         <span class="iso-badge__txt"><b>品質マネジメント</b><br>ISO 9001 認証取得</span>
@@ -252,9 +257,9 @@
         <span class="iso-badge__mark iso-badge__mark--alt">認定<br>企業</span>
         <span class="iso-badge__txt"><b>ユースエール認定</b><br>厚生労働省</span>
       </div>
-      <a class="iso-badge" href="/assets/partnership-sengen.pdf" target="_blank" rel="noopener" style="text-decoration:none; grid-column:1/-1; gap:1.1rem;">
+      <a class="iso-badge iso-pp" href="/assets/partnership-sengen.pdf" target="_blank" rel="noopener" style="text-decoration:none; grid-column:1/-1; gap:1.2rem; background:#fff; border-color:#fff; color:#14263d; padding:1.1rem 1.4rem;">
         <span style="flex:none; display:grid; place-items:center; background:#fff; border-radius:12px; padding:8px 14px; box-shadow:0 6px 18px rgba(0,0,0,.28);"><img src="/assets/partnership-logo.png" alt="パートナーシップ構築宣言ロゴ" style="height:52px; width:auto; display:block;" onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('span'),{textContent:'パートナーシップ構築宣言',style:'color:#0b5aa6;font-weight:900;font-size:.9rem;'}));" /></span>
-        <span class="iso-badge__txt"><b>パートナーシップ構築宣言</b><br>取引先との共存共栄を宣言（クリックで宣言文PDF）</span>
+        <span class="iso-badge__txt" style="color:#14263d;"><b style="color:#14263d;">パートナーシップ構築宣言</b><br><span style="color:#4a5b6e;">取引先との共存共栄を宣言（クリックで宣言文PDF）</span></span>
       </a>
     </div>
   </div>
