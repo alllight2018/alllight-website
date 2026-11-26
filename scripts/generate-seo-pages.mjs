@@ -182,9 +182,9 @@ function renderAreaPage(area, allAreas, services = [], works = []) {
   const neighbors = allAreas.filter((a) => a.slug !== area.slug);
   const areaWorks = worksForArea(area, works);
 
-  // ヒーロー写真を地域ごとにローテーション（毎回genba.jpgでなく変化をつける）
+  // ヒーロー写真を地域ごとにローテーション（毎回同じ写真にならないよう変化をつける）
   const heroPhotos = [
-    "/assets/photos/building-night.jpg", "/assets/photos/genba.jpg", "/assets/photos/work-cubicle.jpg",
+    "/assets/photos/building-night.jpg", "/assets/photos/work-cubicle.jpg", "/assets/photos/work-cubicle.jpg",
     "/assets/photos/work-chuokansen-lightup.jpg", "/assets/photos/sekou-kanri.jpg", "/assets/photos/work-hiyodori-tunnel.jpg",
     "/assets/photos/work-higashinada-shomei.jpg", "/assets/photos/work-iwazono-cubicle.jpg"
   ];
@@ -486,13 +486,13 @@ function renderServiceHub(services) {
   const url = `${SITE_ORIGIN}/service/`;
   const title = "施工内容（電気設備工事の工種）｜株式会社オールライト｜神戸・兵庫";
   const desc = "株式会社オールライトの施工内容一覧。電気設備工事・受変電（キュービクル）・LED照明改修・内線幹線・防災防犯弱電・空調設備まで、公共工事に対応する工種をご紹介します。";
-  return `${head({ title, desc, canonical: url, ogimg: "/assets/photos/genba.jpg" })}
+  return `${head({ title, desc, canonical: url, ogimg: "/assets/photos/work-cubicle.jpg" })}
 <link rel="stylesheet" href="${p}assets/site.css" />
 </head>
 <body>
 ${header(p, "service")}
 <section class="hero" style="min-height:40vh; display:flex; align-items:flex-end;">
-  <div class="hero-bg" style="background-image:url('/assets/photos/genba.jpg')"></div>
+  <div class="hero-bg" style="background-image:url('/assets/photos/work-cubicle.jpg')"></div>
   <div class="hero-overlay"></div>
   <div class="wrap" style="position:relative; padding-block:2.6rem;">
     <p class="eyebrow">施工内容</p>
