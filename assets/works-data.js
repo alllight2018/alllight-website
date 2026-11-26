@@ -56,7 +56,7 @@ window.ALLLIGHT_MAP_DATA = [
   { pref:"大阪府", name:"大阪港安治川突堤南岸壁 電気設備工事", client:"第五管区海上保安本部", type:"工事", status:"受注・施工中", photo:"/assets/photos/noimage-general.svg" },
 
   // ▼ 三重県
-  { pref:"三重県", name:"上野税務署 照明改修工事", client:"名古屋国税局", type:"工事", status:"受注・施工中", photo:"/assets/photos/noimage-shomei.svg" },
+  { pref:"三重県", name:"上野税務署 照明改修工事", client:"名古屋国税局", type:"工事", status:"受注・施工中", photo:"/assets/photos/ueno-tax-office-light.jpg" },
 
   // ▼ 愛知県（防衛省）
   { pref:"愛知県", name:"春日井駐屯地 駐屯地内 電源改修工事", client:"陸上自衛隊（防衛省）", type:"工事", status:"施工実績", photo:"/assets/photos/work-kasugai-genden-blur.jpg", desc:"愛知県・陸上自衛隊 春日井駐屯地の駐屯地内 電源改修工事。外壁のレントゲン探査から丁寧に施工。中部エリアの防衛省施設にも対応します。" },
